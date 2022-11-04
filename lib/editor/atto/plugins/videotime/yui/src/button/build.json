@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_videotime-button",
+  "builds": {
+    "moodle-atto_videotime-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}
