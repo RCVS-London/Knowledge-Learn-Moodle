@@ -1,8 +1,5 @@
-debugger;
 $(document).ready(function() {
-debugger;
     $('.updategoal').on('click', function() {
-        debugger;
         $('#exampleModal').modal('show');
     });
 
