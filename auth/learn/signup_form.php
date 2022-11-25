@@ -92,6 +92,15 @@ class login_signup_form extends moodleform implements renderable, templatable {
         $manager = new \core_privacy\local\sitepolicy\manager();
         $manager->signup_form($mform);
 
+        $mform->addElement('html','<hr><p>RCVS Knowledge is the charity partner of the Royal College of
+        Veterinary Surgeons (RCVS). By completing this form you are consenting to us creating your Learn account. 
+        Your personal information will be used to contact you about your account and to send you any newsletters 
+        that you subscribed to. We will process your data for as long as we have your consent to do so. We are 
+        committed to the privacy of your personal information and will process your data in line with <a href="'.$CFG->wwwroot.'/">our privacy
+        policy</a> and the General Data Protection Regulations. Your personal information will 
+        not be shared with outside third parties and you have the right to withdraw your consent to the processing of 
+        your personal data at any time</p><hr>');
+
         // Buttons.
         $this->add_action_buttons(true, get_string('createaccount'));
 

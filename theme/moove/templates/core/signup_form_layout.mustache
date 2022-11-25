@@ -42,17 +42,15 @@ $(document).ready(function () {
     "I would like to stay up to date with the latest developments in evidence-based veterinary medicine. Please subscribe me to intheKNOW, RCVS Knowledge's monthly newsletter";
   var inFocusLabel =
     "I would like to stay up to date with summaries of the latest research that has the potential to positively impact patient care. Please subscribe me to inFOCUS, RCVS Knowledge's bi-monthly journal watch email.";
-  var disclaimer =
-    "RCVS Knowledge is the charity partner of the Royal College of Veterinary Surgeons (RCVS). By completing this form you are consenting to us creating your Learn account. Your personal information will be used to contact you about your account and to send you any newsletters that you subscribed to. We will process your data for as long as we have your consent to do so. We are committed to the privacy of your personal information and will process your data in line with our privacy policy (link to privacy policy) and the General Data Protection Regulations. Your personal information will not be shared with outside third parties and you have the right to withdraw your consent to the processing of your personal data at any time";
 
   // Create checkboxes
   $("#fgroup_id_buttonar").before(
-    "<hr><div class='form-check form-check-inline'> <input style='width: 55px;' class='inTheKnow-check-input' type='checkbox' value='' id='inTheKnowSubscribe'> <label class='inTheKnow-check-label' for='inTheKnowSubscribe'>" +
+    "<div class='form-check form-check-inline'> <input style='width: 55px;' class='inTheKnow-check-input' type='checkbox' value='' id='inTheKnowSubscribe'> <label class='inTheKnow-check-label' for='inTheKnowSubscribe'>" +
       inTheKnowLabel +
       " </label> </div><div class='form-check form-check-inline'> <input style='width: 65px;' class='inFocus-check-input' type='checkbox' value='' id='inFocusSubscribe'> <label class='inFocus-check-label' for='inFocusSubscribe'>" +
       inFocusLabel +
       " </label> </div> <div class='form-group' id='roleSelectGroup' style='display: none;'> <label for='roleSelect'>Which of the following best describes your role?</label> <select class='form-control' id='roleSelect'> <option value='Veterinary surgeon'>Veterinary surgeon</option> <option value='Veterinary nurse'>Veterinary nurse</option> <option value='Veterinary student'>Veterinary student</option> <option value='VN student'>VN student</option> <option value='Veterinary scientist'>Veterinary scientist</option> <option value='Practice manager'>Practice manager</option> <option value='Practice staff'>Practice staff</option> <option value='Journalist'>Journalist</option> <option value='Animal owner'>Animal owner</option> <option value='Other (not Animal lover)'>Other</option> </select> </div><p>Please note that you can unsubscribe from these emails at any time by following the 'Unsubscribe' link at the bottom of the emails.</p>" +
-      "<hr><p>" + disclaimer + "</p>"
+      "<hr>"
   );
 
 /*
