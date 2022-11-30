@@ -81,4 +81,30 @@ Registered as a Company limited by guarantee in England & Wales No. 598443
 
 <!-- Removed moodle footer as core templates do not pick up moustache vars such as ^disablebottomfooter -->
 
+<script>
+console.log(window.location.href);
+var navelements = document.getElementsByClassName( 'navbar' );
+var devcolor = "skyblue";
+var stagingcolor = "orange"
+var localhostcolor = "#90EE90"
+if (window.location.href.indexOf("learndev") > -1) {
+    document.body.style.background = devcolor;
+    for (var i = 0; i < navelements.length; i++) {
+        navelements[i].style.backgroundColor = devcolor;
+    }
+}
+if (window.location.href.indexOf("learnstaging") > -1) {
+    document.body.style.background = stagingcolor;
+    for (var i = 0; i < navelements.length; i++) {
+        navelements[i].style.backgroundColor = stagingcolor;
+    }
+}
+if (window.location.href.indexOf("localhost") > -1) {
+    document.body.style.background = localhostcolor;
+    for (var i = 0; i < navelements.length; i++) {
+        navelements[i].style.backgroundColor = localhostcolor;
+    }
+}
+</script>
+
 {{{ output.standard_end_of_body_html }}}
