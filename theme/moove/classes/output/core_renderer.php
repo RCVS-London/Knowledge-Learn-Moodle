@@ -620,6 +620,17 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return $output;
     }
+    public function page_heading_menu() {
+        if ($CFG->wwwroot != "https://learn.rcvsknowledge.org" && $CFG->learnenv != 'live') {
+            $stringfromfile = file($CFG->dirroot . '.git/HEAD', FILE_USE_INCLUDE_PATH);
+            $firstLine = $stringfromfile[0]; //get the string from the array
+            $explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
+            $branchname = $explodedstring[2]; //get the one that is always the branch name
+            $output = "Current branch:&nbsp;<span font-weight: bold; text-transform: uppercase;'>" . $branchname . "</span>"; //show it on the page
+            return $output;
+        }
+    }
+
 
     /**
      * Try to return the first image on course summary files, otherwise returns a default image.
