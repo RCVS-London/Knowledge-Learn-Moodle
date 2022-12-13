@@ -1,0 +1,347 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_moove/frontpage_guest
+
+    Guest frontpage template.
+
+    Moove frontpage guest layout template.
+
+    Context variables required for this template:
+    * sitename - The name of the site
+    * output - The core renderer for the page
+    * bodyattributes - attributes for the body tag as a string of html attributes
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+         },
+        "bodyattributes":"",
+        "cansignup": true,
+        "bannerheading": "Content string banner heading",
+        "bannercontent": "Content string banner content",
+        "shoulddisplaymarketing": true
+    }
+}}
+    {{>theme_moove/inc_start}}
+
+    <div id="page" class="container-fluid">
+        <div id="page-header" class="frontpage-guest-header" style="margin-left: 0em !important;">
+
+            {{#sliderenabled}}
+                {{#sliderfrontpage}}
+                        <div id="heroImage">
+                            <img style="opacity: 0.5;" class="img-fluid" src="https://moodle-images.s3.eu-west-2.amazonaws.com/VE-banner.jpg" alt="A female vet holds a sedated German Shepherd's head">
+
+                            <div class="hero-caption d-none d-md-block">
+                                <h2 style="color: black; font-weight: bold;">The home of free evidence-based veterinary medicine learning</h2>
+                            </div>
+                      </div>
+
+                    {{^disablefrontpageloginbox}}
+                        <div id="loginbox" class="d-none d-lg-block">
+                            <div class="card" id="boxForm">
+                                {{>theme_moove/frontpage_login}}
+                            </div>
+                        </div>
+                    {{/disablefrontpageloginbox}}
+                {{/sliderfrontpage}}
+            {{/sliderenabled}}
+
+            {{^sliderenabled}}
+                <div class="row" id="loginbox">
+                    <div class="col-sm-12 hidden-sm-down {{#disablefrontpageloginbox}}col-md-12{{/disablefrontpageloginbox}}{{^disablefrontpageloginbox}}col-md-7{{/disablefrontpageloginbox}}" id="intro">
+                        {{#bannerheading}}
+                            <h1>{{{ bannerheading }}}</h1>
+                        {{/bannerheading}}
+                        {{#bannercontent}}
+                            <h2>{{{ bannercontent }}}</h2>
+                        {{/bannercontent}}
+                    </div>
+                    {{^disablefrontpageloginbox}}
+                        <div class="col-12 col-sm-12 col-md-5 card d-none d-lg-block" id="boxForm">
+                            {{>theme_moove/frontpage_login}}
+                        </div><!-- end of .card-body -->
+                    {{/disablefrontpageloginbox}}
+                </div> <!-- end of #boxForm -->
+            {{/sliderenabled}}
+        </div>
+
+        <div class="container frontpage-maincontent">
+        <div class="home-title">The home of free evidence-based veterinary medicine learning</div>
+
+          {{{ output.main_content }}}
+
+          <!--
+          <div class="student-feedback">
+            <h3>Feedback</h3>
+            <p> <span><i class="fa fa-quote-left"></i></span> The material covered in the course matched my expectations and more, and there were great case examples to back up the points raised.” <span><i class="fa fa-quote-right"></i></span>
+            </p>
+            <p><i>Holly Warrilow RVN</i> </p>
+        </div>
+
+        -->
+        </div>
+
+        <div class="container frontpage-custom-content" style="max-width: none !important;">
+      <div
+        class="row justify-content-md-center dark"
+        style="padding-top: 3em; padding-bottom: 3em;"
+      >
+        <div class="col-auto">
+          <h3 style="display: inline">
+            Don't forget – all courses earn you CPD
+          </h3>
+        </div>
+        <div class="home-btn">
+          <a
+            href="https://onecpd.rcvs.org.uk/"
+            target="_blank"
+            role="button"
+            >Log it on 1CPD</a
+          >
+        </div>
+      </div>
+      <div
+        class="row justify-content-md-center mid"
+        style="padding-bottom: 2em; padding-top: 2em"
+      >
+        <div class="col-md-auto">
+          <p style="margin-bottom: 0px" class="boilerplate">
+            RCVS Knowledge's mission is to advance the quality of veterinary care for the benefit of animals, the public, and society. We champion an evidence-based approach to veterinary medicine, and provide free resources and education to the professions.
+          </p>
+        </div>
+      </div>
+      <div
+        class="row justify-content-md-center mid"
+        style="padding-bottom: 2em;"
+      >
+        <div class="col-sm-6" style="padding-right: 2em;">
+          <h4 class="section-header">Resources</h4>
+          <p class="section-subheading">More resources from RCVS Knowledge</p>
+          <a href="https://www.infocusvj.org" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;inFOCUS journal watch</a>
+          <hr />
+          <a href="https://knowledge.rcvs.org.uk/quality-improvement/tools-and-resources/" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;Quality Improvement</a>
+          <hr />
+          <a href="https://knowledge.rcvs.org.uk/evidence-based-veterinary-medicine/ebvm-toolkit/" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;EBVM Toolkit</a>
+          <hr />
+          <a href="https://knowledge.rcvs.org.uk/evidence-based-veterinary-medicine/ebvm-resources/" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;EBVM resources</a>
+          <hr />
+          <a href="https://vetaudit.rcvsk.org" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;vetAUDIT benchmarking tools</a>
+          <hr />
+          <a href="https://knowledge.rcvs.org.uk/library-and-information-services/" target="_blank"><i class="fa fa-external-link"></i>&nbsp;&nbsp;Library and Information Services</a>
+          <hr />
+        </div>
+        <div
+          class="col-sm-6 ve"
+        >
+          <h4 class="section-header">Veterinary Evidence</h4>
+          <p class="section-subheading">New in Veterinary Evidence, our open access journal</p>
+          <div style="display: flex; justify-content: center; align-items: center;">
+          <div></div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row light"
+        style="padding-bottom: 2em; padding-top: 2em"
+      >
+        <div>
+          <h4 class="section-header" style="padding-bottom: 0.5em">News</h4>
+          <p class="section-subheading">Stay up to date with the latest in evidence-based veterinary medicine</p>
+        </div>
+      </div>
+      <div
+        class="row justify-content-md-center light news"
+        style="padding-bottom: 2em"
+      >
+      </div>
+      <div
+        class="row justify-content-md-center dark"
+        style="padding-top: 3em; padding-bottom: 3em"
+      >
+        <div class="col-auto">
+          <h4 style="display: inline">Sign up to our monthly newsletter <span style="font-style: italic;">intheKNOW</span>, for EBVM news, research, resources and more...</h4>
+        </div>
+        <div class="home-btn">
+          <a
+            href="https://bit.ly/intheKNOW"
+            target="_blank"
+            role="button"
+            >Subscribe</a
+          >
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $.ajax({
+          url: "https://hsbl045889.execute-api.eu-west-2.amazonaws.com/Prod",
+        }).then(function (data) {
+          var mapping = {
+            ve: "Veterinary Evidence",
+            events: "Events",
+            news: "News",
+          };
+          for (var key in mapping) {
+            if (mapping.hasOwnProperty(key)) {
+              var ul = $("div." + key)
+                .children("div")
+                .first()
+                .children("ul")
+                .first();
+              var div = $("div." + key)
+                .children("div")
+                .first();
+              var subDiv = $("div." + key)
+                .children("div")
+                .first()
+                .children("div")
+                .first();
+              var newsDiv = $("div." + key);
+              for (i = 0; i < data[mapping[key]].length; i++) {
+                /* if (key === "events") {
+                  $(ul).append(
+                    "<li><a target='_blank' href='" +
+                      data[mapping[key]][i]["url"] +
+                      "'>" +
+                      data[mapping[key]][i]["title"] +
+                      "</a> " +
+                      "</li>"
+                  );
+                } */ if (key === "ve") {
+                  $(subDiv).append(
+                    "<a target='_blank' href='" +
+                      data[mapping[key]][i]["url"] +
+                      "'><i class='fa fa-external-link'></i>" +
+                      data[mapping[key]][i]["title"] +
+                      "</a>" +
+                      "<hr />"
+                  );
+                } else if (key === "news") {
+                  $(newsDiv).append(
+                    "<div class='col-sm news-item'><a target='_blank' href='" +
+                      data[mapping[key]][i]["url"] +
+                      "'>" +
+                      data[mapping[key]][i]["title"] +
+                      "</a><br /><br /><hr />" +
+                      "<a target='_blank' href='" +
+                      data[mapping[key]][i]["url"] +
+                      "'><span style='color: #222; font-weight: bold;'>Read more</span>" +
+                      "<i class='fa fa-external-link' style='color: black;'></i></a><hr /></div>"
+                  );
+                }
+              }
+            }
+          }
+        });
+});
+    </script>
+
+    <style>
+      div.dark {
+        background-color: #EAF0F4;
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+      div.mid {
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+      div.light {
+        background-color: #fbfbfb;
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+      div.ve, div.news {
+        padding-bottom: 2em;
+      }
+      @media (min-width: 576px) {
+        div.ve {
+          border-left: rgba(0,0,0,.1);
+          border-left-style: solid;
+          border-left-width: 1px;
+          padding-left: 2em;
+          padding-bottom: 0em;
+          padding-top: 0em;
+        }
+        div.news-item {
+          border-left: rgba(0,0,0,.1);
+          border-left-style: solid;
+          border-left-width: 1px;
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+        div.news-item:first-child {
+          border-left-width: 0px;
+        }
+      }
+      #frontpage-available-course-list > h2:before, #frontpage-available-course-list > h2:after {
+        display: none !important;
+      }
+      .section-header {
+        font-weight: bold;
+        color: #782156;
+        padding-bottom: 0.5em;
+      }
+      p.subtitle {
+        padding-bottom: 1em;
+      }
+      .hero-caption {
+        top: 150px;
+        position: absolute;
+        right: 42%;
+        left: 15%;
+        z-index: 10;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align: center;
+      }
+      div#page-header {
+        border-bottom-width: 0;
+        min-height: 0px !important;
+      }
+      @media (max-width: 992px) {
+        div.hero-caption {
+          top: 75px;
+          right: 10%;
+        }
+      }
+      @media (max-width: 700px) {
+        div#heroImage {
+          display: none;
+        }
+        div#frontpage-available-course-list {
+          padding-top: 1em;
+        }
+      }
+    </style>
+
+{{>theme_moove/inc_end}}

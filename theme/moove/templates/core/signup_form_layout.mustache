@@ -1,0 +1,112 @@
+{{!
+    @template core/signup_form_layout
+
+    Example context (json):
+    {
+        "logourl": "https://moodle.org/logo/moodle-logo.svg",
+        "sitename": "Site name",
+        "formhtml": "<p>(Form html would go here)</p>"
+    }
+}}
+
+<div class="page container-fluid">
+    <div class="row row justify-content-center">
+        <div class="col-8">
+
+            <div class="text-center">
+                {{#logourl}}
+                    <h2><img src="{{logourl}}" title="{{sitename}}" alt="{{sitename}}"/></h2>
+                {{/logourl}}
+                {{^logourl}}
+                    <h2>{{sitename}}</h2>
+                {{/logourl}}
+            </div>
+
+            <div class="card my-4">
+                <div class="card-block">
+                    <div class="card-title">
+                        <h3>{{#str}}newaccount{{/str}}</h3>
+                    </div>
+                    {{{formhtml}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>       
+
+{{>theme_moove/inc_end}}
+
+<script>
+$(document).ready(function () {
+  var inTheKnowLabel =
+    "I would like to stay up to date with the latest developments in evidence-based veterinary medicine. Please subscribe me to intheKNOW, RCVS Knowledge's monthly newsletter";
+  var inFocusLabel =
+    "I would like to stay up to date with summaries of the latest research that has the potential to positively impact patient care. Please subscribe me to inFOCUS, RCVS Knowledge's bi-monthly journal watch email.";
+
+  // Create checkboxes
+  $("#fgroup_id_buttonar").before(
+    "<div class='form-check form-check-inline'> <input style='width: 55px;' class='inTheKnow-check-input' type='checkbox' value='' id='inTheKnowSubscribe'> <label class='inTheKnow-check-label' for='inTheKnowSubscribe'>" +
+      inTheKnowLabel +
+      " </label> </div><div class='form-check form-check-inline'> <input style='width: 65px;' class='inFocus-check-input' type='checkbox' value='' id='inFocusSubscribe'> <label class='inFocus-check-label' for='inFocusSubscribe'>" +
+      inFocusLabel +
+      " </label> </div> <div class='form-group' id='roleSelectGroup' style='display: none;'> <label for='roleSelect'>Which of the following best describes your role?</label> <select class='form-control' id='roleSelect'> <option value='Veterinary surgeon'>Veterinary surgeon</option> <option value='Veterinary nurse'>Veterinary nurse</option> <option value='Veterinary student'>Veterinary student</option> <option value='VN student'>VN student</option> <option value='Veterinary scientist'>Veterinary scientist</option> <option value='Practice manager'>Practice manager</option> <option value='Practice staff'>Practice staff</option> <option value='Journalist'>Journalist</option> <option value='Animal owner'>Animal owner</option> <option value='Other (not Animal lover)'>Other</option> </select> </div><p>Please note that you can unsubscribe from these emails at any time by following the 'Unsubscribe' link at the bottom of the emails.</p>" +
+      "<hr>"
+  );
+
+/*
+  // If either is checked, show job role selector
+  $("#inTheKnowSubscribe, #inFocusSubscribe").change(function () {
+    if (
+      $("#inTheKnowSubscribe").prop("checked") ||
+      $("#inFocusSubscribe").prop("checked")
+    ) {
+      $("#roleSelectGroup").show();
+    } else {
+      $("#roleSelectGroup").hide();
+    }
+  });
+  */
+
+  $("#id_submitbutton").click(function () {
+    var firstName = $("#id_firstname").val();
+    var lastName = $("#id_lastname").val();
+    var jobRole = $("#id_profile_field_jobtitle").find(":selected").text();
+    var emailOne = $("#id_email").val();
+    var emailTwo = $("#id_email2").val();
+    var mailchimpUserData = {
+      firstName: firstName,
+      lastName: lastName,
+      jobRole: jobRole,
+      email: emailOne,
+      newsletter: []
+    };
+    if (emailOne.length > 0) { // && emailOne === emailTwo) {
+      if (
+        $("#inTheKnowSubscribe").prop("checked") ||
+        $("#inFocusSubscribe").prop("checked")
+      ) {
+        if ($("#inTheKnowSubscribe").prop("checked")) {
+          mailchimpUserData["newsletter"].push("inTheKnow")
+        }
+        if ($("#inFocusSubscribe").prop("checked")) {
+          mailchimpUserData["newsletter"].push("inFocus");
+        }
+          $.ajax({
+            type: "POST",
+            url:
+              "https://xn0x3xonk7.execute-api.eu-west-2.amazonaws.com/prod/submit",
+            data: JSON.stringify(mailchimpUserData),
+            success: function (data) {
+              console.log(data["body"]);
+            },
+            contentType: "application/json",
+            dataType: "json",
+          });
+        return true;
+      }
+    }
+  });
+});
+</script>
+
+
