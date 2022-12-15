@@ -16,19 +16,17 @@
 /**
  * Video Time filter.
  *
- * @package   filer_videotime
+ * @package   filter_videotime
  * @copyright 2020 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 use mod_videotime\videotime_instance;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Allows embedding of Video Time activities.
  *
- * @package   filer_videotime
+ * @package   filter_videotime
  * @copyright 2020 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -64,7 +62,7 @@ class filter_videotime extends moodle_text_filter {
             if ($matches[0]) {
                 for ($i = 0; $i < count($matches[0]); $i++) {
                     if (isset($matches[1][$i])) {
-                        // Parse attribute
+                        // Parse attribute.
                         $x = new SimpleXMLElement('<element ' . $matches[1][$i] . '/>');
                         $cmid = (string)$x->attributes()['cmid'];
 
@@ -86,11 +84,48 @@ class filter_videotime extends moodle_text_filter {
                 if (!$cm = get_coursemodule_from_id('videotime', $videotimetag['cmid'])) {
                     $content = $OUTPUT->notification(get_string('vimeo_url_missing', 'videotime'));
                 } else {
+                    $context = context_course::instance($cm->course);
 
-                    $instance = videotime_instance::instance_by_id($cm->instance);
-                    $instance->set_embed(true);
+                    $canviewcourse = has_capability('moodle/course:view', $context) ||
+                        is_enrolled(context_course::instance($cm->course), $USER, '', true);
 
-                    $content = $renderer->render($instance);
+                    // Check if user can access activity.
+                    if (!$canviewcourse || !cm_info::create($cm)->uservisible) {
+                        $content = null;
+                    } else if (
+                        get_config('filter_videotime', 'disableifediting')
+                        && $PAGE->user_is_editing()
+                    ) {
+                        $content = $OUTPUT->notification(
+                            get_string('videodisabled', 'filter_videotime', $cm->name),
+                            \core\output\notification::NOTIFY_SUCCESS
+                        );
+                    } else {
+                        $instance = videotime_instance::instance_by_id($cm->instance);
+                        $instance->set_embed(true);
+
+                        $defaultrenderer = $renderer;
+
+                        // Allow any subplugin to override video time instance output.
+                        foreach (\core_component::get_component_classes_in_namespace(
+                            null,
+                            'videotime\\instance'
+                        ) as $fullclassname => $classpath) {
+                            if (is_subclass_of($fullclassname, videotime_instance::class)) {
+                                if ($override = $fullclassname::get_instance($instance->id)) {
+                                    $instance = $override;
+                                }
+                                if ($override = $fullclassname::get_renderer($instance->id)) {
+                                    $renderer = $override;
+                                }
+                            }
+                        }
+
+                        $content = $renderer->render($instance);
+
+                        // Set renderer back to default if override was used.
+                        $renderer = $defaultrenderer;
+                    }
                 }
             } catch (\Exception $e) {
                 $content = $OUTPUT->notification(get_string('parsingerror', 'filter_videotime') . '<br>' . $e->getMessage());

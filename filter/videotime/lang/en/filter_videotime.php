@@ -17,13 +17,16 @@
 /**
  * Strings for filter_videotime
  *
- * @package   filer_videotime
+ * @package   filter_videotime
  * @copyright 2020 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
+$string['disableifediting'] = 'Disable if editing';
+$string['disableifediting_help'] = 'Prevent display of embedded Video Time activities while editing a course';
 $string['filtername'] = 'Video Time activity embed';
 $string['parsingerror'] = 'There is an error in your Video Time embed shortcode. Please review the shortcode and ensure there is no extra formatting. Valid example: [videotime cmid="123"]';
 $string['privacy:metadata'] = 'The Video Time filter does not store any personal data.';
+$string['videodisabled'] = 'Video Time activity \'{$a}\' will be displayed when editing is complete';

@@ -17,14 +17,12 @@
 /**
  * Privacy Subsystem implementation for filter_videotime.
  *
- * @package   filer_videotime
+ * @package   filter_videotime
  * @copyright 2020 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace filter_videotime\privacy;
-
-defined('MOODLE_INTERNAL') || die;
 
 /**
  * Privacy Subsystem for filter_videotime implementing null_provider.

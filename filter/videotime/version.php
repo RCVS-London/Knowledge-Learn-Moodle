@@ -17,17 +17,17 @@
 /**
  * Version of filter_videotime.
  *
- * @package   filer_videotime
+ * @package   filter_videotime
  * @copyright 2020 bdecent gmbh <https://bdecent.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2020040200;
+$plugin->version  = 2022040802;
 $plugin->requires = 2015111610;
 $plugin->component = 'filter_videotime';
-$plugin->release = '1.0';
+$plugin->release = '1.1';
 $plugin->dependencies = [
     'mod_videotime' => 2020040200,
     'videotimeplugin_pro' => 2020040200

@@ -1,0 +1,12 @@
+<button class="btn btn-default btn-secondary pull-right" {{^next_video}}disabled{{/next_video}} {{#next_video}}data-action="preview" data-uri="{{ next_video.uri }}"{{/next_video}}>{{#str}}next{{/str}}</button>
+
+<button class="btn btn-default btn-secondary" {{^previous_video}}disabled{{/previous_video}} {{#previous_video}}data-action="preview" data-uri="{{ previous_video.uri }}"{{/previous_video}}>{{#str}}previous{{/str}}</button>
+
+<hr>
+<div data-uri="{{ video.uri }}" data-vimeo-url="{{ video.link }}" id="vimeo-embed"></div>
+
+{{#js}}
+    require(['mod_videotime/player'], function(Vimeo) {
+        player = new Vimeo('vimeo-embed', {responsive: true});
+    });
+{{/js}}
