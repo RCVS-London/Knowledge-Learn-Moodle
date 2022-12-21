@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/videotime/plugin/pro/db" VERSION="20200712" COMMENT="XMLDB file for Moodle mod/videotime/plugin/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="videotime_session" COMMENT="Stores information on user watch progress.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="module_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Course module ID"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="User for this session."/>
+        <FIELD NAME="time" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time in seconds watched."/>
+        <FIELD NAME="timestarted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Timestamp of when session started."/>
+        <FIELD NAME="state" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Session state (such as finished)."/>
+        <FIELD NAME="percent_watch" TYPE="number" LENGTH="5" NOTNULL="false" SEQUENCE="false" DECIMALS="3"/>
+        <FIELD NAME="current_watch_time" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="2" COMMENT="The current time the user has watched"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="module_user" UNIQUE="false" FIELDS="module_id, user_id"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

@@ -1,0 +1,27 @@
+<button class="btn btn-primary" id="browse-videos">{{#str}}browsevideos, videotime{{/str}}</button>
+
+{{#js}}
+    require(['jquery', 'core/modal_factory', 'videotimeplugin_repository/modal_video_list', 'core/str', 'core/ajax'], function($, ModalFactory, ModalVideoList, str, Ajax) {
+        var trigger = $('#browse-videos');
+        Ajax.call([{
+            methodname: 'videotimeplugin_repository_get_filter_options',
+            args: {}
+        }])[0].then(function(response) {
+            ModalFactory.create({
+                type: ModalVideoList.TYPE,
+                title: "{{#str}}browsevideos, videotime{{/str}}",
+                templateContext: response // Moodle template context.
+            }, trigger, response).done(function(modal) { // Totara template context.
+                modal.setContextId({{contextid}});
+                modal.setReadOnly(true);
+                modal.init();
+                modal.setFilterValue('albums', {{albumid}});
+                modal.setFilterValue('tags', {{tagid}});
+                modal.applyFilters();
+                modal.setQuery("{{query}}");
+                modal.refreshTable();
+                modal.show();
+            });
+        });
+    });
+{{/js}}

@@ -1,0 +1,84 @@
+<div class="panel panel-default">
+    <div class="video-image-preview">
+        <a href="{{url}}">
+            <img src="{{{video.thumbnail_url}}}" class="img-responsive">
+        </a>
+
+        {{#instance.show_duration}}
+            <span class="badge badge-dark video-duration">{{video.duration_formatted}}</span>
+        {{/instance.show_duration}}
+
+        {{#instance.show_viewed_duration}}
+            <div class="progress video-progress">
+                <div class="progress-bar
+                    {{#module_sessions.is_finished}}progress-bar-success{{/module_sessions.is_finished}}
+                    {{^module_sessions.is_finished}}progress-bar-danger{{/module_sessions.is_finished}}" role="progressbar"
+                     aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+                     style="width:{{module_sessions.percent_formatted}}%">
+                    <span class="sr-only">{{module_sessions.percent_formatted}}%</span>
+                </div>
+            </div>
+        {{/instance.show_viewed_duration}}
+    </div>
+    <div class="panel-body">
+        <div>
+            <div class="pull-right">{{{modicons}}}</div>
+            {{#instance.show_title}}
+                {{#url}}
+                    <h4><a href="{{url}}">{{{instance.name}}}</a></h4>
+                {{/url}}
+                {{^url}}
+                    <h4>{{{instance.name}}}</h4>
+                {{/url}}
+            {{/instance.show_title}}
+        </div>
+
+        {{^video}}
+            <p class="alert alert-danger">{{#str}}vimeo_video_not_found, videotime{{/str}}</p>
+        {{/video}}
+        {{#video.notprocessed}}
+            <p class="alert alert-danger">{{#str}}vimeo_video_not_processed, videotime{{/str}}</p>
+        {{/video.notprocessed}}
+
+        {{#instance.show_tags}}
+        <p class="text-muted">
+            {{#video.tags}}
+                #{{name}}&nbsp;
+            {{/video.tags}}
+        </p>
+        {{/instance.show_tags}}
+
+        {{#instance.show_description}}
+            {{#instance.intro_excerpt}}
+                <div>
+                    {{{instance.intro_excerpt}}}
+                    {{#instance.show_more_link}}
+                        <a href="#" data-action="show-more" data-title="{{video.name}}" data-description="{{instance.intro}}">{{#str}}more, videotime{{/str}}</a>
+                    {{/instance.show_more_link}}
+                </div>
+            {{/instance.intro_excerpt}}
+        {{/instance.show_description}}
+    </div>
+</div>
+{{#js}}
+if (!videotime_course_view_initialized) {
+    require(['jquery', 'core/modal_factory'], function($, ModalFactory) {
+        var trigger = $('[data-action=show-more]');
+        var descriptionModal = null;
+
+        ModalFactory.create({
+            footer: '<button class="btn btn-default btn-secondary" data-action="hide">{{#str}}goback, videotime{{/str}}</button>',
+        }, trigger)
+        .done(function(modal) {
+            descriptionModal = modal;
+        });
+
+        trigger.on('click', function() {
+            descriptionModal.setTitle($(this).data('title'));
+            descriptionModal.setBody($(this).data('description'));
+        });
+    });
+}
+
+var videotime_course_view_initialized = true;
+{{/js}}
