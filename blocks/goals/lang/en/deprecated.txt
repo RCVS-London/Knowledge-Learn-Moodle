@@ -1,0 +1,17 @@
+defaulttab,block_goals
+defaulttab_desc,block_goals
+morecourses,block_goals
+nocoursesinprogress,block_goals
+nocoursesfuture,block_goals
+nocoursespast,block_goals
+noevents,block_goals
+next30days,block_goals
+next7days,block_goals
+recentlyoverdue,block_goals
+sortbycourses,block_goals
+sortbydates,block_goals
+timeline,block_goals
+viewcoursename,block_goals
+privacy:metadata:goalslasttab,block_goals
+nocourses,block_goals
+complete,block_goals
