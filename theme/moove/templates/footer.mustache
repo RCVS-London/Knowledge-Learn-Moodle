@@ -207,6 +207,251 @@
 
 {{{ output.standard_end_of_body_html }}}
 
+{{!
+    RCVS addition legacy javascript for EBVM quizzes
+    RCVS addition colours for dev environments
+}}
+
+<script>
+    function scrollToToC() {
+        var h5s = document.getElementsByTagName("h5");
+        var searchText = "Contents";
+        var toC;
+        for (var i = 0; i < h5s.length; i++) {
+            if (h5s[i].textContent == searchText) {
+                toC = h5s[i];
+                break;
+            }
+        }
+        toC.scrollIntoView();
+    }
+    function insertQuiz(
+            question,
+            answerArray,
+            correctAnswerArray,
+            explanationArray,
+            imageUrl,
+            imageAltText
+    ) {
+        function areArraysEqualSets(a1, a2) {
+            const superSet = {};
+            for (const i of a1) {
+                const e = i + typeof i;
+                superSet[e] = 1;
+            }
+            for (const i of a2) {
+                const e = i + typeof i;
+                if (!superSet[e]) {
+                    return false;
+                }
+                superSet[e] = 2;
+            }
+            for (let e in superSet) {
+                if (superSet[e] === 1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        function guidGenerator() {
+            var S4 = function () {
+                return (((1 + Math.random()) * 0x10000) | 0)
+                        .toString(16)
+                        .substring(1);
+            };
+            return (
+                    S4() +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    S4() +
+                    S4()
+            );
+        }
+        var quizId = guidGenerator();
+        $(".quizContent").append(
+                "<div id='" + quizId + "_content' style='padding-bottom: 2em;'><div>"
+        );
+        if (
+                typeof imageUrl !== "undefined" &&
+                typeof imageAltText !== "undefined"
+        ) {
+            $("div#" + quizId + "_content").append(
+                    "<img src='" +
+                    imageUrl +
+                    "' alt='" +
+                    imageAltText +
+                    "' title='" +
+                    imageAltText +
+                    "' class='img-fluid'>"
+            );
+        }
+        $("div#" + quizId + "_content").append("<p>" + question + "</p>");
+        var type;
+        correctAnswerArray.length === 1
+                ? (type = "radio")
+                : (type = "checkbox");
+        if (type === "checkbox") {
+            $("div#" + quizId + "_content").append(
+                    "<div id='" + quizId + "_checkboxes'></div>"
+            );
+        } else {
+            $("div#" + quizId + "_content").append(
+                    "<div id='" + quizId + "_radiobuttons'></div>"
+            );
+        }
+        $.each(answerArray, function (index, value) {
+            if (type === "checkbox") {
+                $("#" + quizId + "_checkboxes").append(
+                        "<div class='checkbox'><label><input type='checkbox' value='" +
+                        index +
+                        "'>&nbsp;" +
+                        value +
+                        "</label><p style='display: none;' id='answer_" +
+                        quizId +
+                        "_" +
+                        index +
+                        "'></p></div>"
+                );
+            } else {
+                $("#" + quizId + "_radiobuttons").append(
+                        "<div class='radio'><label><input type='radio' name='radio_" +
+                        quizId +
+                        "' value='" +
+                        index +
+                        "'>&nbsp;" +
+                        value +
+                        "</label><p style='display: none;' id='answer_" +
+                        quizId +
+                        "_" +
+                        index +
+                        "'></div>"
+                );
+            }
+        });
+        var additionalAnswer = false;
+        $.each(explanationArray, function (index, value) {
+            if (answerArray.length < explanationArray.length && index === explanationArray.length - 1) {
+                $("div#" + quizId + "_content").append(
+                        "<p style='font-weight: bold; display: none;' id='" +
+                        quizId +
+                        "_additionalAnswer'></p>"
+                );
+                $("p#" + quizId + "_additionalAnswer").text(value);
+                additionalAnswer = true;
+            } else {
+                $("p#answer_" + quizId + "_" + index).text(value);
+            }
+        });
+        $("div#" + quizId + "_content").append(
+                "<div id='" + quizId + "_buttons'></div>"
+        );
+        $("div#" + quizId + "_buttons").append(
+                "<a class='btn btn-warning' id='" +
+                quizId +
+                "_check' role='button'>Check answer</a>"
+        );
+        $("div#" + quizId + "_buttons").append(
+                "<a style='margin-left: 1em; color: white !important; cursor: pointer;' id='" +
+                quizId +
+                "_show' class='btn btn-primary' role='button'> Show answers and explanations</a>"
+        );
+        $("div#" + quizId + "_content").append(
+                "<p style='font-weight: bold;' id='" + quizId + "_result'></p>"
+        );
+        function revealAnswers() {
+            $("[id^=answer_" + quizId + "]").show();
+            if (additionalAnswer) {
+                $("p#" + quizId + "_additionalAnswer").show();
+            }
+            $("[id^=answer_" + quizId + "]").css("color", "#9A3918");
+            var correctAnswerIndexArray = [];
+            $.each(correctAnswerArray, function (index, value) {
+                correctAnswerIndexArray.push(answerArray.indexOf(value));
+            });
+            $.each(correctAnswerIndexArray, function (index, value) {
+                $("#answer_" + quizId + "_" + value).css("color", "#34632C");
+            });
+        }
+        $("a#" + quizId + "_check").click(function () {
+            if (type === "checkbox") {
+                var selectedOptions = $(
+                        "#" +
+                        quizId +
+                        "_checkboxes > div.checkbox > label > input:checked"
+                );
+                var selectedAnswers = [];
+                $(selectedOptions).each(function () {
+                    selectedAnswers.push(parseInt($(this).val()));
+                });
+                var correctAnswerIndexArray = [];
+                $.each(correctAnswerArray, function (index, value) {
+                    correctAnswerIndexArray.push(answerArray.indexOf(value));
+                });
+                var pass = areArraysEqualSets(
+                        selectedAnswers,
+                        correctAnswerIndexArray
+                );
+                var correct_count = 0;
+                var correct_total = correctAnswerIndexArray.length;
+                $.each(selectedAnswers, function (index, value) {
+                    if (correctAnswerIndexArray.indexOf(value) !== -1) {
+                        correct_count++;
+                    }
+                });
+            } else {
+                var selectedOptionValue = parseInt(
+                        $(
+                                "#" +
+                                quizId +
+                                "_radiobuttons > div.radio > label > input:checked"
+                        ).val()
+                );
+                var correctAnswerIndex = answerArray.indexOf(correctAnswerArray[0]);
+                var pass = selectedOptionValue === correctAnswerIndex;
+            }
+            var result;
+            var result_colour;
+            if (pass) {
+                result = "<i class='fa fa-check fa-3x'></i> Correct";
+                result_colour = "green";
+            } else if (correct_count) {
+                result = correct_count + " out of " + correct_total + " correct";
+                result_colour = "blue";
+            } else {
+                result = "<i class='fa fa-times fa-3x'></i> Incorrect";
+                result_colour = "red";
+            }
+            $("p#" + quizId + "_result").css("color", result_colour);
+            $("p#" + quizId + "_result").html(result);
+        });
+        $("a#" + quizId + "_show").click(function () {
+            revealAnswers();
+        });
+    }
+
+    var rcvskGitBranch = document.getElementById('rcvsk-git-branch');
+
+    var devcolor = "skyblue";
+    var stagingcolor = "orange"
+    var localhostcolor = "#90EE90"
+    if (window.location.href.indexOf("learndev") > -1) {
+        rcvskGitBranch.style.backgroundColor = devcolor;
+    }
+    if (window.location.href.indexOf("learnstaging") > -1) {color;
+        rcvskGitBranch.style.backgroundColor = stagingcolor;
+    }
+    if (window.location.href.indexOf("localhost") > -1) {
+        rcvskGitBranch.style.backgroundColor = localhostcolor;
+    }
+</script>
+
 {{#js}}
     require(['theme_boost/footer-popover'], function(FooterPopover) {
         FooterPopover.init();
