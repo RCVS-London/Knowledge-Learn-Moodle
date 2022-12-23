@@ -271,6 +271,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML for the header bar.
      */
     protected function render_context_header(\context_header $contextheader) {
+        global $CFG; // RCVSK addition
         if ($this->page->pagelayout == 'mypublic') {
             return '';
         }
@@ -280,6 +281,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $heading = $this->heading($this->page->heading, $contextheader->headinglevel, 'h2');
         } else {
             $heading = $this->heading($contextheader->heading, $contextheader->headinglevel, 'h2');
+        }
+
+        // RCVSK addition to add git branch
+        if ($CFG->wwwroot != "https://learn.rcvsknowledge.org" && $CFG->learnenv != 'live') {
+            $firstLine = file_get_contents($CFG->dirroot.'/.git/HEAD');
+            $explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
+            $branchname = $explodedstring[2]; //get the one that is always the branch name
+            $heading .= "<br><p id='rcvsk-git-branch'>Current branch:&nbsp;<span style='font-weight: bold; text-transform: uppercase;'>" . $branchname . "</span></p>"; //show it on the page
         }
 
         // All the html stuff goes here.
@@ -435,4 +444,5 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         return $output;
     }
+
 }
