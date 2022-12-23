@@ -429,3 +429,29 @@ function mod_customcert_get_fontawesome_icon_map() {
         'mod_customcert:download' => 'fa-download'
     ];
 }
+
+/**
+ * RCVSK addition: add certificates and badges to front page secondary navigation
+ * @param navigation_node $navigation
+ * @return void
+ * @throws coding_exception
+ * @throws moodle_exception
+ */
+function mod_customcert_extend_navigation_frontpage(navigation_node $navigation) {
+    global $PAGE;
+    $node = navigation_node::create(get_string('certificate', 'customcert'),
+        new moodle_url('/mod/customcert/index.php', array('courseid' => $PAGE->course->id)),
+        navigation_node::TYPE_SETTING,
+        null,
+        null,
+        new pix_icon('i/competencies', ''));
+    $navigation->add_node($node);
+
+    $node = navigation_node::create(get_string('badges', 'badges'),
+        new moodle_url('/badges/mybadges.php'),
+        navigation_node::TYPE_SETTING,
+        null,
+        null,
+        new pix_icon('i/competencies', ''));
+    $navigation->add_node($node);
+}
