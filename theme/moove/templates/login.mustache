@@ -65,4 +65,67 @@
     require(['theme_boost/loader'], function() {
       M.util.js_complete('theme_boost/loader');
     });
+    $(document).ready(function () {
+      var inTheKnowLabel =
+        "I would like to stay up to date with the latest developments in evidence-based veterinary medicine. Please subscribe me to intheKNOW, RCVS Knowledge's monthly newsletter";
+      var inFocusLabel =
+        "I would like to stay up to date with summaries of the latest research that has the potential to positively impact patient care. Please subscribe me to inFOCUS, RCVS Knowledge's bi-monthly journal watch email.";
+
+      // Create checkboxes
+      $("#fgroup_id_buttonar").before(
+            "<div class='form-check form-check-inline'>" +
+                "<input class='inTheKnow-check-input' type='checkbox' value='' id='inTheKnowSubscribe'>" +
+                "<label class='inTheKnow-check-label p-3' for='inTheKnowSubscribe'>" +
+                     inTheKnowLabel +
+                "</label>" +
+            "</div>" +
+            "<div class='form-check form-check-inline'>" +
+                "<input class='inFocus-check-input' type='checkbox' value='' id='inFocusSubscribe'>" +
+                "<label class='inFocus-check-label p-3' for='inFocusSubscribe'>" +
+                    inFocusLabel +
+                "</label>" +
+             "</div>" +
+          "<hr>"
+      );
+
+      $("#id_submitbutton").click(function () {
+        var firstName = $("#id_firstname").val();
+        var lastName = $("#id_lastname").val();
+        var jobRole = $("#id_profile_field_jobtitle").find(":selected").text();
+        var emailOne = $("#id_email").val();
+        var emailTwo = $("#id_email2").val();
+        var mailchimpUserData = {
+          firstName: firstName,
+          lastName: lastName,
+          jobRole: jobRole,
+          email: emailOne,
+          newsletter: []
+        };
+        if (emailOne.length > 0) { // && emailOne === emailTwo) {
+          if (
+            $("#inTheKnowSubscribe").prop("checked") ||
+            $("#inFocusSubscribe").prop("checked")
+          ) {
+            if ($("#inTheKnowSubscribe").prop("checked")) {
+              mailchimpUserData["newsletter"].push("inTheKnow")
+            }
+            if ($("#inFocusSubscribe").prop("checked")) {
+              mailchimpUserData["newsletter"].push("inFocus");
+            }
+              $.ajax({
+                type: "POST",
+                url:
+                  "https://xn0x3xonk7.execute-api.eu-west-2.amazonaws.com/prod/submit",
+                data: JSON.stringify(mailchimpUserData),
+                success: function (data) {
+                  console.log(data["body"]);
+                },
+                contentType: "application/json",
+                dataType: "json",
+              });
+            return true;
+          }
+        }
+      });
+    });
 {{/js}}
