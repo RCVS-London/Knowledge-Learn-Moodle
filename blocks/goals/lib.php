@@ -454,3 +454,27 @@ function enforce_security($requirecapability = false) {
         die();
     }
 }
+
+/*
+ * Add link to FVC Smart Goals page
+ */
+function block_goals_extend_navigation_frontpage(navigation_node $navigation) {
+    global $PAGE, $USER, $DB;
+
+    //Does user have privileges to manage smart goals
+    $managegoals = has_capability('block/goals:managegoals', \context_system::instance());
+
+    //Or is user a FVC?
+    $FVC_badge_array = array('name'=>'Farm Vet Champions access badge');
+    $badgeid = $DB->get_field('badge','id',$FVC_badge_array);
+    $access_FVC_goals_array = array('userid'=>$USER->id, 'badgeid'=>$badgeid);
+    if ($managegoals OR $DB->record_exists('badge_issued',$access_FVC_goals_array)) {
+        $node = navigation_node::create(get_string('goals', 'block_goals'),
+            new moodle_url('/blocks/goals/view.php', array('courseid' => $PAGE->course->id)),
+            navigation_node::TYPE_SETTING,
+            null,
+            null,
+            new pix_icon('i/competencies', ''));
+        $navigation->add_node($node);
+    }
+}
