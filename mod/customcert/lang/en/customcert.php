@@ -33,6 +33,7 @@ $string['alignright'] = 'Right alignment';
 $string['awardedto'] = 'Awarded to';
 $string['cannotverifyallcertificates'] = 'You do not have the permission to verify all certificates on the site.';
 $string['certificate'] = 'Certificate';
+$string['certificates'] = 'Certificates';
 $string['code'] = 'Code';
 $string['copy'] = 'Copy';
 $string['coursetimereq'] = 'Required minutes in course';
