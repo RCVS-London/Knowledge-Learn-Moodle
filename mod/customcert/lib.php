@@ -440,7 +440,7 @@ function mod_customcert_get_fontawesome_icon_map() {
 function mod_customcert_extend_navigation_frontpage(navigation_node $navigation) {
     global $PAGE;
     $node = navigation_node::create(get_string('certificates', 'customcert'),
-        new moodle_url('/mod/customcert/index.php', array('courseid' => $PAGE->course->id)),
+        new moodle_url('/mod/customcert/my_certificates.php'),
         navigation_node::TYPE_SETTING,
         null,
         null,
