@@ -27,13 +27,16 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/lib.php');
 
 $THEME->name = 'moove';
-$THEME->sheets = [];
+//RCVS Knowledge
+$THEME->sheets = ['ebvm'];
+$THEME->javascripts_footer = array('ebvm');
 $THEME->editor_sheets = [];
 $THEME->editor_scss = ['editor'];
 $THEME->usefallback = false;
 $THEME->scss = function($theme) {
     return theme_moove_get_main_scss_content($theme);
 };
+
 
 $THEME->layouts = [
     // Most backwards compatible layout without the blocks.
