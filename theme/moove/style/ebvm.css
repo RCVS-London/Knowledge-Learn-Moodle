@@ -1,6 +1,6 @@
-&.podbean {
+.podbean {
    background-color: grey;
-   &:hover {
+   :hover {
       background-color: darken(#999999, 20%);
    }
    .fa {
