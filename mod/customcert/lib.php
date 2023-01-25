@@ -349,6 +349,7 @@ function customcert_extend_settings_navigation(settings_navigation $settings, na
         $customcertnode->add_node($node, $beforekey);
     }
 
+
     if (has_capability('mod/customcert:verifycertificate', $PAGE->cm->context)) {
         $node = navigation_node::create(get_string('verifycertificate', 'customcert'),
             new moodle_url('/mod/customcert/verify_certificate.php', array('contextid' => $PAGE->cm->context->id)),
@@ -439,19 +440,21 @@ function mod_customcert_get_fontawesome_icon_map() {
  */
 function mod_customcert_extend_navigation_frontpage(navigation_node $navigation) {
     global $PAGE;
-    $node = navigation_node::create(get_string('certificates', 'customcert'),
-        new moodle_url('/mod/customcert/my_certificates.php'),
-        navigation_node::TYPE_SETTING,
-        null,
-        null,
-        new pix_icon('i/competencies', ''));
-    $navigation->add_node($node);
+    if (isloggedin()) {
+        $node = navigation_node::create(get_string('certificates', 'customcert'),
+            new moodle_url('/mod/customcert/my_certificates.php'),
+            navigation_node::TYPE_SETTING,
+            null,
+            null,
+            new pix_icon('i/competencies', ''));
+        $navigation->add_node($node);
 
-    $node = navigation_node::create(get_string('badges', 'badges'),
-        new moodle_url('/badges/mybadges.php'),
-        navigation_node::TYPE_SETTING,
-        null,
-        null,
-        new pix_icon('i/competencies', ''));
-    $navigation->add_node($node);
+        $node = navigation_node::create(get_string('badges', 'badges'),
+            new moodle_url('/badges/mybadges.php'),
+            navigation_node::TYPE_SETTING,
+            null,
+            null,
+            new pix_icon('i/competencies', ''));
+        $navigation->add_node($node);
+    }
 }
