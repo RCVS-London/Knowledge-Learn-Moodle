@@ -438,7 +438,7 @@ function mod_customcert_get_fontawesome_icon_map() {
  * @throws coding_exception
  * @throws moodle_exception
  */
-function mod_customcert_extend_navigation_frontpage(navigation_node $navigation) {
+/* function mod_customcert_extend_navigation_frontpage(navigation_node $navigation) {
     global $PAGE;
     if (isloggedin()) {
         $node = navigation_node::create(get_string('certificates', 'customcert'),
@@ -456,5 +456,5 @@ function mod_customcert_extend_navigation_frontpage(navigation_node $navigation)
             null,
             new pix_icon('i/competencies', ''));
         $navigation->add_node($node);
-    }
-}
+    } 
+}*/

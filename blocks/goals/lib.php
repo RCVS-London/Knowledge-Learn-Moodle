@@ -456,9 +456,9 @@ function enforce_security($requirecapability = false) {
 }
 
 /*
- * Add link to FVC Smart Goals page
+ * RCVS Kmowledge Add link to FVC Smart Goals page
  */
-function block_goals_extend_navigation_frontpage(navigation_node $navigation) {
+/*function block_goals_extend_navigation_frontpage(navigation_node $navigation) {
     global $PAGE, $USER, $DB;
 
     //Does user have privileges to manage smart goals?
@@ -479,4 +479,4 @@ function block_goals_extend_navigation_frontpage(navigation_node $navigation) {
             new pix_icon('i/competencies', ''));
         $navigation->add_node($node);
     }
-}
+}*/
