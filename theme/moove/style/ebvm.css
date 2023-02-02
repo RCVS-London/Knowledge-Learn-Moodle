@@ -45,6 +45,10 @@ body.category-3 {
   font-size: 1rem;
 }
 
+.category-3 .drawer {
+  z-index: 1;
+}
+
 .category-3 .pagelayout-incourse #region-main {
   width: 100%;
   margin-left: 0px;
