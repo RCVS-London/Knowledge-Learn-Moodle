@@ -219,7 +219,7 @@ $right-drawer-width: 320px;
     @include drawertypes();
 }
 
-@include media-breakpoint-up(lg) {
+/*@include media-breakpoint-up(lg) {
     .drawer {
         z-index: inherit;
 
@@ -236,7 +236,7 @@ $right-drawer-width: 320px;
             display: block;
         }
     }
-}
+}*/
 
 .drawer-md,
 .drawer-sm {
