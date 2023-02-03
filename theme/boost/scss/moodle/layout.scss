@@ -203,7 +203,7 @@
     .drawer-left,
     .drawer-right {
         top: $navbar-height;
-        height: calc(100vh - #{$navbar-height});
+        /*RCVSK removed as having o scroll to see blocks: height: calc(100vh - #{$navbar-height});*/
     }
     .hasstickyfooter {
         .drawer-left,

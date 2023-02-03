@@ -219,7 +219,8 @@ $right-drawer-width: 320px;
     @include drawertypes();
 }
 
-/*@include media-breakpoint-up(lg) {
+/*RCVSK removed as was breaking book module
+@include media-breakpoint-up(lg) {
     .drawer {
         z-index: inherit;
 
