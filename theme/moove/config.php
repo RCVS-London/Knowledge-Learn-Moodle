@@ -28,7 +28,7 @@ require_once(__DIR__ . '/lib.php');
 
 $THEME->name = 'moove';
 //RCVS Knowledge
-$THEME->sheets = ['ebvm'];
+$THEME->sheets = ['ebvm','knowledge'];
 $THEME->editor_sheets = [];
 $THEME->editor_scss = ['editor'];
 $THEME->usefallback = false;
