@@ -24,6 +24,14 @@
 
 require_once('../../config.php');
 
+// RCVSK move require login so required at top of script 
+// Requires a login.
+if ($courseid) {
+    require_login($courseid);
+} else {
+    require_login();
+}
+
 $userid = optional_param('userid', $USER->id, PARAM_INT);
 $download = optional_param('download', null, PARAM_ALPHA);
 $courseid = optional_param('course', null, PARAM_INT);
@@ -42,12 +50,8 @@ $perpage = optional_param('perpage', \mod_customcert\certificate::CUSTOMCERT_PER
 $pageurl = $url = new moodle_url('/mod/customcert/my_certificates.php', array('userid' => $userid,
     'page' => $page, 'perpage' => $perpage));
 
-// Requires a login.
-if ($courseid) {
-    require_login($courseid);
-} else {
-    require_login();
-}
+    
+
 
 // Check that we have a valid user.
 $user = \core_user::get_user($userid, '*', MUST_EXIST);
@@ -86,5 +90,23 @@ $PAGE->navbar->add(get_string('mycertificates', 'customcert'));
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('mycertificates', 'customcert'));
 echo html_writer::div(get_string('mycertificatesdescription', 'customcert'));
-$table->out($perpage, false);
+
+//RCVSK beautify page when user has no certificates
+if ($DB->record_exists('customcert_issues', ['userid' => $userid])) {
+    $table->out($perpage, false);
+} else {
+    echo <<<NOCERTS
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-sm bg-light text-dark p-4 border">
+            <p>Hi {$USER->firstname},</p>
+            <p>You have not been awarded a certificate yet, but please come back when you have earned one.</p>
+            <p>Good luck!</p>
+            <p>The RCVS Knowledge team</p>
+            </p><a href="mailto:ebvm@rcvsknowledge.org">ebvm@rcvsknowledge.org</a></p>
+        </div>
+    </div>
+</div>
+NOCERTS;
+}
 echo $OUTPUT->footer();
