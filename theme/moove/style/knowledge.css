@@ -1,3 +1,4 @@
+/* RCVSK Footer icon for podcast subscriptions */
 .podbean {
     background-color: grey;
     :hover {
@@ -8,6 +9,7 @@
      }
  }
  
+ /* RCVSK Footer formattting */
  #top-footer {
    background-image: none !important;
    background: #f8f8f8;
@@ -20,6 +22,16 @@
    font-weight: 400;
  }
 
+ /* RCVSK course images on enrolment page */
+ .dashboard-card .dashboard-card-img {
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* RCVSK Frontpage label */
  img .rcvsk-front-page-label  {
     height: 150px;
     width: 100%;
@@ -27,10 +39,7 @@
 .rcvsk-front-page-label div  {
     overflow: hidden;
 }
-/*div .rcvsk-front-page-label [class^="col-"] {
-    padding-left: 5px;
-    padding-right: 5px;
-}*/
+
 .rcvsk-front-page-label .card {
     padding: 0.5em;
     transition: 0.5s;
@@ -82,3 +91,5 @@
 div .rcvsk-front-page-label a:hover {
     text-decoration: none;
 }
+
+
