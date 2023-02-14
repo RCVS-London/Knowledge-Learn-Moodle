@@ -47,6 +47,10 @@ $url = new moodle_url('/badges/mybadges.php');
 $PAGE->set_url($url);
 
 if (isguestuser()) {
+    //RCVSK added redirect
+    if (!isloggedin() || isguestuser()) {
+        redirect($CFG->wwwroot . '/login/index.php');
+    }
     $PAGE->set_context(context_system::instance());
     echo $OUTPUT->header();
     echo $OUTPUT->box(get_string('error:guestuseraccess', 'badges'), 'notifyproblem');
