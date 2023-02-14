@@ -32,6 +32,11 @@ if ($courseid) {
     require_login();
 }
 
+//RCVSK added redirect
+if (!isloggedin() || isguestuser()) {
+    redirect($CFG->wwwroot . '/login/index.php');
+}
+
 $userid = optional_param('userid', $USER->id, PARAM_INT);
 $download = optional_param('download', null, PARAM_ALPHA);
 $courseid = optional_param('course', null, PARAM_INT);
@@ -95,18 +100,29 @@ echo html_writer::div(get_string('mycertificatesdescription', 'customcert'));
 if ($DB->record_exists('customcert_issues', ['userid' => $userid])) {
     $table->out($perpage, false);
 } else {
-    echo <<<NOCERTS
+    echo <<<FORMATOPEN
 <div class="container mt-2">
     <div class="row">
         <div class="col-sm bg-light text-dark p-4 border">
+FORMATOPEN;       
+    if (!isguestuser()) {
+        echo <<<NOCERTS
+
             <p>Hi {$USER->firstname},</p>
             <p>You have not been awarded a certificate yet, but please come back when you have earned one.</p>
             <p>Good luck!</p>
             <p>The RCVS Knowledge team</p>
             </p><a href="mailto:ebvm@rcvsknowledge.org">ebvm@rcvsknowledge.org</a></p>
+NOCERTS;
+    } else {
+        echo <<<NOTLOGGEDIN
+            <p>You are currently using guest access. To see your certificates badges you need to log in with your user account.</p>
+NOTLOGGEDIN;
+    }
+    echo <<<FORMATCLOSE
         </div>
     </div>
 </div>
-NOCERTS;
+FORMATCLOSE;
 }
 echo $OUTPUT->footer();
