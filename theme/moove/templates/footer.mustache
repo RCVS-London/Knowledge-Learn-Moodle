@@ -259,11 +259,21 @@
 {{{ output.standard_end_of_body_html }}}
 
 {{!
-    RCVS addition legacy javascript for EBVM quizzes
-    RCVS addition colours for dev environments
+    RCVSK add active class to primary nav when clicked
+    RCVSK addition legacy javascript for EBVM quizzes
+    RCVSK addition colours for dev environments
 }}
 
 <script>
+    const navLinks = document.querySelectorAll('a.nav-link');
+    const currentURL = window.location.href;
+    navLinks.forEach(navLink => {
+        const linkURL = navLink.getAttribute('href');
+        if (linkURL === currentURL) {
+            navLink.classList.add('active');
+        }
+    });
+
     function scrollToToC() {
         var h5s = document.getElementsByTagName("h5");
         var searchText = "Contents";
