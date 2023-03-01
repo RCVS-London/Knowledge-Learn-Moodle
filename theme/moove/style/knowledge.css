@@ -1,3 +1,13 @@
+/* Font awesome search icons */
+
+.fa-search:before {
+    content: "" !important;
+}
+
+.fa-times:before {
+    content: "" !important;
+}
+
 /* RCVSK Footer icon for podcast subscriptions */
 .podbean {
     background-color: grey;
