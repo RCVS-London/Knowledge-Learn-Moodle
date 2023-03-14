@@ -652,7 +652,7 @@ $string['emailconfirmationresend'] = 'Resend confirmation email';
 $string['emailconfirmationsubject'] = '{$a}: account confirmation';
 $string['emailconfirmsent'] = '<p>An email should have been sent to your address at <b>{$a}</b></p>
    <p>It contains easy instructions to complete your registration.</p>
-   <p>If you continue to have difficulty, contact the site administrator.</p>';
+   <p>If you continue to have difficulty, contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.</p>';
 $string['emailconfirmsentfailure'] = 'Confirmation email failed to send';
 $string['emailconfirmsentsuccess'] = 'Confirmation email sent successfully';
 $string['emaildigest'] = 'Email digest type';
@@ -709,15 +709,15 @@ If you need help, please contact the site administrator,
 $string['emailpasswordconfirmationsubject'] = '{$a}: Change password confirmation';
 $string['emailpasswordconfirmmaybesent'] = '<p>If you supplied a correct username or unique email address then an email should have been sent to you.</p>
    <p>It contains easy instructions to confirm and complete this password change.
-If you continue to have difficulty, please contact the site administrator.</p>';
+If you continue to have difficulty, please contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.</p>';
 $string['emailpasswordconfirmnoemail'] = '<p>The user account you specified does not have a recorded email address.</p>
-   <p>Please contact the site administrator.</p>';
+   <p>Please contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.</p>';
 $string['emailpasswordconfirmnotsent'] = '<p>The user detail you supplied does not identify an existing user account.</p>
    <p>Please check the information you entered, then try again.
-If you continue to have difficulty, please contact the site administrator.</p>';
+If you continue to have difficulty, please contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.</p>';
 $string['emailpasswordconfirmsent'] = 'An email should have been sent to your address at <b>{$a}</b>.
 <br />It contains easy instructions to confirm and complete this password change.
-If you continue to have difficulty, contact the site administrator.';
+If you continue to have difficulty, contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.';
 $string['emailpasswordchangeinfo'] = 'Hi {$a->firstname},
 
 Someone (probably you) has requested a new password for your
@@ -766,7 +766,7 @@ If you need help, please contact the site administrator,
 $string['emailresetconfirmationsubject'] = '{$a}: Password reset request';
 $string['emailresetconfirmsent'] = 'An email has been sent to your address at <b>{$a}</b>.
 <br />It contains easy instructions to confirm and complete this password change.
-If you continue to have difficulty, contact the site administrator.';
+If you continue to have difficulty, contact the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>.';
 $string['emailstop'] = 'Disable notifications';
 $string['emailtoprivatefiles'] = 'You can also e-mail files as attachments straight to your private files space. Simply attach your files to an e-mail and send it to {$a}';
 $string['emailtoprivatefilesdenied'] = 'Your administrator has disabled the option to upload your own private files.';
@@ -1638,7 +1638,7 @@ $string['paymentinstant'] = 'Use the button below to pay and be enrolled within 
 $string['paymentpending'] = '(<small><b><u>{$a}</u></b> pending</small>)';
 $string['paymentrequired'] = 'This course requires a payment for entry.';
 $string['payments'] = 'Payments';
-$string['paymentsorry'] = 'Thank you for your payment!  Unfortunately your payment has not yet been fully processed, and you are not yet registered to enter the course "{$a->fullname}".  Please try continuing to the course in a few seconds, but if you continue to have trouble then please alert the {$a->teacher} or the site administrator';
+$string['paymentsorry'] = 'Thank you for your payment!  Unfortunately your payment has not yet been fully processed, and you are not yet registered to enter the course "{$a->fullname}".  Please try continuing to the course in a few seconds, but if you continue to have trouble then please alert the {$a->teacher} or the <a href="mailto:ebvm@rcvsknowledge.org">site administrator</a>';
 $string['paymentthanks'] = 'Thank you for your payment!  You are now enrolled in your course:<br />"{$a}"';
 $string['pendingrequests'] = 'Pending requests';
 $string['percents'] = '{$a}%';
