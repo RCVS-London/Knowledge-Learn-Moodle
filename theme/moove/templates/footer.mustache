@@ -177,19 +177,23 @@
                 {{/ output.supportemail }}
 
                 {{{ output.login_info }}}
+                {{# not.rcvsk}}
+                    {{{ output.standard_footer_html }}}
 
-                {{{ output.standard_footer_html }}}
-
-                <div class="tool_usertours-resettourcontainer"></div>
+                    <div class="tool_usertours-resettourcontainer"></div>
+                {{/not.rcvsk}}
             </div>
             <div class="col-md-4 column-right">
                 {{#enablemobilewebservice}}
+
                     {{#mobilesetuplink}}
                         <a href="{{{mobilesetuplink}}}">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</a>
                     {{/mobilesetuplink}}
+
                     {{^mobilesetuplink}}
                         <h3 class="footer-title">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</h3>
                     {{/mobilesetuplink}}
+
                     <div class="stores">
                         {{#androidappid}}
                             <a href="https://play.google.com/store/apps/details?id={{androidappid}}">
