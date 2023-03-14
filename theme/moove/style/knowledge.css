@@ -1,3 +1,9 @@
+/* Hide the doubling of the description on H5P activities */
+div#hvpintro.box.py-3.mod_introbox {
+	display: none !important;
+}
+
+
 /* Font awesome search icons */
 
 .fa-search:before {
