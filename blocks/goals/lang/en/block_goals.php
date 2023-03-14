@@ -50,8 +50,8 @@ $string['createcategory'] = 'Create Filter Category';
 $string['createfilter'] = 'Create Filter';
 $string['creategoal'] = 'Create SMART Goal';
 $string['creategoalfilter'] = 'Create SMART Goal Filter';
-$string['createindividualgoal'] = 'Create new Individual SMART goal &nbsp;<i class="fas fa-plus"></i>';
-$string['createindividualgoalpreamble'] = 'I want to create a SMART goal that is just for me!';
+$string['createindividualgoal'] = 'Create new Individual SMART goal</i>';
+$string['createindividualgoalpreamble'] = 'I want to create a SMART goal that is just for me  &nbsp;<i class="fas fa-plus"></i>';
 $string['createnewcategory'] = 'Create New Category';
 $string['createnewfilter'] = 'Create New Filter';
 $string['createnewgoal'] = 'Create New SMART Goal';
@@ -61,15 +61,41 @@ $string['createnewteammember'] = 'Add New Team Member';
 $string['createnewverb'] = 'Create New Verb';
 $string['createteam'] = 'Create Team';
 $string['createteamgoal'] = 'Create new Team SMART goal &nbsp;<i class="fas fa-plus"></i>';
-$string['createteamgoalpreamble'] = 'I want to create a SMART goal that is for a team!';
+$string['createteamgoalpreamble'] = 'I want to create a SMART goal that is for a team  &nbsp;<i class="fas fa-plus"></i>';
 $string['createteammember'] = 'Add Team Member';
 $string['createverb'] = 'Create Verb';
 $string['dashboard'] = 'Return to Dashboard';
 $string['dashboardheading'] = '
-<p>Welcome to the SMART goals dashboard! Here you can set yourself, and your team, targets to achieve with an aim to improve responsible use of antimicrobials, in line with Plan Prevent Protect.</p>
-<p>This platform is designed to help support and guide you through the process of setting a SMART goal that is <b>S</b>pecific <b>M</b>easurable <b>A</b>chievable <b>R</b>ealistic and <b>T</b>ime-bound.</p>
-<p>Think about what area of your work you would like to focus on and who might be involved before setting a SMART goal. SMART Goals can only be set one at a time.</p>
-<p>Click on Add a New SMART Goal to get started!</p>
+<h4>Welcome to the SMART goals dashboard!</h4>
+<div class="p-2">
+  <details class="mb-2">
+    <summary class="btn btn-info p-2 mb-2">
+      Instructions
+    </summary>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <p>
+            Here you can set yourself, and your team, targets to achieve with an aim to improve responsible use of antimicrobials, in line with Plan Prevent Protect.
+          </p>
+          <p>
+            This platform is designed to help support and guide you through the process of setting a SMART goal that is <b>S</b>pecific <b>M</b>easurable <b>A</b>chievable <b>R</b>ealistic and <b>T</b>ime-bound.
+          </p> 
+          <p>Think about what area of your work you would like to focus on and who might be involved before setting a SMART goal. 
+          SMART Goals can only be set one at a time.</p>
+          <p>Click on Add a New SMART Goal to get started!</p>
+          <p>For GDPR purposes, please do not use any personal identifiable information in this goal unless you have the correct permissions to do so. </p>
+
+        </div>
+        <div class="col-4 bg-secondary rounded">
+          <img src="https://moodle-images.s3.eu-west-2.amazonaws.com/smartgoalstortoise.jpeg" 
+        alt="" width="1500" height="833" role="presentation" class="img-fluid atto_image_button_text-bottom rounded mt-2">
+          <p class="pt-2"><a href="/course/view.php?id=120">For more on Smart Goals</a></p>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>
 ';
 $string['decline'] = 'Decline Invitation';
 $string['defaultcategory'] = 'Default Filter Category';
@@ -189,7 +215,7 @@ $string['management'] = 'Management';
 $string['managementdesc'] = '<a href="{$a}" class="btn btn-secondary" role="button">SMART Goal Management</a>';
 $string['managemypreferenceshtml'] = '<a href="{$a}">Manage my reminder preferences</a>.';
 $string['managemypreferencestext'] = 'Manage my reminder preferences: {$a}.';
-$string['managemyteams'] = 'Manage my teams';
+$string['managemyteams'] = 'Manage my teams</i>';
 $string['missinggoaltext'] = '(Missing SMART goal text)';
 $string['missingindividualname'] = '(Missing individual name)';
 $string['missingteamname'] = '(Missing team name)';
@@ -203,7 +229,7 @@ $string['next'] = 'Next';
 $string['nobadgeaccess'] = 'No Badge Access';
 $string['nobadgeaccessdefault'] = 'The Farm Vet Champions SMART goals tool is available to all users of the platform after watching the <em>Welcome to Farm Vet Champions</em> video. To access this area and start setting your own or team goals, please watch the video <a href="https://learn.rcvsknowledge.org/course/view.php?id=9">here</a>.
 The CPD modules that follow are delivered by industry experts in bitesize webinars or podcasts, and are directly applicable to farm animal vets with valuable information and techniques.<br>This online tool is designed to help you formulate personal goals
-that are Specific, Measurable, Achievable, Realistic and Time-bound. You can set up, or be invited to, a team to create common goals to work together to PLAN, Prevent and Protect our herds and flocks, with the overall aim to improve responsible use of
+that are Specific, Measurable, Achievable, Realistic and Time-bound. You can set up, or be invited to, a team to create common goals to work together to Plan, Prevent and Protect our herds and flocks, with the overall aim to improve responsible use of
 antimicrobials and safeguard their availability.';
 $string['nobadgeaccessdesc'] = 'No Badge Access description TODO: write this';
 $string['nofiltersdefined'] = 'No Filters Defined';

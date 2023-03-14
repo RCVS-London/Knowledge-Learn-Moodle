@@ -296,28 +296,44 @@ $species = models\category::get_record(['name' => 'Species']);
                         $data->progress = 0;
 -->
                         <div id="test-nl-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper2trigger1">
+
+
+                            <input type="hidden" id="goaltype" name="goaltype" value="individual">
+                            <div class="d-flex align-items-stretch">
+                                <div class="d-inline p-2 m-2  bg-success rounded bg-opacity-25">
+                                    <div class='d-block mb-2'>
+                                        <span class = 'pb-4'><?php echo get_string('createindividualgoalpreamble', 'block_goals'); ?>
+                                    </div>
+                                    <div class='d-block text-center'>
+                                        <button id="addgoal1" type="button" class="btn btn-success btn-lg active  bottom-0"  role="button" aria-pressed="true">
+                                            <?php echo get_string('createindividualgoal', 'block_goals'); ?>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="d-inline p-2 bg-success m-2 rounded bg-opacity-25">
+                                    <div class='d-block mb-2'>
+                                        <span class = 'pb-4'><?php echo get_string('createteamgoalpreamble', 'block_goals'); ?>
+                                    </div>
+                                    <div class='d-block text-center'>
+                                    <?php
+                                        if (!empty($teamshtml)) {
+                                            echo '<button id="addgoal2" type="button" class="btn btn-success align-bottom">';
+                                            echo get_string('createteamgoal', 'block_goals');
+                                            echo '</button>';
+                                            echo '<span class="alert alert-success">' . $teamshtml . '</span>';
+                                        }
+                                    ?>    
+                                        <a href="/blocks/goals/teams.php" class="btn btn-success btn-lg active align-bottom" role="button" aria-pressed="true">
+                                        <?php echo get_string('managemyteams', 'block_goals') . '</a>'; ?>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="container-fluid">
                                 <?php echo get_config('block_goals', 'introcontent'); ?>
                             </div>
 
                             <hr>
-
-                            <input type="hidden" id="goaltype" name="goaltype" value="individual">
-                            <div class="d-flex align-items-stretch">
-                                <div class="d-inline-flex well p-2">
-                                    <p><?php echo get_string('createindividualgoalpreamble', 'block_goals'); ?></p>
-                                    <button id="addgoal1" type="button" class="btn btn-success bottom-0"><?php echo get_string('createindividualgoal', 'block_goals'); ?></button>
-                                </div>
-                                <div class="d-inline-flex well p-2">
-                                    <p><?php echo get_string('createteamgoalpreamble', 'block_goals'); ?></p>
-                                    <?php
-                                        if (!empty($teamshtml)) {
-                                            echo '<button id="addgoal2" type="button" class="btn btn-success align-bottom">' . get_string('createteamgoal', 'block_goals') . '</button><span class="alert alert-success">' . $teamshtml . '</span>';
-                                        }
-                                        echo '<a href="/blocks/goals/teams.php" class="btn btn-success btn-lg active align-bottom" role="button" aria-pressed="true">' . get_string('managemyteams', 'block_goals') . '</a>';
-                                    ?>
-                                </div>
-                            </div>
 
                         </div>
                         <div id="test-nl-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper2trigger2">
@@ -620,7 +636,6 @@ $species = models\category::get_record(['name' => 'Species']);
         var stepper2;
 
         function updateGoal() {
-            debugger;
             var percentagestring = ($("#percentageflag").is(':checked')) ? '%' : '';
             $("#sentence").text($("#committo").text() + ' ' + $("#verb-select option:selected").text() + ' ' + $("#amount").val() + percentagestring + ' ' + $("#objective").val() + ' ' + $("#bydate").text() );
             $("#goal").text($("#sentence").text());
@@ -630,7 +645,7 @@ $species = models\category::get_record(['name' => 'Species']);
 
             $("#goalstablereveal").hide();
 
-            debugger;
+            
             var table = $('#example').DataTable({
                     "columnDefs": [
                         {"visible": true, "searchable": false, "targets": 0, "width": "10%"}, // Select
@@ -680,25 +695,25 @@ $species = models\category::get_record(['name' => 'Species']);
 
             $(checkboxes).on('keypress keyup blur change',function() {
 
-                debugger;
+                
 
                 var search = '';
                 $(checkboxes).each(function(index) {
                     var checked = $(this).prop('checked');
                     if (checked) {
                         search += $("label[for='" + $(this).attr("name") + "']").text().trim() + ' ';
-                        debugger;
+                        
                     }
                 })
 
-                debugger;
+                
                 table.column(7).search(search).draw();
             });
 
             $('#example').on('click','.add-goal', function() {
                 //var rowIndex =  $(this).find('td').first().text()
 
-                debugger;
+                
                 var td = $(this).find('td').first();
                 var tr = $(this).closest('tr');
                 var cell = table.cell(td);
@@ -721,7 +736,7 @@ $species = models\category::get_record(['name' => 'Species']);
                 //$("#verb").val(verb.trim());
                 //$("#verb").text(verb.trim());
 
-                debugger;
+                
                 $('#verb-select option:contains("' + verb.trim() + '")').prop('selected', true);
 
 
@@ -746,7 +761,7 @@ $species = models\category::get_record(['name' => 'Species']);
 
             $("#submitgoal").on('click', function() {
 
-                debugger;
+                
 
                 var goaltype = $("#goaltype").val();
                 goaltype = goaltype[0].toUpperCase() + goaltype.substring(1)
@@ -766,7 +781,7 @@ $species = models\category::get_record(['name' => 'Species']);
                 var animalscategories = '';
 
                 peoplechecks.each(function() {
-                    debugger;
+                    
                     peoplecategories = peoplecategories + $("label[for='" + $(this).attr("name") + "']").text() + ', ';
                 });
                 datachecks.each(function() {
@@ -791,19 +806,19 @@ $species = models\category::get_record(['name' => 'Species']);
                 var whochecks = $("fieldset.Who input:checkbox:checked");
                 var who = '';
                 whochecks.each(function() {
-                    debugger;
+                    
                     who = who + $("label[for='" + $(this).attr("name") + "']").text() + ', ';
                 });
                 $("#summarygoalpeople").html(who);
 
-                debugger;
+                
                 $("#summarygoal").text($("#sentence").text());
                 $("#summarygoaldetails").html($("#description").val());
 
                 var specieschecks = $("fieldset.Species input:checkbox:checked");
                 var species = '';
                 specieschecks.each(function() {
-                    debugger;
+                    
                     species = species + $("label[for='" + $(this).attr("name") + "']").text() + ', ';
                 });
                 $("#summarygoalspecies").html(species);
@@ -815,7 +830,7 @@ $species = models\category::get_record(['name' => 'Species']);
                 }
                 $("#summarygoalduedate").text(date);
 
-                debugger;
+                
                 $("#modalsummary").modal('show');
 
             });
@@ -839,7 +854,7 @@ $species = models\category::get_record(['name' => 'Species']);
             $("#duedate").on('keypress keyup blur change', function() {
                 var date = '[date]';
 
-                debugger;
+                
                 var d = new Date($("#duedate").val());
                 if (!isNaN(d.valueOf())) {
                     date = d.toLocaleDateString();
@@ -859,7 +874,7 @@ $species = models\category::get_record(['name' => 'Species']);
             });
 
             $("#goalstablereveal").on('click', function() {
-                debugger;
+                
                 $("#goalstablewrapper").show();
                 table.draw();
                 $("#goalstablereveal").hide();
