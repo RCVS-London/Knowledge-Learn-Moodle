@@ -47,6 +47,10 @@ if (!$currentpage = my_get_page(null, MY_PAGE_PUBLIC, MY_PAGE_COURSES)) {
     throw new Exception('mymoodlesetup');
 }
 
+if (!enrol_get_my_courses()){
+    redirect(new moodle_url('/course'));
+}
+
 // Start setting up the page.
 $PAGE->set_context($context);
 $PAGE->set_url('/my/courses.php');
