@@ -47,7 +47,7 @@ if (!$currentpage = my_get_page(null, MY_PAGE_PUBLIC, MY_PAGE_COURSES)) {
     throw new Exception('mymoodlesetup');
 }
 
-if (!enrol_get_my_courses()){
+if (!enrol_get_my_courses() && !is_siteadmin()){
     redirect(new moodle_url('/course'));
 }
 
