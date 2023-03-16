@@ -174,5 +174,10 @@ div .rcvsk-front-page-label a:hover {
     text-decoration: none;
 }
 
+div .rcvsk-front-page-label a:hover .card-text {
+    text-decoration: underline;
+}
+
+
 
 
