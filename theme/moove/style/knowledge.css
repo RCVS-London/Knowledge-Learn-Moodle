@@ -1,3 +1,8 @@
+/* Body background */
+body {
+    background-color: #F8F8F8 !important;
+}
+
 /* Styling not logged front page caurosel */
 #page-site-index.notloggedin #mooveslideshow .carousel-caption {
     background-color: rgb(119 33 88 / 69%) !important;
@@ -72,7 +77,7 @@ div#hvpintro.box.py-3.mod_introbox {
  /* RCVSK Footer formattting */
  #top-footer {
    background-image: none !important;
-   background: #f8f8f8;
+   background: #fff;
    padding: 40px 55px;
    margin: 20px 35px 30px 40px;
    border-radius: 30px;
@@ -84,11 +89,19 @@ div#hvpintro.box.py-3.mod_introbox {
 
  /* RCVSK course images on enrolment page */
 
- #topofscroll {
+ #page-site-index #topofscroll {
     background-color: #fff !important;
+    border-radius: 30px;
+    border: 1px solid #ddd;
  }
- #topofscroll #page-content,
- #topofscroll #region-main {
+ #page-site-index.notloggedin #topofscroll {
+    background-color: #fff !important;
+    border-radius: 30px;
+    border: 0;
+ }
+
+ #page-site-index #topofscroll #page-content,
+ #page-site-index #topofscroll #region-main {
     background-color: #fff !important;
  }
 
@@ -102,7 +115,7 @@ div#hvpintro.box.py-3.mod_introbox {
 
 /* RCVSK Frontpage label */
 
-#page-site-index.notloggedin .section .activity.modtype_label.label .contentwithoutlink {
+#page-site-index .section .activity.modtype_label.label .contentwithoutlink {
     padding-right: 0;
 }
 
