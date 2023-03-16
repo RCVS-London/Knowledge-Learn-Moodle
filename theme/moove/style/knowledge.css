@@ -1,3 +1,47 @@
+/* Styling not logged front page caurosel */
+#page-site-index.notloggedin #mooveslideshow .carousel-caption {
+    background-color: rgb(119 33 88 / 69%) !important;
+}
+#page-site-index.notloggedin #mooveslideshow .carousel-control-prev-icon, 
+#page-site-index.notloggedin #mooveslideshow .carousel-control-next-icon {
+    width:40px;
+    height: 40px;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-control-prev:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow:0px 0px 0px white !important;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-control-next:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow:0px 0px 0px white !important;
+} 
+
+#page-site-index.notloggedin #mooveslideshow .carousel-indicators li {
+    width: 48px;
+    height:48px;
+    border-radius: 50%;
+    position:relative;
+    top:-3.5px;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-caption {
+    bottom: 60px;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-indicators {
+    height: 61px;
+    margin-bottom: 0;
+    /* background-color: rgb(119 33 88 / 69%); */
+}
+
+
+
 /* Hide the doubling of the description on H5P activities */
 div#hvpintro.box.py-3.mod_introbox {
 	display: none !important;
@@ -39,6 +83,15 @@ div#hvpintro.box.py-3.mod_introbox {
  }
 
  /* RCVSK course images on enrolment page */
+
+ #topofscroll {
+    background-color: #fff !important;
+ }
+ #topofscroll #page-content,
+ #topofscroll #region-main {
+    background-color: #fff !important;
+ }
+
  .dashboard-card .dashboard-card-img {
     width: 100%;
     background-position: center;
@@ -48,7 +101,12 @@ div#hvpintro.box.py-3.mod_introbox {
 }
 
 /* RCVSK Frontpage label */
- img .rcvsk-front-page-label  {
+
+#page-site-index.notloggedin .section .activity.modtype_label.label .contentwithoutlink {
+    padding-right: 0;
+}
+
+img .rcvsk-front-page-label  {
     height: 150px;
     width: 100%;
 }
@@ -60,11 +118,15 @@ div#hvpintro.box.py-3.mod_introbox {
     padding: 0.5em;
     transition: 0.5s;
     cursor: pointer;
+
+    -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+
 }
 .rcvsk-front-page-label .card:hover {
     text-decoration: none;
-    transform: scale(1.05);
-    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+    /* transform: scale(1.05); */
+    /* box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3); */
 }
 .rcvsk-front-page-label .card:hover::before {
     transform: scale3d(1, 1, 1);
@@ -98,6 +160,10 @@ div#hvpintro.box.py-3.mod_introbox {
     pointer-events: none;
     transform-origin: right bottom;
 }
+
+.rcvsk-front-page-label .card a:not([class]):focus{
+    border-radius:0.5em;
+}
 .rcvsk-front-page-label .card:focus::before {
     transform: scale3d(1, 1, 1);
 }
@@ -107,5 +173,6 @@ div#hvpintro.box.py-3.mod_introbox {
 div .rcvsk-front-page-label a:hover {
     text-decoration: none;
 }
+
 
 
