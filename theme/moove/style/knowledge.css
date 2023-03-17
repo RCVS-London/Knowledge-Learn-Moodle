@@ -79,7 +79,7 @@ div#hvpintro.box.py-3.mod_introbox {
    background-image: none !important;
    background: #fff;
    padding: 40px 55px;
-   margin: 20px 35px 30px 40px;
+   margin: 20px 0px 30px 0px;
    border-radius: 30px;
    border: 1px solid #ddd;
    color: #707070;
@@ -191,6 +191,41 @@ div .rcvsk-front-page-label a:hover .card-text {
     text-decoration: underline;
 }
 
+/*
+Ant - padding on card title and card text were wrong, adding styles.
+*/
+
+div .rcvsk-front-page-label h5.card-title, p.card-text {
+    padding: 0 10px;
+}
+
+div .rcvsk-front-page-label p.card-text {
+    padding-bottom: 20px;
+}
+
+/* 
+	Ant - card images were set to max-width:calc(100%-1em), so this has now been set to 100%
+*/
+div .rcvsk-front-page-label .atto_image_button_text-top.img-fluid, .atto_image_button_middle.img-fluid, .atto_image_button_text-bottom.img-fluid {
+    max-width: 100%;
+}
+
+/*
+	Ant - margins were causing the images to be pushed to the right, out of alignment.  Setting margins to 0
+*/
+div .rcvsk-front-page-label .atto_image_button_text-bottom {
+    margin: 0;
+}
+
+/*
+	Ant - setting max-width for body container to 100% (from 95% / 85% ).  
+    This may break the logged-in or Boost display with the right drawer.
+*/
+@media (max-width: 991.98px) {
+	#page-site-index .pagelayout-standard #page.drawers .main-inner, body.limitedwidth #page.drawers .main-inner, #page.drawers .main-inner, .moove-container-fluid, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+		max-width: 100%;
+	}
+}
 
 
 
