@@ -29,6 +29,9 @@ require_once $CFG->dirroot . '/blocks/goals/classes/forms/preferences.php';
 require_once $CFG->dirroot . '/user/editlib.php';
 require_once $CFG->dirroot . '/blocks/goals/lib.php';
 
+$PAGE->navbar->add(get_string('goals', 'block_goals'), new moodle_url('/blocks/goals/view.php'));
+$PAGE->navbar->add('Preferences', new moodle_url('/blocks/goals/preferences.php'));
+
 
 $url = new moodle_url('/goals/preferences.php');
 $PAGE->set_url($url);

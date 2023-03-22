@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../../config.php');
 global $CFG, $PAGE;
 require_once $CFG->dirroot . '/blocks/goals/lib.php';
 
-$PAGE->navbar->add(get_string('goals', 'block_goals'), new moodle_url('/blocks/goals/index.php'));
+$PAGE->navbar->add(get_string('goals', 'block_goals'), new moodle_url('/blocks/goals/view.php'));
 $PAGE->navbar->add('Teams', new moodle_url('/blocks/goals/teams.php'));
 
 $action = optional_param('action', '', PARAM_ALPHANUMEXT);

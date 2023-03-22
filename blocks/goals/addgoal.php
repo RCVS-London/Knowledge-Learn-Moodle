@@ -32,6 +32,9 @@ use block_goals\models;
 use block_goals\controllers;
 use core\notification;
 
+$PAGE->navbar->add(get_string('goals', 'block_goals'), new moodle_url('/blocks/goals/view.php'));
+$PAGE->navbar->add('Add goals', new moodle_url('/blocks/goals/addgoals.php'));
+
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/blocks/goals/addgoal.php'));
 $PAGE->set_title('Create new goal');
@@ -156,8 +159,9 @@ $query = '
 $myteams = $DB->get_records_sql($query, ['userid' => $USER->id]); // ['userid' => $USER->id] ['userid' => 5]
 $teamshtml = '';
 if (!empty($myteams)) {
-    $teamshtml = '<div class="form-group">
-    <label for="teamid">Team</label>
+    $teamshtml = '
+    <div class="form-group">
+    <label for="teamid">Select team:</label>
     <select id="teamid" name="teamid" class="form-control">';
 
     foreach ($myteams as $team) {
@@ -317,13 +321,14 @@ $species = models\category::get_record(['name' => 'Species']);
                                     <div class='d-block text-center'>
                                     <?php
                                         if (!empty($teamshtml)) {
-                                            echo '<button id="addgoal2" type="button" class="btn btn-success align-bottom">';
+                                            echo $teamshtml;
+                                            echo '<button id="addgoal2" type="button" class="btn btn-success btn-lg active align-bottom mb-2">';
                                             echo get_string('createteamgoal', 'block_goals');
-                                            echo '</button>';
-                                            echo '<span class="alert alert-success">' . $teamshtml . '</span>';
+                                            echo '</button><br>';
+    
                                         }
                                     ?>    
-                                        <a href="/blocks/goals/teams.php" class="btn btn-success btn-lg active align-bottom" role="button" aria-pressed="true">
+                                        <a href="/blocks/goals/teams.php" class="btn btn-success active align-bottom" role="button" aria-pressed="true">
                                         <?php echo get_string('managemyteams', 'block_goals') . '</a>'; ?>
                                     </div>
                                 </div>
