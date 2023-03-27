@@ -275,7 +275,11 @@
     const currentURL = window.location.href;
     navLinks.forEach(navLink => {
         const linkURL = navLink.getAttribute('href');
-        if (linkURL === currentURL) {
+        const linklastslashpos = linkURL.lastIndexOf('/'); 
+        const linkpath = linkURL.substring(0,linklastslashpos);
+        const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
+        const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
+        if (linkpath === currentURLpath) {
             navLink.classList.add('active');
         }
     });
