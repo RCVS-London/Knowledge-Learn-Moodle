@@ -116,18 +116,9 @@ div#hvpintro.box.py-3.mod_introbox {
 /* RCVSK Frontpage label */
 
 /* only show carousel when not on mobile and show logo on mobiles */
-@media (min-width: 768px) {
-    #mobile-logo {
-        display:none;
-    }
-}
-
 @media (max-width: 768px) {
     #mooveslideshow {
       display: none !important;
-    }
-    #mobile-logo {
-        display: block !important;
     }
 }
 
