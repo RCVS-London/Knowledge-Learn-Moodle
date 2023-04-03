@@ -279,6 +279,8 @@
         const linkpath = linkURL.substring(0,linklastslashpos);
         const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
         const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
+        navLink.classList.remove('active');
+        //console.log(currentURLpath);
         if (linkpath === currentURLpath) {
             navLink.classList.add('active');
         }
