@@ -74,7 +74,7 @@ $string['dashboardheading'] = '
     </summary>
     <div class="container">
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8 col-sm-12">
           <p>
             Here you can set yourself, and your team, targets to achieve with an aim to improve responsible use of antimicrobials, in line with Plan Prevent Protect.
           </p>
@@ -87,7 +87,7 @@ $string['dashboardheading'] = '
           <p>For GDPR purposes, please do not use any personal identifiable information in this goal unless you have the correct permissions to do so. </p>
 
         </div>
-        <div class="col-4 bg-secondary rounded">
+        <div class="col-md-4 col-sm-12 bg-secondary rounded">
           <img src="https://moodle-images.s3.eu-west-2.amazonaws.com/smartgoalstortoise.jpeg" 
         alt="" width="1500" height="833" role="presentation" class="img-fluid atto_image_button_text-bottom rounded mt-2">
           <p class="pt-2"><a href="/course/view.php?id=120">For more on Smart Goals</a></p>
