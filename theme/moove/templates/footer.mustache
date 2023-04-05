@@ -57,6 +57,7 @@
                 <a href="/local/staticpage/view.php?page=accessing-information-policy">Accessing information
                     policy</a><br/>
                 <a href="/local/staticpage/view.php?page=cookie-declaration">Cookie policy</a><br/>
+                <a href="/local/staticpage/view.php?page=disclaimer">Disclaimer</a>
             </div>
 
             <div class="col-12 col-md-12" style="padding-bottom: 1em;">
@@ -175,6 +176,14 @@
                 {{# output.supportemail }}
                     <div class="supportemail">{{{ output.supportemail }}}</div>
                 {{/ output.supportemail }}
+
+                {{#mobile}}
+                    <div class="supportemail">
+                        <a href="tel:{{{mobile}}}" target="_blank" class="">
+                            <i class="fa fa-phone"></i>{{{mobile}}}
+                        </a>
+                    </div>
+                {{/mobile}}
 
                 {{{ output.login_info }}}
                 {{# not.rcvsk}}
