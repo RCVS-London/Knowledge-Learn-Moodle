@@ -3,13 +3,24 @@ body {
     background-color: #F8F8F8 !important;
 }
 
+/* Increase font sizes on category page */
+.pagelayout-coursecategory .course-info-container .coursename {
+    font-size:1.4em;
+}
+
+.pagelayout-coursecategory .dashboard-card .course-info-container .customfields .customfield {
+    font-size:100%;
+}
+
 /* navigation on mobile to remain */
 @media (max-width: 767.98px) {
     .activity-navigation {
         display: block;
-        color: pink;
     }
 }
+
+
+
 
 /* Styling not logged front page caurosel */
 #page-site-index.notloggedin #mooveslideshow .carousel-caption {
