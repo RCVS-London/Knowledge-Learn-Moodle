@@ -77,7 +77,7 @@ class boostnavbar implements \renderable {
             // RCVSK bring back nav bar in course pages 
             // $this->remove($this->page->course->category, \breadcrumb_navigation_node::TYPE_CATEGORY);
             // Remove the course breadcrumb node.
-            $this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
+            //$this->remove($this->page->course->id, \breadcrumb_navigation_node::TYPE_COURSE);
             // Remove the navbar nodes that already exist in the secondary navigation menu.
             $this->remove_items_that_exist_in_navigation($PAGE->secondarynav);
 
@@ -105,6 +105,7 @@ class boostnavbar implements \renderable {
             $this->remove('mycourses');
             $this->remove('courses');
             // Remove the course category breadcrumb node.
+            // RCVSK Show course sub categories 
             // $this->remove($this->page->course->category, \breadcrumb_navigation_node::TYPE_CATEGORY);
             $courseformat = course_get_format($this->page->course)->get_course();
             // Section items can be only removed if a course layout (coursedisplay) is not explicitly set in the
