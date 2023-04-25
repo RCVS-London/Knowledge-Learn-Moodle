@@ -3,6 +3,15 @@ body {
     background-color: #F8F8F8 !important;
 }
 
+
+.course-content ul.collapsibletopics li.section .sectionname {
+    color: #782156;
+}
+
+.course-content ul.collapsibletopics .content .section-summary-activities .activity-count {
+    display: none;
+}
+
 /* Increase font sizes on category page */
 .pagelayout-coursecategory .course-info-container .coursename {
     font-size:1.4em;
