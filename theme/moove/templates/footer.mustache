@@ -280,6 +280,7 @@
 }}
 
 <script>
+    //highlight primary navigation when on teh page link or subpage
     const navLinks = document.querySelectorAll('a.nav-link');
     const currentURL = window.location.href;
     navLinks.forEach(navLink => {
@@ -294,6 +295,27 @@
             navLink.classList.add('active');
         }
     });
+
+    //This is to remove the expand arrow in collapsible topics view when there is content
+    document.querySelectorAll('div.content').forEach(function(contentDiv) {
+        var collapsible = contentDiv.querySelectorAll('div.collapse').forEach(function(collapseDiv) {
+            var listElement = collapseDiv.querySelector('ul');
+            var innerList = listElement.querySelectorAll('li');
+            if (!innerList.length) {
+                contentDiv.querySelectorAll('div[role="tabpanel"]').forEach(function(tabPanel) {
+                    tabPanel.removeAttribute('id');
+                });
+                var sectionToggle = contentDiv.querySelector('a.sectiontoggle');
+                sectionToggle.style.backgroundImage = 'none';
+                sectionToggle.style.paddingLeft = '0';
+                sectionToggle.style.position = 'relative';
+                sectionToggle.style.right = '.5rem';
+            }
+        });
+    });
+    
+
+    //This is EBVM stuff
 
     function scrollToToC() {
         var h5s = document.getElementsByTagName("h5");
