@@ -494,7 +494,8 @@ class auth_plugin_imis extends auth_plugin_base {
         }
 
         // Set delayed redirection of user to course page.
-        $SESSION->wantsurl = (string)new moodle_url('/course/view.php?id=' . urlencode($this->vetgdpcourseid));
+        $SESSION->wantsurl = (string)new moodle_url('/local/imis_user_notice.php');
+        //$SESSION->wantsurl = (string)new moodle_url('/course/view.php?id=' . urlencode($this->vetgdpcourseid));
 
     }
 
