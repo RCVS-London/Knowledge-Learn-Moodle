@@ -253,27 +253,30 @@ $string['preferences'] = 'Preferences';
 $string['progress'] = 'Progress';
 $string['recentupdate'] = 'Recent Update';
 $string['relevantfilters'] = 'Relevant Filters';
-$string['reminderemailbody'] = 'Hi {$a->fullname},
-
-
+$string['reminderemailbody'] = 
+'Hi {$a->fullname},
 
 We’re so happy to see you setting SMART goals and joining the united force to tackle antimicrobial resistance. By promoting the Plan Prevent Protect mantra, and responsible use of antimicrobials to colleagues and clients, you are taking a positive step forward and acting as a role model to others.
 
-To head to a specific SMART goal, click on the link that displays the SMART goals percentage completion. Alternatively you can view your SMART goals dashboard and create new SMART goals here: {$a->viewyourdashboard}
+To head to a specific SMART goal, click on the link that displays the SMART goals percentage completion. Alternatively you can view your SMART goals dashboard and create new SMART goals here: 
+{$a->viewyourdashboard}. 
 
 You have the following SMART goals with Farm Vet Champions:
-
+-----
 {$a->goals}
+-----
+Your SMART goals reminder settings are set to {$a->reminderfrequency}. You can manage your preferences here:
+{$a->managemypreferences}
 
-Your SMART goals reminder settings are set to {$a->reminderfrequency}. You can manage your preferences here: {$a->managemypreferences}
+Don’t forget the free CPD on offer here:
+https://learn.rcvsknowledge.org/course/index.php?categoryid=6
  
-Don’t forget the free CPD on offer at https://learn.rcvsknowledge.org/course/index.php?categoryid=6
- 
-We’ve got some great resources you can use to help tell others about Farm Vet Champions: https://knowledge.rcvs.org.uk/amr/farm-vet-champions/farm-vet-champions-promotion-resources/resources-for-farm-vet-champions/  
+We’ve got some great resources you can use to help tell others about Farm Vet Champions: 
+https://knowledge.rcvs.org.uk/amr/farm-vet-champions/farm-vet-champions-promotion-resources/resources-for-farm-vet-champions/
 
-For further information about this tool and about your SMART Goals account please visit
-https://rcvsknowledge.org/document-library/plan-prevent-protect-information
- 
+For further information about this tool and about your SMART Goals account:
+https://knowledge.rcvs.org.uk/amr/plan-prevent-protect
+
 Keep working towards your SMART goals and encouraging your team to be involved. 
 
 Best wishes,

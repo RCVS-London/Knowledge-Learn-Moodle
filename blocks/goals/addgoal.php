@@ -114,9 +114,9 @@ if ($action == 'creategoal') {
         $userreminderfrequency = get_user_preferences('goalreminderfrequencysetting', 0);
         $reminderfrequencies = get_reminderfrequencies();
 
-        $reminderfrequenytext = 'Never';
+        $reminderfrequencytext = 'Never';
         if (array_key_exists($userreminderfrequency, $reminderfrequencies)) {
-            $reminderfrequenytext = $reminderfrequencies[$userreminderfrequency];
+            $reminderfrequencytext = $reminderfrequencies[$userreminderfrequency];
         }
 
         echo $OUTPUT->header();
@@ -129,7 +129,7 @@ if ($action == 'creategoal') {
                     <h1 class="display-4">SMART Goal Successfully Created</h1>
                     <p class="lead">Congratulations on setting up a new goal.</p>
                     <hr class="my-4">
-                    <p>You are currently being reminded (' . $reminderfrequenytext . ') about your SMART goals? You can change your settings <a href="/blocks/goals/preferences.php">here</a>.</p>
+                    <p>You are currently being reminded (' . $reminderfrequencytext . ') about your SMART goals? You can change your settings <a href="/blocks/goals/preferences.php">here</a>.</p>
                     <p>Click here to return to your SMART goal dashboard.</p>
                     <p class="lead">
                         <a class="btn btn-primary btn-lg" href="/blocks/goals/view.php" role="button">Return to dashboard</a>

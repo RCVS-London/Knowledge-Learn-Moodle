@@ -276,12 +276,12 @@ function send_reminder_emails($reminderfrequency = 0) {
             $goaltext = '';
             $goalhtml = '<br>';
 
-            $userreminderfrequency = get_user_preferences('goalreminderfrequencysetting', 0, $goaluser);
+            $userreminderfrequency = get_user_preferences('goalreminderfrequencysetting', 1, $userid);
             $reminderfrequencies = get_reminderfrequencies();
 
-            $reminderfrequenytext = 'empty';
+            $reminderfrequencytext = 'empty';
             if (array_key_exists($userreminderfrequency, $reminderfrequencies)) {
-                $reminderfrequenytext = $reminderfrequencies[$userreminderfrequency];
+                $reminderfrequencytext = $reminderfrequencies[$userreminderfrequency];
             }
 
             if ($userreminderfrequency != $reminderfrequency) {
@@ -367,7 +367,7 @@ function send_reminder_emails($reminderfrequency = 0) {
                 'fullname' => fullname($goaluser),
                 'goals' => $goaltext,
                 'viewyourdashboard' => get_string('viewyourdashboardtext', 'block_goals', $dashboardlink),
-                'reminderfrequency' => $reminderfrequenytext,
+                'reminderfrequency' => $reminderfrequencytext,
                 'managemypreferences' => get_string('managemypreferencestext', 'block_goals', $preferenceslink)
             ];
             $messagetext = get_string('reminderemailbody', 'block_goals', $paramstext);
@@ -376,7 +376,7 @@ function send_reminder_emails($reminderfrequency = 0) {
                 'fullname' => fullname($goaluser),
                 'goals' => $goalhtml,
                 'viewyourdashboard' => get_string('viewyourdashboardhtml', 'block_goals', $dashboardlink) . '<br>',
-                'reminderfrequency' => $reminderfrequenytext,
+                'reminderfrequency' => $reminderfrequencytext,
                 'managemypreferences' => get_string('managemypreferenceshtml', 'block_goals', $preferenceslink)
             ];
             $messagehtml = get_string('reminderemailbody', 'block_goals', $paramshtml);
@@ -390,13 +390,11 @@ function send_reminder_emails($reminderfrequency = 0) {
             $result = email_to_user($goaluser, $noreplyuser, $subject, $messagetext, $messagehtml);
             if ($result) {
                 if ($reminderfrequency == BLOCK_GOALS_REMINDER_TESTING) {
-                    /*
                     mtrace('Email to: ' . fullname($goaluser));
                     mtrace('Email from: ' . fullname($noreplyuser));
                     mtrace('Subject: ' . $subject);
                     mtrace('Message Text: ' . $messagetext);
                     mtrace('Message HTML: ' . $messagehtml);
-                    */
                 }
                 $success ++;
                 mtrace(' okay');
