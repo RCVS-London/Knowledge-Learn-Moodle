@@ -640,11 +640,13 @@ class mod_feedback_completion extends mod_feedback_structure {
         if (has_capability('mod/feedback:complete', $context, $this->userid)) {
             return true;
         }
-
+        
         if (!empty($CFG->feedback_allowfullanonymous)
-                    AND $this->feedback->course == SITEID
+                    //RCVSK remove so guests can answer feedback
+                    //AND $this->feedback->course == SITEID
                     AND $this->feedback->anonymous == FEEDBACK_ANONYMOUS_YES
-                    AND ((!isloggedin() && $USER->id == $this->userid) || isguestuser($this->userid))) {
+                    AND ((!isloggedin() && $USER->id == $this->userid) 
+                    || isguestuser($this->userid))) {
             // Guests are allowed to complete fully anonymous feedback without having 'mod/feedback:complete' capability.
             return true;
         }
