@@ -50,7 +50,7 @@ class login_forgot_password_form extends moodleform {
         // Hook for plugins to extend form definition.
         core_login_extend_forgot_password_form($mform);
         
-        //RCVS not needed for learn auth method
+        //RCVSK not needed for learn auth method
         //It also causes browser autofill problems
         //$mform->addElement('header', 'searchbyusername', get_string('searchbyusername'), '');
 

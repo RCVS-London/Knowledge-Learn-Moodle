@@ -456,7 +456,7 @@ function enforce_security($requirecapability = false) {
 }
 
 /*
- * RCVS Kmowledge Add link to FVC Smart Goals page
+ * RCVSK Add link to FVC Smart Goals page
  */
 /*function block_goals_extend_navigation_frontpage(navigation_node $navigation) {
     global $PAGE, $USER, $DB;
