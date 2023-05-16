@@ -259,7 +259,7 @@ $string['reminderemailbody'] =
 We’re so happy to see you setting SMART goals and joining the united force to tackle antimicrobial resistance. By promoting the Plan Prevent Protect mantra, and responsible use of antimicrobials to colleagues and clients, you are taking a positive step forward and acting as a role model to others.
 
 To head to a specific SMART goal, click on the link that displays the SMART goals percentage completion. Alternatively you can view your SMART goals dashboard and create new SMART goals here: 
-{$a->viewyourdashboard}. 
+{$a->viewyourdashboard}
 
 You have the following SMART goals with Farm Vet Champions:
 -----
