@@ -317,6 +317,21 @@
 
     //This is EBVM stuff
 
+    //Change text to collapse or expand
+    document.addEventListener("DOMContentLoaded", function() {
+        var accordionButtons = document.querySelectorAll("div.accordion-box > button");
+        accordionButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                var collapsed = button.classList.contains("collapsed");
+                if (collapsed) {
+                    button.querySelector("small").textContent = "Click to close";
+                } else {
+                    button.querySelector("small").textContent = "Click to expand";
+                }
+            });
+        });
+    });
+
     function scrollToToC() {
         var h5s = document.getElementsByTagName("h5");
         var searchText = "Contents";
