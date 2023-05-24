@@ -1,9 +1,10 @@
-/* Body background */
+/* BODY BACKGROUND */
 body {
     background-color: #F8F8F8 !important;
 }
 
-
+/* COLLAPSIBLE TOPICS */
+/* remove dropdown arrow if topic has no modules */
 .course-content ul.collapsibletopics li.section .sectionname {
     color: #782156;
 }
@@ -12,16 +13,80 @@ body {
     display: none;
 }
 
-/* Increase font sizes on category page */
-.pagelayout-coursecategory .course-info-container .coursename {
-    font-size:1.4em;
+/* FLIP ANIMATION */
+/* Size and relative of wrapper */
+.flip-box {
+    perspective: 1000px;
+    width: 200px;
+    height: 100px;
+    position: relative;
+    display: inline-block;
+    margin-right: 50px;
+}
+/* Last box not to have a margin */
+.flip-box:last-child {
+    margin-right: 0;
+}
+/* size and behaviour of inner flippable boxes */
+.flip-box .flip-front,
+.flip-box .flip-back {
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.6s;
+    border-radius: 30px;
+    width:200px;
+    height:80px;
+    align-items: center;
+    justify-content: center;
+}
+/* front box colour and position (visible) */
+.flip-box .flip-front {
+    background-color: #C0D2A5;
+    color: #444;
+    display: flex;
+    flex-direction: column;
+    transform: rotateY(0deg);
+}
+/* back box colour and position (hidden) */
+.flip-box .flip-back {
+    background-color: #444;
+    color:#fff;
+    display: flex;
+    flex-direction: column;
+    transform: rotateY(180deg);
+}
+/* front box position on hover (hidden) */
+.flip-box:hover .flip-front {
+    transform: rotateY(-180deg);
+}
+/* back box position on hover (visible) */
+.flip-box:hover .flip-back {
+    transform: rotateY(0deg);
+}
+/* Text styling */
+.flip-box p {
+    margin: 0 !important;
+    text-align: center;
+    transition: color 0.3s;
+}
+/* Style rotate text */
+.flip-box p.flip-rotate {
+    font-weight: 300;
+    font-size: 70%;
+}
+/* add a line and bold */
+.flip-box p.flip-text {
+    border-bottom: 1px solid #999;
+    font-weight: 800;
+}
+/* style back text white */
+.flip-box .flip-back p.flip-text,
+.flip-box .flip-back p {
+    color: white;
 }
 
-.pagelayout-coursecategory .dashboard-card .course-info-container .customfields .customfield {
-    font-size:100%;
-}
-
-/* navigation on mobile to remain */
+/* MODULE NAVIGATION */
+/*navigation on mobile to remain */
 @media (max-width: 767.98px) {
     .activity-navigation {
         display: block;
@@ -32,55 +97,10 @@ html.h5p-iframe {
     font-family:roboto;
 }
 
-/* Styling not logged front page caurosel */
-#page-site-index.notloggedin #mooveslideshow .carousel-caption {
-    background-color: rgb(119 33 88 / 69%) !important;
-}
-#page-site-index.notloggedin #mooveslideshow .carousel-control-prev-icon, 
-#page-site-index.notloggedin #mooveslideshow .carousel-control-next-icon {
-    width:40px;
-    height: 40px;
-}
-
-#page-site-index.notloggedin #mooveslideshow .carousel-control-prev:focus {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    box-shadow:0px 0px 0px white !important;
-}
-
-#page-site-index.notloggedin #mooveslideshow .carousel-control-next:focus {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    box-shadow:0px 0px 0px white !important;
-} 
-
-#page-site-index.notloggedin #mooveslideshow .carousel-indicators li {
-    width: 48px;
-    height:48px;
-    border-radius: 50%;
-    position:relative;
-    top:-3.5px;
-}
-
-#page-site-index.notloggedin #mooveslideshow .carousel-caption {
-    bottom: 60px;
-}
-
-#page-site-index.notloggedin #mooveslideshow .carousel-indicators {
-    height: 61px;
-    margin-bottom: 0;
-    /* background-color: rgb(119 33 88 / 69%); */
-}
-
-
-
 /* Hide the doubling of the description on H5P activities */
 div#hvpintro.box.py-3.mod_introbox {
 	display: none !important;
 }
-
 
 /* Font awesome search icons */
 
@@ -92,6 +112,7 @@ div#hvpintro.box.py-3.mod_introbox {
     content: "" !important;
 }
 
+/* FOOTER */
 /* RCVSK Footer icon for podcast subscriptions */
 .podbean {
     background-color: grey;
@@ -142,8 +163,50 @@ div#hvpintro.box.py-3.mod_introbox {
     border-bottom-right-radius: 0;
 }
 
-/* RCVSK Frontpage label */
+/* FRONT PAGE CAROUSEL */
+/* Styling not logged front page caurosel */
+#page-site-index.notloggedin #mooveslideshow .carousel-caption {
+    background-color: rgb(119 33 88 / 69%) !important;
+}
+#page-site-index.notloggedin #mooveslideshow .carousel-control-prev-icon, 
+#page-site-index.notloggedin #mooveslideshow .carousel-control-next-icon {
+    width:40px;
+    height: 40px;
+}
 
+#page-site-index.notloggedin #mooveslideshow .carousel-control-prev:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow:0px 0px 0px white !important;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-control-next:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow:0px 0px 0px white !important;
+} 
+
+#page-site-index.notloggedin #mooveslideshow .carousel-indicators li {
+    width: 48px;
+    height:48px;
+    border-radius: 50%;
+    position:relative;
+    top:-3.5px;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-caption {
+    bottom: 60px;
+}
+
+#page-site-index.notloggedin #mooveslideshow .carousel-indicators {
+    height: 61px;
+    margin-bottom: 0;
+    /* background-color: rgb(119 33 88 / 69%); */
+}
+
+/* RCVSK Frontpage label */
 /* only show carousel when not on mobile and show logo on mobiles */
 @media (max-width: 768px) {
     #mooveslideshow {
