@@ -55,57 +55,167 @@
         ]
     }
 }}
-<nav class="navbar fixed-top navbar-light bg-white navbar-expand shadow" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar-light bg-white shadow" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 
-    <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_moove-drawers-primary">
-        <span class="navbar-toggler-icon"></span>
-        <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
-    </button>
+{{RCVS Knowledge}}
+  <main>
+{{!RCVSK mobile menu up/down chevron }}
+    <div class="d-md-none d-sm-block bg-purple accordion" id="accordion-rcvsk">
+      <div id="headingOne">
+        <h2 class="mb-0">
+          <button class="accordion-button bg-purple text-white" type="button" 
+            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" 
+            aria-controls="collapseOne">
+          </button>
+        </h2>
+      </div>
 
-    <a href="{{{ config.homeurl }}}" class="navbar-brand d-none d-md-flex align-items-center m-0 mr-4 p-0 aabtn">
+{{!RCVSK primary menu in mobile }}
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" 
+        data-parent="#accordion-rcvsk">
+        <div class="card-body bg-purple">
+          <ul class="d-block text-right">
+            <li class="nav-item"><a href="infocus.html" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
+            <li class="nav-item"><a href="" class="text-light icon_learn nav-link px-2 active" target="_top">LEARN</a></li>
+            <li class="nav-item"><a href="veterinaryEvidence.html" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
+            <li class="nav-item"><a href="vetHistory.html" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
+            <li class="nav-item"><a href="ccr.html" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+{{!RCVSK primary menu in desktop }}
+    <nav class="ribbon d-none d-md-block py-2 bg-purple border-bottom">
+      <div class="container-fluid d-flex flex-wrap navbar-nav">
+        <ul class="nav d-flex text-right justify-content-end">
+          <li class="nav-item"><a href="infocus.html" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
+          <li class="nav-item"><a href="#" class="text-light icon_learn nav-link px-2 active" target="_top">LEARN</a></li>
+          <li class="nav-item"><a href="veterinaryEvidence.html" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
+          <li class="nav-item"><a href="vetHistory.html" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
+          <li class="nav-item"><a href="ccr.html" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
+        </ul>
+      </div>
+    </nav>
+{{!RCVSK main title bar }}  
+    <nav class="navbar navbar-expand-md navbar-light bg-light text-dark p-0 py-4 px-md-4" aria-label="Navbar">
+      <div class="container-fluid">
         {{# output.should_display_logo }}
-            <img src="{{output.get_logo}}" class="logo mr-1" alt="{{sitename}}">
+        <a class="navbar-brand d-none d-md-block" href="#">
+          <img src="{{output.get_logo}}" class="logo mr-1" alt="{{sitename}}">
+        </a>
+        <a class="navbar-brand d-md-none d-sm-block pl-4" href="#">
+          <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
+        </a>
         {{/ output.should_display_logo }}
-        {{^ output.should_display_logo }}
+{{!Learn title }}         
+        <div class="nav-link link-dark font-weight-bold fs-4 d-flex text-purple">
+          <div class="text-light icon_learn pe-3 active"></div> 
+          <span>
             {{{ sitename }}}
-        {{/ output.should_display_logo }}
+          </span>
+        </div>
+{{!Learn menu mobile hamburger }}
+        <button class="navbar-toggler pr-4" type="button" data-toggle="collapse" 
+          data-target="#bottomNavBar" aria-controls="bottomNavBar" aria-expanded="false" 
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>  
+    <div class="navbar-collapse collapse" id="bottomNavBar" style="">
+        <ul class="navbar-nav ms-auto mb-2 mb-sm-0">
+          <li class="nav-item">
+            <a class="nav-link link-dark font-weight-bold fs-5" href="#">
+                {{$drawercontent}}
+        <div class="list-group">
+            {{#mobileprimarynav}}
+                {{#haschildren}}
+                <a id="drop-down-{{sort}}" href="#" class="list-group-item list-group-item-action icons-collapse-expand collapsed d-flex" data-toggle="collapse" data-target="#drop-down-menu-{{sort}}" aria-expanded="false" aria-controls="drop-down-menu-{{sort}}">
+                    {{{text}}}
+                    <span class="ml-auto expanded-icon icon-no-margin mx-2">
+                        {{#pix}} t/expanded, core {{/pix}}
+                        <span class="sr-only">
+                            {{#str}} collapse, core {{/str}}
+                        </span>
+                    </span>
+                    <span class="ml-auto collapsed-icon icon-no-margin mx-2">
+                        {{#pix}} t/collapsed, core {{/pix}}
+                        <span class="sr-only">
+                            {{#str}} expand, core {{/str}}
+                        </span>
+                    </span>
+                </a>
+                <div class="collapse list-group-item p-0 border-0" role="menu" id="drop-down-menu-{{sort}}" aria-labelledby="drop-down-{{sort}}">
+                    {{#children}}
+                        {{^divider}}
+                             <a href="{{{url}}}" class="pl-5 bg-light list-group-item list-group-item-action">{{{text}}}</a>
+                        {{/divider}}
+                    {{/children}}
+                </div>
+                {{/haschildren}}
+                {{^haschildren}}
+                <a href="{{{url}}}" class="list-group-item list-group-item-action {{#isactive}}active{{/isactive}} {{#classes}}{{.}} {{/classes}}" {{#isactive}}aria-current="true"{{/isactive}}>
+                    {{{text}}}
+                </a>
+                {{/haschildren}}
+            {{/mobileprimarynav}}
+        </div>
+    {{/drawercontent}}
     </a>
+          </li>
+        </ul>
+
+    </div>
+  </main>
+
+{{! RCVS Knowledge end }}
+
+  <div class="navbar navbar-expand justify-content-center">
+    {{!
+    <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0"
+      data-toggler="drawers" data-action="toggle" data-target="theme_moove-drawers-primary">
+      <span class="navbar-toggler-icon"></span>
+      <span class="sr-only">{{#strsidepanel, core{{/str</span>
+    </button>
+    }}
+    
 
     {{#primarymoremenu}}
-        <div class="primary-navigation">
-            {{> core/moremenu}}
-        </div>
+      <div class="primary-navigation">
+        {{> core/moremenu}}
+      </div>
     {{/primarymoremenu}}
 
     <ul class="navbar-nav d-none d-md-flex my-1 px-1">
-        <!-- page_heading_menu -->
-        {{{ output.page_heading_menu }}}
+      <!-- page_heading_menu -->
+        {{{ output.page_heading_menu }}} 
     </ul>
-
     <div id="usernavigation" class="navbar-nav ml-auto">
-        <div class="navbarcallbacks">
-            {{{ output.get_navbar_callbacks_data }}}
-        </div>
-        {{# output.search_box }}
-            {{{ output.search_box }}}
-            <div class="divider border-left h-75 align-self-center mx-1"></div>
-        {{/output.search_box}}
-        {{#langmenu}}
-            {{> theme_moove/language_menu }}
-            <div class="divider border-left h-75 align-self-center mx-1"></div>
-        {{/langmenu}}
-        {{{ output.navbar_plugin_output }}}
-        <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
-            {{#usermenu}}
-                {{> core/user_menu }}
-            {{/usermenu}}
-        </div>
-        {{{ output.edit_switch }}}
+      <div class="navbarcallbacks">
+        {{{ output.get_navbar_callbacks_data }}}
+      </div>
+      {{# output.search_box }}
+      {{{ output.search_box }}}
+      <div class="divider border-left h-75 align-self-center mx-1"></div>
+      {{/output.search_box}}
+      {{#langmenu}}
+      {{> theme_moove/language_menu }}
+      <div class="divider border-left h-75 align-self-center mx-1"></div>
+      {{/langmenu}}
+      {{{ output.navbar_plugin_output }}}
+      <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+          {{#usermenu}}
+          {{> core/user_menu }}
+        {{/usermenu}}
+       </div>
+      {{{ output.edit_switch }}}
     </div>
+  </div>
 </nav>
 
+
 {{#secondarymoremenu}}
-    <div class="secondary-navigation d-print-none moove">
+    <div class="secondary-navigation d-print-none moove ">
         <div class="moove-container-fluid">
             {{> core/moremenu}}
         </div>
