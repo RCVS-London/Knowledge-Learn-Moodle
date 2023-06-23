@@ -23,9 +23,11 @@ body.category-3 {
   font-size: 1rem;
 }
 
-.category-3 .drawer {
+.category-3 #page .drawer {
   z-index: 1;
 }
+
+/* REMOVED FOR BRAND WORK
 
 .category-3 .pagelayout-incourse #region-main {
   width: 100%;
@@ -42,7 +44,7 @@ body.pagelayout-incourse.category-3  #region-main a:not(.btn),
 body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   text-decoration: none !important;
   font-weight: 500;
-}
+}*/
 
 .category-3 .book_content {
   margin-top: -20px;
@@ -108,36 +110,9 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   border: 1px solid #ddd;
 }
 
-.category-3 .scale-up-show,
-.category-3 nav.navbar
-  ul.navbar-nav
-  .popover-region
-  .popover-region-container[aria-hidden="false"],
-.category-3 nav.navbar ul.navbar-nav .usermenu .dropdown.show .dropdown-menu {
-  box-shadow: 0px 20px 50px #c0c0c0;
-  border-radius: 10px;
-  margin-top: -10px;
-}
 
-.category-3 nav.navbar ul.navbar-nav .usermenu {
-  line-height: 24px;
-  padding-left: 3em;
-  padding-top: 25px;
-}
 
-.category-3 .usermenu .login {
-  line-height: 1.25rem;
-}
-
-.category-3 nav.navbar
-  ul.navbar-nav
-  .popover-region
-  .popover-region-container
-  .popover-region-footer-container {
-  border-radius: 10px;
-}
-
-.category-3 .page-header-headings h1 {
+.category-3 #page .page-header-headings h1 {
   font-size: 3.3em;
   color: #792256;
   font-weight: 100;
@@ -255,7 +230,53 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   padding-left: 0;
 }
 
-.category-3 nav.navbar {
+/*NAV BAR changes */
+/*
+.category-3 .scale-up-show,
+.category-3 nav.navbar
+  ul.navbar-nav
+  .popover-region
+  .popover-region-container[aria-hidden="false"],
+.category-3 nav.navbar ul.navbar-nav .usermenu .dropdown.show .dropdown-menu {
+  box-shadow: 0px 20px 50px #c0c0c0;
+  border-radius: 10px;
+  margin-top: -10px;
+}
+
+.category-3 #page nav.navbar ul.navbar-nav .usermenu {
+  line-height: 24px;
+  padding-left: 3em;
+  padding-top: 25px;
+}
+
+.category-3 #page .usermenu .login {
+  line-height: 1.25rem;
+}
+
+.category-3 #page nav.navbar
+  ul.navbar-nav
+  .popover-region
+  .popover-region-container
+  .popover-region-footer-container {
+  border-radius: 10px;
+}
+
+.category-3 #nav-drawer {
+  background: #f8f8f8;
+  margin-left: 5px;
+  height: 90%;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+}
+
+.category-3 nav.navbar .drawer-toggle .nav-link {
+  color: #333;
+}
+
+.category-3 nav.navbar .logo img {
+  width: 200px;
+}
+.category-3 #page nav.navbar {
   min-height: 70px;
   margin-bottom: 20px;
   box-shadow: none;
@@ -263,7 +284,7 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   position: absolute;
 }
 
-.category-3 nav.navbar .drawer-toggle {
+.category-3 #page nav.navbar .drawer-toggle {
   height: 70px;
   position: fixed;
   left: 22px;
@@ -271,13 +292,9 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   border-radius: 80px;
 }
 
-.category-3 nav.-link {
+.category-3 #page nav-link {
   font-weight: 500;
   font-size: 1.2em;
-}
-
-.category-3 label {
-  font-weight: 400;
 }
 
 .category-3 #nav-drawer {
@@ -304,6 +321,104 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   background: #fff;
   color: #666;
 }
+
+.category-3 #page-navbar > nav > ol > li:nth-child(1),
+.category-3 #page-navbar > nav > ol > li:nth-child(2) {
+  display: none;
+}
+
+.category-3 #page-navbar .breadcrumb li > * {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  margin: 4px 0px 0px 0px;
+  color: #444 !important;
+  font-size: 0.9em;
+  padding: 5px 20px !important;
+  font-weight: 500;
+  border-radius: 30px;
+  text-decoration: none;
+}
+
+.category-3 #page-navbar .breadcrumb li a:hover {
+  color: #792256 !important;
+  transition: 0.2s;
+}
+
+.category-3 #page-navbar .breadcrumb li:last-of-type > *:hover {
+  background: #fefefe;
+  transition: 0.2s;
+}
+
+.category-3 #page-navbar .breadcrumb li::after,
+.category-3 #page-navbar .breadcrumb li > *::after {
+  border: none;
+}
+
+.category-3 #page-navbar .breadcrumb li:last-of-type > * {
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff !important;
+  border: 1px solid #762157 !important;
+  background: #762157;
+  border-radius: 30px;
+  cursor: default;
+}
+
+.category-3 #page-navbar .breadcrumb li:last-of-type > *:hover {
+  border: 1px solid #762157 !important;
+  background: #762157 !important;
+  color: #fff !important;
+}
+
+.category-3 #page-navbar .breadcrumb li > * .fa-home {
+  padding-right: 22px;
+  margin-left: -5px;
+}
+
+.category-3 nav.navbar .navbar-brand .logo img {
+  max-height: 70px;
+  width: 160px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.category-3 #page-navbar > nav > ol > li:nth-child(3) > a {
+  padding-right: 1px;
+}
+
+.category-3 nav.navbar .drawer-toggle {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+}
+
+.category-3 #page-navbar {
+  margin-left: 20px;
+}
+
+.category-3 #page-navbar > nav > ol > li:nth-child(3) > a:nth-child(2) > i.fa.fa-home {
+  padding-right: 0px;
+  margin-right: -5px;
+}
+
+.category-3 .navbar-expand .navbar-nav .nav-link .btn-primary {
+  background-color: #fff;
+  border-color: #777;
+  color: #777 !important;
+  padding: 5px 20px !important;
+  border-radius: 20px !important;
+}
+
+.category-3 .navbar-expand .navbar-nav .nav-link .btn-primary:hover {
+  border-color: #782156;
+  color: #782156 !important;
+}
+
+/* NAVBAR END */
+
+.category-3 label {
+  font-weight: 400;
+}
+
 
 .category-3 .btn-primary {
   border-radius: 20px;
@@ -433,10 +548,7 @@ body.pagelayout-incourse.category-3 .section-navigation > a:not(.btn) {
   border-radius: 5px;
 }
 
-.category-3 #page-navbar > nav > ol > li:nth-child(1),
-.category-3 #page-navbar > nav > ol > li:nth-child(2) {
-  display: none;
-}
+
 
 
 /* Installed fonts,
@@ -734,53 +846,7 @@ img[src*="image.php/moove/book"] {
   margin-bottom: 30px;
 }
 
-.category-3 #page-navbar .breadcrumb li > * {
-  background: #f8f8f8;
-  border: 1px solid #ddd;
-  margin: 4px 0px 0px 0px;
-  color: #444 !important;
-  font-size: 0.9em;
-  padding: 5px 20px !important;
-  font-weight: 500;
-  border-radius: 30px;
-  text-decoration: none;
-}
 
-.category-3 #page-navbar .breadcrumb li a:hover {
-  color: #792256 !important;
-  transition: 0.2s;
-}
-
-.category-3 #page-navbar .breadcrumb li:last-of-type > *:hover {
-  background: #fefefe;
-  transition: 0.2s;
-}
-
-.category-3 #page-navbar .breadcrumb li::after,
-.category-3 #page-navbar .breadcrumb li > *::after {
-  border: none;
-}
-
-.category-3 #page-navbar .breadcrumb li:last-of-type > * {
-  font-weight: 600;
-  text-decoration: none;
-  color: #fff !important;
-  border: 1px solid #762157 !important;
-  background: #762157;
-  border-radius: 30px;
-  cursor: default;
-}
-
-.category-3 #page-navbar .breadcrumb li:last-of-type > *:hover {
-  border: 1px solid #762157 !important;
-  background: #762157 !important;
-  color: #fff !important;
-}
-
-.category-3 #page-navbar .breadcrumb li > * .fa-home {
-  padding-right: 22px;
-  margin-left: -5px;
-}
 
 .category-3 .fa-home:before {
   font-size: 1.4em;
@@ -1791,9 +1857,7 @@ img[src*="image.php/moove/book"] {
   display: none;
 }
 
-.category-3 #page-navbar > nav > ol > li:nth-child(3) > a {
-  padding-right: 1px;
-}
+
 
 .category-3 .bookexit {
   display: none;
@@ -1991,12 +2055,7 @@ img[src*="image.php/moove/book"] {
   display: none;
 }
 
-.category-3 nav.navbar .navbar-brand .logo img {
-  max-height: 70px;
-  width: 160px;
-  margin-top: 10px;
-  margin-left: 20px;
-}
+
 
 @media only screen and (max-width: 1000px) {
   .category-3 .course-intro {
@@ -2094,10 +2153,7 @@ img[src*="image.php/moove/book"] {
     flex-direction: column;
     min-width: auto !important;
   }
-  .category-3 nav.navbar .drawer-toggle {
-    background: #f8f8f8;
-    border: 1px solid #ddd;
-  }
+
   .category-3 .pagelayout-incourse #region-main {
     width: 100%;
     margin-left: 0px;
@@ -2236,9 +2292,7 @@ img[src*="image.php/moove/book"] {
   .category-3 #jump-to-activity.custom-select {
     margin: 0px 10px 0px 30px;
   }
-  .category-3 #page-navbar {
-    margin-left: 20px;
-  }
+
   .category-3 #action-menu-toggle-3 {
     margin-top: -28px !important;
     margin-left: -50px !important;
@@ -2288,10 +2342,7 @@ img[src*="image.php/moove/book"] {
   height: 14rem;
 }
 
-.category-3 #page-navbar > nav > ol > li:nth-child(3) > a:nth-child(2) > i.fa.fa-home {
-  padding-right: 0px;
-  margin-right: -5px;
-}
+
 
 .category-3 #page-login-index.moove-login .logo img {
   max-height: 110px;
@@ -2315,18 +2366,9 @@ img[src*="image.php/moove/book"] {
   display: none;
 }
 
-.category-3 .navbar-expand .navbar-nav .nav-link .btn-primary {
-  background-color: #fff;
-  border-color: #777;
-  color: #777 !important;
-  padding: 5px 20px !important;
-  border-radius: 20px !important;
-}
 
-.category-3 .navbar-expand .navbar-nav .nav-link .btn-primary:hover {
-  border-color: #782156;
-  color: #782156 !important;
-}
+
+
 
 .category-3 .img-fluid,
 .category-3 .img-responsive {
@@ -2416,9 +2458,12 @@ body.category-3.notloggedin #loginbox h3 {
   border: 1px solid #ddd;
 }
 
+
+/* Paoloremoving as moves edit mode button
 .category-3 .input-group {
   margin-bottom: 25px !important;
 }
+*/
 
 body.category-3.notloggedin #loginbox .input-group .input-group-addon {
   width: 40px;
