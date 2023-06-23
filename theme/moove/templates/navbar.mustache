@@ -75,24 +75,28 @@
         data-parent="#accordion-rcvsk">
         <div class="card-body bg-purple">
           <ul class="d-block text-right">
-            <li class="nav-item"><a href="infocus.html" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
-            <li class="nav-item"><a href="" class="text-light icon_learn nav-link px-2 active" target="_top">LEARN</a></li>
-            <li class="nav-item"><a href="veterinaryEvidence.html" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
-            <li class="nav-item"><a href="vetHistory.html" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
-            <li class="nav-item"><a href="ccr.html" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
+            <li class="nav-item"><a href="https://knowledgestage.rcvs.org.uk" class="text-light icon_mainsite nav-link px-2">RCVS Knowledge</a></li>
+            <li class="nav-item"><a href="https://staging.infocusvj.org" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
+            <li class="nav-item"><a href="/" class="text-light icon_learn nav-link px-2 active" target="_top">LEARN</a></li>
+            <li class="nav-item"><a href="https://production.veterinaryevidence.org/index.php/ve/index" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
+            <li class="nav-item"><a href="https://staging.rcvsvethistory.org/" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
+            <li class="nav-item"><a href="https://staging.caninecruciateregistry.org/" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
           </ul>
         </div>
       </div>
     </div>
 {{!RCVSK primary menu in desktop }}
     <nav class="ribbon d-none d-md-block py-2 bg-purple border-bottom">
-      <div class="container-fluid d-flex flex-wrap navbar-nav">
-        <ul class="nav d-flex text-right justify-content-end">
-          <li class="nav-item"><a href="infocus.html" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
+      <div class="container-fluid d-flex flex-row flex-wrap navbar-nav">
+        <ul class="nav d-flex mr-auto">
+          <li class="nav-item"><a href="https://knowledgestage.rcvs.org.uk" class="text-light icon_mainsite nav-link px-2">RCVS Knowledge</a></li>
+        </ul>
+        <ul class="nav d-flex justify-content-end ml-auto">
+          <li class="nav-item"><a href="https://staging.infocusvj.org" class="text-light icon_infocus nav-link px-2" target="_top">INFOCUS</a></li>
           <li class="nav-item"><a href="#" class="text-light icon_learn nav-link px-2 active" target="_top">LEARN</a></li>
-          <li class="nav-item"><a href="veterinaryEvidence.html" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
-          <li class="nav-item"><a href="vetHistory.html" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
-          <li class="nav-item"><a href="ccr.html" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
+          <li class="nav-item"><a href="https://production.veterinaryevidence.org/index.php/ve/index" class="text-light icon_ve nav-link px-2" target="_top">VETERINARY EVIDENCE</a></li>
+          <li class="nav-item"><a href="https://staging.rcvsvethistory.org/" class="text-light icon_vh nav-link px-2" target="_top">VET HISTORY</a></li>
+          <li class="nav-item"><a href="https://staging.caninecruciateregistry.org/" class="text-light icon_ccr nav-link px-2" aria-current="page" target="_top">CANINE CRUCIATE REGISTRY</a></li>
         </ul>
       </div>
     </nav>
@@ -100,8 +104,8 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light text-dark p-0 py-4 px-md-4" aria-label="Navbar">
       <div class="container-fluid">
         {{# output.should_display_logo }}
-        <a class="navbar-brand d-none d-md-block" href="#">
-          <img src="{{output.get_logo}}" class="logo mr-1" alt="{{sitename}}">
+        <a class="navbar-brand d-none d-md-block" href="/">
+          <img src="{{output.get_logo}}" class="logo mr-1" width="250px" alt="{{sitename}}">
         </a>
         <a class="navbar-brand d-md-none d-sm-block pl-4" href="#">
           <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
@@ -122,8 +126,8 @@
         </button>
       </div>
     </nav>  
-    <div class="navbar-collapse collapse" id="bottomNavBar" style="">
-        <ul class="navbar-nav ms-auto mb-2 mb-sm-0">
+    <div class="navbar-collapse d-md-none collapse" id="bottomNavBar" style="">
+        <ul class="navbar-nav ms-auto mb-2 mb-sm-0 mx-0">
           <li class="nav-item">
             <a class="nav-link link-dark font-weight-bold fs-5" href="#">
                 {{$drawercontent}}
@@ -206,7 +210,7 @@
       <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
           {{#usermenu}}
           {{> core/user_menu }}
-        {{/usermenu}}
+          {{/usermenu}}
        </div>
       {{{ output.edit_switch }}}
     </div>
