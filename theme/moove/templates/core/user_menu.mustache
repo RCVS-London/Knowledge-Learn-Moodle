@@ -54,10 +54,12 @@
 }}
 <div class="usermenu">
     {{#unauthenticateduser}}
-        <span class="login pl-2">
+    {{/RCVSK remove padding class}}
+        <span class="login d-flex flex-row mt-2 nav-link">
             {{#guest}}
                 {{#str}} loggedinasguest, core {{/str}}
-                <div class="divider border-left h-75 align-self-center mx-2"></div>
+                {{/RCVSK remove divider and height class}}
+                <div class="border-left align-self-center mx-2"></div>
             {{/guest}}
             {{#url}}
                 <a href="{{url}}">{{#str}} login, core {{/str}}</a>
