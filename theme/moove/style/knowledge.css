@@ -20,6 +20,15 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
 .secondary-navigation {
     position: relative;
     top: 0;
+    background-color: white;
+}
+
+.secondary-navigation .moremenu .nav-tabs .nav-link {
+    color: #4d1438; 
+}
+
+.secondary-navigation .moremenu .nav-tabs .nav-link:hover {
+    color: #fff; 
 }
 
 .popover-region-container {
@@ -313,7 +322,7 @@ border-radius: 0;
     content:'';
     background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/infocus.svg);
     background-repeat: no-repeat;
-    filter: brightness(0) invert(1);
+    filter: brightness(0);
     background-size: contain;
 }
 .icon_infocus.active::before {
@@ -327,7 +336,7 @@ border-radius: 0;
 content:'';
 background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/learn.svg);
 background-repeat: no-repeat;
-filter: brightness(0) invert(1);
+filter: brightness(0) ;
 background-size: contain;
 }
 .icon_learn.active::before {
@@ -340,7 +349,7 @@ filter:none;
     content:'';
     background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vetevidence.svg);
     background-repeat: no-repeat;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) ;
     background-size: contain;
 }
 .icon_ve.active::before {
@@ -354,7 +363,7 @@ filter:none;
     content:'';
     background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vethistory.svg);
     background-repeat: no-repeat;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) ;
     background-size: contain;
 }
 .icon_vh.active::before {
@@ -368,7 +377,7 @@ filter:none;
     content: '';
     background: url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/ccr.svg);
     background-repeat: no-repeat;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) ;
     background-size: contain;
 }
 .icon_ccr.active::before {
