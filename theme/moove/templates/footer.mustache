@@ -281,8 +281,8 @@
 
 <script>
     //highlight primary navigation when on teh page link or subpage
-    const navLinks = document.querySelectorAll('primary-navigation a.nav-link');
     const currentURL = window.location.href;
+    const navLinks = document.querySelectorAll('.primary-navigation a.nav-link');
     navLinks.forEach(navLink => {
         const linkURL = navLink.getAttribute('href');
         const linklastslashpos = linkURL.lastIndexOf('/'); 
@@ -290,12 +290,25 @@
         const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
         const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
         navLink.classList.remove('active');
-        //console.log(currentURLpath);
+        //console.log('link path ' + linkpath + 'current path ' + currentURLpath);
         if (linkpath === currentURLpath) {
             navLink.classList.add('active');
         }
     });
 
+    const mobileNavLinks = document.querySelectorAll('.nav-item a.list-group-item-action');
+    mobileNavLinks.forEach(mobileNavLink => {
+        const linkURL = mobileNavLink.getAttribute('href');
+        const linklastslashpos = linkURL.lastIndexOf('/'); 
+        const linkpath = linkURL.substring(0,linklastslashpos);
+        const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
+        const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
+        mobileNavLink.classList.remove('active');
+        //console.log('link path ' + linkpath + 'current path ' + currentURLpath);
+        if (linkpath === currentURLpath) {
+            mobileNavLink.classList.add('active');
+        }
+    });
     //This is to remove the expand arrow in collapsible topics view when there is content
     document.querySelectorAll('div.content').forEach(function(contentDiv) {
         var collapsible = contentDiv.querySelectorAll('div.collapse').forEach(function(collapseDiv) {
