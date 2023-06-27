@@ -13,100 +13,36 @@ body {
     margin-top:0rem;
 }
 
-body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
-    margin-top: 0px;
+/*
+.logo {
+    margin:28px;
 }
+*/
 
-.secondary-navigation {
-    position: relative;
-    top: 0;
-    background-color: white;
-}
-
-.secondary-navigation .moremenu .nav-tabs .nav-link {
-    color: #4d1438; 
-}
-
-.secondary-navigation .moremenu .nav-tabs .nav-link:hover {
-    color: #fff; 
-}
-
-.popover-region-container {
-    z-index:1202;
-}
-
-#user-action-menu {
-    z-index:1202;
-}
-
-
-
-@media (min-width: 767.98px) {
-    /* 
-    .secondary-navigation.moove {
-        margin-top:14.188rem;
-         width:66%; */
-    }*/
-    body.has-secondarynavigation .drawer-left, 
-    body.has-secondarynavigation .drawer-right {
-            top:calc(356px + 1px);
-        }
-    body.has-secondarynavigation 
-    .drawer-toggles .drawer-toggler {
-        top:366px;
-    }
-}
-
-@media (max-width: 767.98px) {
-    .secondary-navigation.moove {
-        margin-top: 110.438rem;
-    }
-}
-
-
-
-
+/* RIBBON/BRAND CHANGES BEGIN */
+/* START: General */
 @font-face {
     font-family: "Gellix";
-    src: url(" https://learndev.rcvsknowledge.org/theme/moove/fonts/Gellix-Regular.woff2");
+    src: url("/theme/moove/fonts/Gellix-Regular.woff2");
     font-style:normal;
 }
 
-.navbar-nav.ml-auto {
-    margin-left: 233px!important;
-}
+@media only screen and (min-width: 875px) {
+    #page-wrapper #page {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+      min-width: 875px !important;
+    }
+  }
+  
+  @media only screen and (max-width: 850px) {
+    #page-header .card-body {
+      width: 100%;
+      background: none !important;
+    }
+  }
 
-.fs-4 {
-    font-size: 1.5rem;
-}
-a.nav-link {
-    font-size:0.76rem;
-}
-.nav-link.active {
-  color: #ff6100!important;
-}
-.nav-link {
-    font-family:Gellix;
-}
-.nav-item {
-    color:white;
-    list-style-type: none;
-}
-
-div.popover-region-toggle.nav-link {
-    margin-top:0.3rem;
-}
-
-a.btn.btn-open.rounded-0.nav-link {
-    margin-top:0.45rem;
-}
-
-
-
-.text-light.icon_ccr.pe-3.active {
-    position: relative;
-    top: 5px;
-}
 :root {
     --bs-blue: #02b8d4;
     --bs-indigo: #6610f2;
@@ -176,6 +112,141 @@ a.btn.btn-open.rounded-0.nav-link {
     --bs-highlight-bg: #fff3cd;
 }
 
+.text-purple {
+    --bs-text-opacity: 1;
+    color: var(--bs-purple) !important;
+}
+.bg-purple {
+    --bs-bg-opacity: 1;
+    background-color: var(--bs-purple)!important;
+}
+
+.navbar-nav .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 13px;
+}
+
+.navbar-service-primarynav {
+    padding-bottom: 0;
+}
+
+/* END: general */
+
+/* START: Learn title */
+.learn-title:hover,
+.learn-title:active
+ {
+    border-bottom:none;
+}
+
+.learn-service-title {
+    font-family:Gellix;
+}
+
+/* START: Learn secondary nav */
+body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
+    margin-top: 0px;
+}
+
+.secondary-navigation {
+    position: relative;
+    top: 0;
+    background-color: white;
+}
+
+.secondary-navigation .moremenu .nav-tabs .nav-link {
+    color: #4d1438; 
+}
+
+.secondary-navigation .moremenu .nav-tabs .nav-link:hover {
+    color: #fff; 
+}
+
+.popover-region-container {
+    z-index:1202;
+}
+
+#user-action-menu {
+    z-index:1202;
+}
+
+.moremenu .nav-link.active {
+    border-bottom-color: #ff6100;
+}
+
+@media (min-width: 767.98px) {
+    /* 
+    .secondary-navigation.moove {
+        margin-top:14.188rem;
+         width:66%; 
+    }*/
+    body.has-secondarynavigation .drawer-left, 
+    body.has-secondarynavigation .drawer-right {
+            top:calc(356px + 1px);
+        }
+    body.has-secondarynavigation 
+    .drawer-toggles .drawer-toggler {
+        top:366px;
+    }
+}
+
+/* @media (max-width: 767.98px) {
+    .secondary-navigation.moove {
+        margin-top: 110.438rem;
+    }
+}*/
+
+/* END: Learn secondary Nav */
+
+.navbar-nav.ml-auto {
+    margin-left: 233px!important;
+}
+
+.fs-4 {
+    font-size: 1.5rem;
+}
+a.nav-link {
+    font-size:0.76rem;
+}
+.nav-link.active,
+.nav-link:hover {
+  /* color: #ff6100!important; */
+  border-bottom: solid 4px #ff6100 !important;
+}
+.nav-link {
+    font-family:Gellix;
+}
+
+.nav-item {
+    color:white;
+    list-style-type: none;
+}
+#rcvsk-nav ul.nav li.nav-item a.nav-link {
+    height: 52px;
+    float: right;
+    clear: both;
+    padding-top:13px;
+}
+
+#collapseOne a.nav-link {
+    float: right;
+    clear: both;  
+}
+
+div.popover-region-toggle.nav-link {
+    margin-top:0.3rem;
+}
+
+a.btn.btn-open.rounded-0.nav-link {
+    margin-top:0.45rem;
+}
+
+/* START: Icons */
+.text-light.icon_ccr.pe-3.active {
+    position: relative;
+    top: 5px;
+}
 #nav-icon3 {
     width: 26px;
     height: 30px;
@@ -211,28 +282,28 @@ a.btn.btn-open.rounded-0.nav-link {
     transition: .25s ease-in-out;
 }
 #nav-icon3 span:nth-child(1) {
-top: 1px;
+    top: 1px;
 }
 
 #nav-icon3 span:nth-child(2),#nav-icon3 span:nth-child(3) {
-top: 9px;
+    top: 9px;
 }
 
 #nav-icon3 span:nth-child(4) {
-top: 17px;
+    top: 17px;
 }
 
 #nav-icon3.open span:nth-child(1) {
-top: 20px;
-width: 0%;
-left: 50%;
+    top: 20px;
+    width: 0%;
+    left: 50%;
 }
 
 #nav-icon3.open span:nth-child(2) {
--webkit-transform: rotate(45deg);
--moz-transform: rotate(45deg);
--o-transform: rotate(45deg);
-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 #nav-icon3.open span:nth-child(3) {
@@ -248,50 +319,34 @@ transform: rotate(45deg);
     left: 50%;
 }
 
-@media only screen and (min-width: 875px) {
-    #page-wrapper #page {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      min-width: 875px !important;
-    }
-  }
-  
-  @media only screen and (max-width: 850px) {
-    .#page-header .card-body {
-      width: 100%;
-      background: none !important;
-    }
-  }
-  
 /* New navbar toggler icon (hamburger - override default) */
 .navbar-light .navbar-toggler-icon {
-background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb%28255, 97, 0%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-border:0;
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgb%28255, 97, 0%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    border:0;
 }
 .navbar-toggler {
-padding: 0;
-background-color: transparent;
-border: 0;
-border-radius: 0;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
 }
 /* Icons for each website - need to be replaced with the proper ones */
 .icon_mainsite::before,.icon_infocus::before, .icon_learn::before, .icon_ve::before, .icon_vh::before, .icon_ccr::before {
-    width: 45px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
     padding-left: 30px;
     display: inline-block;
     position: relative;
     margin-right: 10px;
 }
 .ribbon .icon_mainsite::before, .ribbon .icon_infocus::before, .ribbon .icon_learn::before, .ribbon .icon_ve::before, .ribbon .icon_vh::before, .ribbon .icon_ccr::before {
-    width: 30px;
-    height: 21px;
-    padding-left: 30px;
+    width: 0;
+    height:21px;
+    padding-left: 0;
     display: inline-block;
     position: relative;
-    margin-right: 10px;
-    top: 5px;
+    margin-right: 0;
+    top:5px;
 }
 .accordion .icon_mainsite::before,.accordion .icon_infocus::before, .accordion .icon_learn::before, .accordion .icon_ve::before, .accordion .icon_vh::before, .accordion .icon_ccr::before {
     width: 30px;
@@ -306,8 +361,8 @@ border-radius: 0;
     justify-content: flex-end;
 }
 .icon_mainsite::before {
-    content:'';
-    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/mainsite.png);
+    /*content:'';
+     background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/mainsite.png);*/
     background-repeat: no-repeat;
     filter: brightness(0) invert(1);
     background-size: contain;
@@ -319,8 +374,8 @@ border-radius: 0;
     filter:none;
 }
 .icon_infocus::before {
-    content:'';
-    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/infocus.svg);
+    /*content:'';
+    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/infocus.svg);*/
     background-repeat: no-repeat;
     filter: brightness(0);
     background-size: contain;
@@ -333,21 +388,30 @@ border-radius: 0;
 }
 
 .icon_learn::before {
-content:'';
-background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/learn.svg);
-background-repeat: no-repeat;
-filter: brightness(0) ;
-background-size: contain;
+    /*content:'';
+    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/learn.svg);*/
+    background-repeat: no-repeat;
+    filter: brightness(0) ;
+    background-size: contain;
 }
+
 .icon_learn.active::before {
-content:'';
-padding-left: 30px;
-display: inline-block;
-filter:none;
+    /*content:'';
+     padding-left: 30px; */
+    display: inline-block;
+    filter:none;
 }
+
+div.icon_learn::before {
+    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/learn.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
 .icon_ve::before {
-    content:'';
-    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vetevidence.svg);
+    /*content:'';
+    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vetevidence.svg);*/
     background-repeat: no-repeat;
     filter: brightness(0) ;
     background-size: contain;
@@ -360,8 +424,8 @@ filter:none;
     background-size: contain;
 }
 .icon_vh::before {
-    content:'';
-    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vethistory.svg);
+    /*content:'';
+    background:url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/vethistory.svg);*/
     background-repeat: no-repeat;
     filter: brightness(0) ;
     background-size: contain;
@@ -374,8 +438,8 @@ filter:none;
     background-size: contain;
 }
 .icon_ccr::before {
-    content: '';
-    background: url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/ccr.svg);
+    /*content: '';
+    background: url(https://rcvsk-images-bucket.s3.eu-west-1.amazonaws.com/brand-icons/ccr.svg);*/
     background-repeat: no-repeat;
     filter: brightness(0) ;
     background-size: contain;
@@ -386,16 +450,11 @@ filter:none;
     display: inline-block;
     filter:none;
 }
-.text-purple {
---bs-text-opacity: 1;
-color: var(--bs-purple) !important;
-}
-.bg-purple {
---bs-bg-opacity: 1;
-background-color: var(--bs-purple)!important;
-}
+/* END: Icons */
+
+/* START: accordion */
 .accordion-flush .accordion-collapse {
-border-width: 0;
+    border-width: 0;
 }
 .accordion-flush .accordion-item {
     border-right: 0;
@@ -482,6 +541,8 @@ border-width: 0;
     outline: 0;
     box-shadow: var(--bs-accordion-btn-focus-box-shadow);
 }
+/* END: accordion */
+/* END: RIBBON/BRAND */
 
 /* COLLAPSIBLE TOPICS */
 /* remove dropdown arrow if topic has no modules */
