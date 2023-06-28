@@ -95,12 +95,12 @@
       </div>
     </div>
 {{!RCVSK primary menu in desktop }}
-    <nav class="ribbon d-none d-md-block pt-2 bg-white">
+    <nav class="ribbon d-none d-md-block bg-white">
       <div class="w-100 container-fluid d-flex flex-row flex-wrap navbar-nav">
         <ul class="nav d-flex mr-auto">
           <li class="nav-item">
                   <a class="navbar-brand d-none d-md-block" href="https://knowledgestage.rcvs.org.uk">
-          <img src="{{output.get_logo}}" class="logo mr-1" width="150px" alt="{{sitename}}">
+          <img src="{{output.get_logo}}" class="logo mr-1" id="learn-logo" width="150px" alt="{{sitename}}">
         </a>
           </li>
         </ul>
@@ -228,7 +228,7 @@
 
 {{#secondarymoremenu}}
     <div class="secondary-navigation d-print-none moove">
-        <div class="moove-container-fluid ">
+        <div class="moove-container-fluid text-purple">
             {{> core/moremenu}}
         </div>
     </div>
