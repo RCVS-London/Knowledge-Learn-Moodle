@@ -1,15 +1,7 @@
 /* BODY BACKGROUND */
 body {
     background-color: #F8F8F8 !important;
-    /* max-width:1200px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto; */
 }
-
-
-
 
 #page, #page.drawers {
     margin-top:0rem;
@@ -29,6 +21,12 @@ body {
     font-family: "Gellix";
     src: url("/theme/moove/fonts/Gellix-Regular.woff2");
     font-style:normal;
+}
+
+@font-face {
+    font-family: "Gellix";
+    src: url("/theme/moove/fonts/Gellix-SemiBold.woff2");
+    font-style:bold;
 }
 
 @media only screen and (min-width: 875px) {
@@ -144,7 +142,7 @@ body {
 .navbar-nav .nav-link {
     padding-right: 0;
     padding-left: 0;
-    padding-bottom: 13px;
+    /* padding-bottom: 13px; */
 }
 
 .navbar-service-primarynav {
@@ -176,6 +174,8 @@ body {
 
 #usernavigation {
     font-size: 0.76rem;
+    position: relative;
+    top:-3px;
 }
 
 .moremenu .nav-link.active {
@@ -184,10 +184,6 @@ body {
 
 .moremenu {
     font-size: 0.76rem;
-}
-
-.navbar-nav.ml-auto {
-    margin-left: 233px!important;
 }
 
 .fs-4 {
@@ -210,6 +206,11 @@ body {
     color:white;
     list-style-type: none;
 }
+
+#collapseOne li.nav-item {
+    height: 35px;
+}
+
 #rcvsk-nav ul.nav li.nav-item a.nav-link {
     height: 91px;
     float: right;
@@ -226,9 +227,20 @@ div.popover-region-toggle.nav-link {
     margin-top:0.3rem;
 }
 
-a.btn.btn-open.rounded-0.nav-link {
-    margin-top:0.2rem;
+.simplesearchform .collapse.show, .simplesearchform .collapsing {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    z-index: 1060;
+    height: 37px
 }
+
+/* a.btn.btn-open.rounded-0.nav-link {
+    margin-top:0.2rem;
+}*/
 
 /* END: navigation */
 
@@ -256,41 +268,29 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
 }
 
 @media (min-width: 767.98px) {
-    /* 
-    .secondary-navigation.moove {
-        margin-top:14.188rem;
-         width:66%; 
-    }
-    .secondary-navigation .navigation {
-        padding-left: 0;
-    }*/
+
 
     body.has-secondarynavigation .drawer-left, 
     body.has-secondarynavigation .drawer-right {
-            top:calc(356px + 1px);
-        }
-    body.has-secondarynavigation 
-    .drawer-toggles .drawer-toggler {
-        top:366px;
+            top:136px;
     }
 }
 
-/* @media (max-width: 767.98px) {
-    .secondary-navigation.moove {
-        margin-top: 110.438rem;
-    }
-}*/
+body.has-secondarynavigation .drawer-toggles .drawer-toggler {
+    top:300px;
+}
 
 .dropdown-menu.show {
     z-index:1022;
     font-size:0.76rem;
 }
 
+#user-menu-toggle {
+    padding-top:0;
+    padding-bottom:0;
+}
 
 /* END: Learn secondary Nav */
-
-
-
 
 /* START: Icons */
 .text-light.icon_ccr.pe-3.active {

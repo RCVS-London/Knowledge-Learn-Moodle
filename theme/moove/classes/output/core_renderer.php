@@ -29,6 +29,7 @@ use context_course;
 use moodle_url;
 use html_writer;
 use theme_moove\output\core_course\activity_navigation;
+use stdClass;
 
 /**
  * Renderers to align Moodle's HTML with that expected by Bootstrap
@@ -443,6 +444,15 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $output;
+    }
+
+    public function rcvsk_menu() {
+        global $OUTPUT, $CFG;
+
+        $template = new stdClass();
+        $template->config = $CFG;
+        
+        return $OUTPUT->render_from_template("theme_moove/rcvsk/rcvsk_menu", $template);
     }
 
 }
