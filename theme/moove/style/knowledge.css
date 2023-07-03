@@ -5,13 +5,23 @@ body {
 
 #page, #page.drawers {
     margin-top:0rem;
+
 }
 #page {
     font-size:0.76rem;
 }
 
-#learn-logo {
+#page-header {
+    margin-top:0.75rem;
+    margin-bottom:0.75rem;
+}
+
+#learn-logo-full {
     margin:20px;
+}
+
+#learn-logo-mobile {
+    margin-bottom:0.8rem;
 }
 
 
@@ -29,19 +39,25 @@ body {
     font-style:bold;
 }
 
-@media only screen and (min-width: 875px) {
+/* @media only screen and (min-width: 875px) { */
     #page-wrapper #page {
       flex: 1 0 auto;
       display: flex;
       flex-direction: column;
       min-width: 875px !important;
     }
-  }
+  /* }*/
   
-  @media only screen and (max-width: 850px) {
+@media only screen and (max-width: 850px) {
     #page-header .card-body {
       width: 100%;
       background: none !important;
+    }
+}
+
+@media only screen and (max-width: 850px) and (min-width: 768px) {
+    #rcvsk-nav .nav-item a.nav-link {
+        font-size:0.76rem;
     }
   }
 
@@ -123,14 +139,26 @@ body {
     background-color: var(--bs-purple)!important;
 }
 
+/* Moove login */
+
+.moove-login #loginlogo {
+    margin:45px;
+}
+
 /* END: general */
 
 /* START: Learn title */
+#rcvsk-nav .navbar {
+    height: 60px !important;
+}
+
 .learn-title:hover,
 .learn-title:active
  {
     border-bottom:none;
 }
+
+/*
 
 .learn-service-title {
     font-family:Gellix;
@@ -139,15 +167,32 @@ body {
 
 /* START: navigation menu */
 
+#rcvsk-nav .nav.d-flex {
+    position: relative;
+    left: 4px;
+}
+
 .navbar-nav .nav-link {
     padding-right: 0;
     padding-left: 0;
     /* padding-bottom: 13px; */
 }
 
+.navbar-expand .navbar-nav .nav-link,
+.secondary-navigation .moremenu .nav-link {
+    padding-right: 0.2rem;
+    padding-left: 0.2rem;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+}
+
 .navbar-service-primarynav {
     padding-bottom: 0;
     height: 40px;
+}
+
+.secondary-navigation .moremenu .nav-tabs .nav-link.active {
+    font-weight:400;
 }
 
 .primary-navigation .navigation .nav-link {
@@ -161,7 +206,7 @@ body {
 }
 
 .moremenu .nav-link.active {
-    font-weight:700;
+    font-weight:400;
 }
 
 .popover-region-container {
@@ -215,7 +260,7 @@ body {
     height: 91px;
     float: right;
     clear: both;
-    padding-top:48px;
+    padding-top:46px;
 }
 
 #collapseOne a.nav-link {
@@ -254,12 +299,12 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
     position: relative;
     top: 0;
     background-color: white;
-    height: 40px;
+    height: 44px;
 }
 
 .secondary-navigation .moremenu .nav-tabs .nav-link {
     color: #4d1438; 
-    height: 40px;
+    height: 44px;
 }
 
 .secondary-navigation .moremenu .nav-tabs .nav-link:hover,

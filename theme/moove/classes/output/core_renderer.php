@@ -289,7 +289,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $firstLine = file_get_contents($CFG->dirroot.'/.git/HEAD');
             $explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
             $branchname = $explodedstring[2]; //get the one that is always the branch name
-            $heading .= "<br><p id='rcvsk-git-branch'>Current branch:&nbsp;<span style='font-weight: bold; text-transform: uppercase;'>" . $branchname . "</span></p>"; //show it on the page
+            $heading .= "<span id='rcvsk-git-branch'>Current branch:&nbsp;<span style='font-weight: bold; text-transform: uppercase;'>" . $branchname . "</span></span>"; //show it on the page
         }
 
         // All the html stuff goes here.
@@ -444,6 +444,14 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $output;
+    }
+
+    public function rcvsk_url() {
+        global $CFG;
+        
+        $rcvsk_url = $CFG->rcvsk_url; 
+
+        return $rcvsk_url;
     }
 
     public function rcvsk_menu() {

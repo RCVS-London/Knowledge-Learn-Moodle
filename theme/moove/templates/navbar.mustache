@@ -66,10 +66,10 @@
 {{RCVS Knowledge}}
   <main id='rcvsk-nav'>
 {{!RCVSK mobile menu up/down chevron }}
-    <div class="d-md-none d-sm-block bg-white accordion" id="accordion-rcvsk">
+    <div class="d-md-none d-sm-block bg-white accordion  pb-3 pt-4" id="accordion-rcvsk">
       <h2 class="mb-0 d-inline-block">
-        <a class="d-md-none pl-4 mx-28" href="https://knowledgestage.rcvs.org.uk">
-          <img src="{{output.get_compact_logo_url}}" class="logo mr-1" alt="{{sitename}}">
+        <a class="d-md-none pl-4 mx-28" href="{{output.rcvsk_url}}">
+          <img src="{{output.get_compact_logo_url}}" class="logo mr-1"  id="learn-logo-mobile" alt="{{sitename}}">
         </a>
       </h2>
       <div id="headingOne" class = "float-right mb-0 d-flex flex-row d-inline-block">
@@ -89,25 +89,25 @@
       </div>
     </div>
 {{!RCVSK primary menu in desktop }}
-    <nav class="ribbon d-none d-md-block bg-white container-fluid">
+    <nav class="ribbon d-none d-md-block bg-white">
       <div class="w-100  d-flex flex-row flex-wrap navbar-nav">
         <ul class="nav d-flex mr-auto">
           <li class="nav-item">
-                  <a class="navbar-brand d-none d-md-block" href="https://knowledgestage.rcvs.org.uk">
-          <img src="{{output.get_logo}}" class="logo mr-1" id="learn-logo" width="150px" alt="{{sitename}}">
+                  <a class="navbar-brand d-none d-md-block" href="{{output.rcvsk_url}}">
+          <img src="{{output.get_logo}}" class="logo mr-1" id="learn-logo-full" width="150px" alt="{{sitename}}">
         </a>
           </li>
         </ul>
-        <ul class="nav d-flex justify-content-end ml-auto">
+        <ul class="nav d-flex justify-content-end ml-auto pr-3">
           {{{ output.rcvsk_menu }}}
         </ul>
       </div>
     </nav>
 {{!RCVSK main title bar }}  
     <nav class="navbar w-100 bg-purple navbar-expand-md navbar-light bg-light text-dark" aria-label="Navbar">
-      <div class="container-fluid no-gutters">
+      <!--<div class="container-fluid no-gutters">-->
 {{!Learn title }}         
-        <div class="learn-service-title font-weight-bold p-0 pt-1 d-flex text-light">
+        <div class="learn-service-title font-weight-bold p-0 pt-2 pl-2 d-flex text-light">
           <div class="text-light icon_learn pe-3 active"></div>
           <span>
             <a href='/' class='learn-title text-light text-decoration-none'> 
@@ -122,7 +122,7 @@
           aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-      </div>
+      <!--</div>-->
     </nav>  
     <div class="navbar-collapse d-md-none collapse" id="bottomNavBar" style="">
         <ul class="navbar-nav ms-auto mb-2 mb-sm-0 mx-0">
