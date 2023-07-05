@@ -7,9 +7,6 @@ body {
     margin-top:0rem;
 
 }
-#page {
-    font-size:0.76rem;
-}
 
 #page-header {
     margin-top:0.75rem;
@@ -20,8 +17,12 @@ body {
     margin:20px;
 }
 
-#learn-logo-mobile {
-    margin-bottom:0.8rem;
+@media only screen and (max-width: 767px) {
+    #learn-logo-mobile {
+        position:relative;
+        left:20px;    
+        top:-4px;
+    }
 }
 
 
@@ -39,14 +40,12 @@ body {
     font-style:bold;
 }
 
-/* @media only screen and (min-width: 875px) { */
-    #page-wrapper #page {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      min-width: 875px !important;
-    }
-  /* }*/
+#page-wrapper #page {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
   
 @media only screen and (max-width: 850px) {
     #page-header .card-body {
@@ -55,11 +54,17 @@ body {
     }
 }
 
-@media only screen and (max-width: 850px) and (min-width: 768px) {
+@media only screen and (max-width: 866px) and (min-width: 768px) {
     #rcvsk-nav .nav-item a.nav-link {
         font-size:0.76rem;
     }
-  }
+}
+
+@media only screen and (max-width: 796px) and (min-width: 768px) {
+    #rcvsk-nav .nav-item a.nav-link {
+        font-size:0.70rem;
+    }
+}
 
 :root {
     --bs-blue: #02b8d4;
@@ -169,7 +174,6 @@ body {
 
 #rcvsk-nav .nav.d-flex {
     position: relative;
-    left: 4px;
 }
 
 .navbar-nav .nav-link {
@@ -228,7 +232,7 @@ body {
 }
 
 .moremenu {
-    font-size: 0.76rem;
+    font-size: 0.875rem;
 }
 
 .fs-4 {
@@ -302,6 +306,11 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
     height: 44px;
 }
 
+.secondary-navigation .navigation {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .secondary-navigation .moremenu .nav-tabs .nav-link {
     color: #4d1438; 
     height: 44px;
@@ -317,7 +326,7 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
 
     body.has-secondarynavigation .drawer-left, 
     body.has-secondarynavigation .drawer-right {
-            top:136px;
+            top:236px;
     }
 }
 
