@@ -13,6 +13,10 @@ body {
     margin-bottom:0.75rem;
 }
 
+#page-header .mr-auto {
+    min-width:35%;
+}
+
 #learn-logo-full {
     margin:20px;
 }
@@ -327,6 +331,7 @@ body.has-secondarynavigation #page, body.has-secondarynavigation #page.drawers {
     body.has-secondarynavigation .drawer-left, 
     body.has-secondarynavigation .drawer-right {
             top:236px;
+            height:100vh;
     }
 }
 
@@ -650,6 +655,13 @@ div.icon_learn::before {
 }
 /* END: accordion */
 /* END: RIBBON/BRAND */
+
+/* Drawer */
+
+.drawer {
+    position: absolute;
+    height:130%;
+}
 
 /* COLLAPSIBLE TOPICS */
 /* remove dropdown arrow if topic has no modules */
