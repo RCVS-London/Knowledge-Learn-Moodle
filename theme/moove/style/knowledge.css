@@ -26,6 +26,7 @@ body {
         position:relative;
         left:20px;    
         top:-4px;
+        width:150px;
     }
 }
 
@@ -244,6 +245,7 @@ body {
 }
 #rcvsk-nav a.nav-link {
     font-size:0.875rem;
+    border-bottom: solid 4px white;
 }
 .nav-link.active,
 #rcvsk-nav .nav-link:hover,
