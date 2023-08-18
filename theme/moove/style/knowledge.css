@@ -988,5 +988,13 @@ div .rcvsk-front-page-label .atto_image_button_text-bottom {
 	}
 }
 
+/*
+   Custom SQL plugin
+*/
+#page-admin-report-customsql-index .admin_note {
+    display:block;
+    font-size: 0.8em;
+    color: #000;
+}
 
 
