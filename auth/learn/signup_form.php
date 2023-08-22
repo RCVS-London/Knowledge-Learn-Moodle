@@ -102,6 +102,12 @@ class login_signup_form extends moodleform implements renderable, templatable {
         not be shared with outside third parties and you have the right to withdraw your consent to the processing of 
         your personal data at any time</p><hr>');
 
+        if (signup_captcha_enabled()) {
+            $mform->addElement('recaptcha', 'recaptcha_element', get_string('security_question', 'auth'));
+            $mform->addHelpButton('recaptcha_element', 'recaptcha', 'auth');
+            $mform->closeHeaderBefore('recaptcha_element');
+        }
+
         // Buttons.
         $this->add_action_buttons(true, get_string('createaccount'));
 
