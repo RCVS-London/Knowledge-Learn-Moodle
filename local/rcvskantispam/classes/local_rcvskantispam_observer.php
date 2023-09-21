@@ -10,6 +10,7 @@ class local_rcvskantispam_observer
     // Get the data from the $_POST object as the event data doesn't have any user details from the DB in it at this time 
     public static function user_created(\core\event\user_created $event)
     {
+        global $USER, $DB;
         //error_log("user created - event picked up.",0);
         $sender_email = $_POST['email'];
         $sender_ip = $_SERVER['REMOTE_ADDR'];
@@ -21,8 +22,9 @@ class local_rcvskantispam_observer
         if ($isSpam) {
             error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
             echo ("<BR><h1>SPAM</h1>");
-            // throw new moodle_exception('authentication_denied', 'local_rcvskantispam');
-            die();
+            $user = $DB->delete_records('user',array('email'=>$sender_email));
+            reset($USER);
+            throw new moodle_exception('spam_user', 'local_rcvskantispam');
         } else {
             echo ("<BR><h1>NOT SPAM</h1>");
         }
@@ -47,11 +49,13 @@ class local_rcvskantispam_observer
         if ($isSpam) {
             echo ("<BR><h1>SPAM</h1>");
             error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
-
+            reset($USER);
+            throw new moodle_exception('spam_user', 'local_rcvskantispam');
+            //Notify admin?
             die();
         } else {
             echo ("<BR><h1>NOT SPAM</h1>");
-            die(); // remove this (and the echo message when finished.)
+            //die(); // remove this (and the echo message when finished.)
         }
     }
 
@@ -89,12 +93,10 @@ class local_rcvskantispam_observer
 
             if ($is_spam) {
                 echo ("<br><h1>Spam IP.</h1>");
-                //$blocked_ip_obj = $DB->get_record('config','name','blockedip');
-                $blocked_ip_obj = $DB->get_record('config', array('name' => 'blockedip'));
-                $update_blocked_ip = new \stdClass;
-                $update_blocked_ip->id = $blocked_ip_obj->id;
-                $update_blocked_ip->blocked_ip_list = $blocked_ip_obj->blocked_ip_list . '\n' . $sender_ip;
-                if ($DB->update_record('config', $update_blocked_ip)) {
+                $blockedip = get_config('core','blockedip','');
+                if (!strstr($blockedip,$sender_ip)) {
+                    $blockedip = $sender_email.'\n '.$blockedip;
+                    if (set_config('blockedip',$blockedip)) {
                     echo "Blocked IPs list update succeeded.\n";
                     error_log("IP:" . $sender_ip . "added to block list");
                 } else {
@@ -162,31 +164,16 @@ class local_rcvskantispam_observer
 
 
             if ($is_spam_email) {
-
-                
-               // $blocked_email_obj = $DB->get_record('config', array('name' => 'denyemailaddresses'));
-                //print_r($blocked_email_obj);
-               // $CFG->denyemailaddresses .= ' ' . $sender_email;
-                //echo ("Spam email added.  New CFG value - " . $CFG->denyemailaddresses);
-                //$update_blocked_email = new \stdClass;
-                //$update_blocked_email->id = $blocked_email_obj->id;
-                //$update_blocked_email->blocked_emails_list = $blocked_email_obj->blocked_email_list . ' ' . $sender_email;
-
                 $denyemailaddresses = get_config('core','denyemailaddresses','');
-
-                $update_denyemailaddresses = $denyemailaddresses.' '.$sender_email;
-
-                if (set_config('denyemailaddresses',$update_denyemailaddresses)) {
-        
-                
-
-               
-                //if ($DB->update_record('config', $update_blocked_email)) {
-                    error_log("Email:" . $sender_email . " added to email block list");
-                    echo "Blocked IPs list update succeeded.\n";
-                } else {
-                    error_log("Email:" . $sender_email . " failed to add to email block list");
-                    echo "Blocked IPs list update failed.\n";
+                if (!strstr($denyemailaddresses,$sender_email)) {
+                    $denyemailaddresses = $sender_email.' '.$denyemailaddresses;
+                    if (set_config('denyemailaddresses',$denyemailaddresses)) {
+                        error_log("Email:" . $sender_email . " added to email block list");
+                        echo "Blocked email list update succeeded.\n";
+                    } else {
+                        error_log("Email:" . $sender_email . " failed to add to email block list");
+                        echo "Blocked email list update failed.\n";
+                    }
                 }
             } else {
                 echo ("<br><h1>Email is OK.</h1>");
