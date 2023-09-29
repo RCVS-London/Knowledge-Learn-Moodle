@@ -5,7 +5,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version = 2023091460; // Replace with your version number. Note this needs to be incremented after every change.
 $plugin->requires = 2022041900;
 
-$plugin->component = 'local_rcvskantispam'; // Replace with your plugin's name.
+$plugin->component = 'local_cleantalk_antispam'; // Replace with your plugin's name.
 
 // Plugin maturity level and release notes URL (if applicable).
 $plugin->maturity = MATURITY_ALPHA;

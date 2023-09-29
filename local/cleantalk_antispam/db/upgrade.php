@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-function xmldb_local_rcvskantispam_upgrade($oldversion) {
+function xmldb_local_cleantalk_antispam_upgrade($oldversion) {
     //  database upgrade logic goes here.
     return true;
 }

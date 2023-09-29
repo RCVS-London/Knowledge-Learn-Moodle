@@ -6,7 +6,7 @@ defined('MOODLE_INTERNAL') || die();
 
 // This function is called when a user is created.
 // Wont be called any more.
-function local_rcvskantispam_handle_user_created(core\event\user_created $event) {
+function local_cleantalk_antispam_handle_user_created(core\event\user_created $event) {
     // Get the user data from the event.
     $user = $event->get_record_snapshot('user', $event->get_data());
 
@@ -15,12 +15,12 @@ function local_rcvskantispam_handle_user_created(core\event\user_created $event)
 
     // If you want to prevent the user from being created, you can throw an exception.
     // Example:
-    throw new moodle_exception('registration_denied', 'local_rcvskantispam');
+    throw new moodle_exception('registration_denied', 'local_cleantalk_kantispam');
 }
 
 // This function is called when a user is authenticated (logs in).
 // Wont be called any more.
-function local_rcvskantispam_handle_user_authenticated(core\event\user_authenticated $event) {
+function local_cleantalk_antispam_handle_user_authenticated(core\event\user_authenticated $event) {
     // Get the user data from the event.
     $user = $event->get_record_snapshot('user', $event->get_data());
     print_r($user);
@@ -29,5 +29,5 @@ function local_rcvskantispam_handle_user_authenticated(core\event\user_authentic
 
     // If you want to prevent the user from authenticating, you can throw an exception.
     // Example:
-    throw new moodle_exception('authentication_denied', 'local_rcvskantispam');
+    throw new moodle_exception('authentication_denied', 'local_cleantalk_antispam');
 }

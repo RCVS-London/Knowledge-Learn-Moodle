@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin settings for the local_rcvskantispam plugin.
+ * Plugin settings for the local_cleantalk_antispam plugin.
  *
- * @package   local_rcvskantispam
+ * @package   local_cleantalk_antispam
  * @copyright Year, You Name <your@email.address>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -13,7 +13,7 @@ if ($hassiteconfig) {
     // Create the new settings page
     // - in a local plugin this is not defined as standard, so normal $settings->methods will throw an error as
     // $settings will be null
-    $settings = new admin_settingpage('local_rcvskantispam', 'RCVSK Antispam Settings');
+    $settings = new admin_settingpage('local_cleantalk_antispam', 'Cleantalk Antispam Settings');
 
     // Create
     $ADMIN->add('localplugins', $settings);
@@ -21,7 +21,7 @@ if ($hassiteconfig) {
     // Add a setting field to the settings for this page
     $settings->add(new admin_setting_configtext(
         // This is the reference you will use to your configuration
-        'local_rcvskantispam/apikey',
+        'local_cleantalk_antispam/apikey',
 
         // This is the friendly title for the config, which will be displayed
         'Cleantalk Blacklist API: Key',

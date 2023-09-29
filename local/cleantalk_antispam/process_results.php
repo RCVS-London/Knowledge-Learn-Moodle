@@ -115,24 +115,25 @@ foreach($files as $file) {
 }
 
 $arrlength = count($spamEmails);
-echo("<br><h1>Spam records:".$arrlength."</h1>");
+echo("<br><h1>Spam records: ".$arrlength."</h1>");
 $min_num_logs = 20;
 
 foreach ($spamEmails as $spamEmail) {
     $user = $DB->get_record('user',array('email'=>$spamEmail));
-    $number_of_logs = $DB->count_records_sql(
-        "select 
-            count(id) 
-        from 
-            {$CFG->prefix}logstore_standard_log 
-        where 
-            userid = {$user->id}");
-    if ($number_of_logs > $min_num_logs) {
-        echo "<p class 'spam'>Spam user ".fullname($user).
-        " (email {$user->email}) has {$min_num_logs} logs or above";
+    if (is_numeric($user->id)) {
+        $sql_count = "select count(id) 
+                from {$CFG->prefix}logstore_standard_log 
+                where userid = {$user->id}";
+        $number_of_logs = $DB->count_records_sql($sql_count);
+        if ($number_of_logs > $min_num_logs) {
+            echo "<p class = 'spam'>Spam user ".fullname($user).
+            " (email {$user->email}) has {$min_num_logs} logs or above";
+        } else {
+            echo "<p>Spam user ".fullname($user)
+            ." (email {$user->email}) will be deleted";
+        }
     } else {
-        echo "<p>Spam user ".fullname($user).
-        " (email {$user->email}) will deleted";
+        var_dump('weird user ',$user->id);
     }
     
 }
