@@ -133,7 +133,7 @@ foreach ($spamEmails as $spamEmail) {
             ." (email {$user->email}) will be deleted";
         }
     } else {
-        var_dump('weird user ',$user->id);
+        echo "<p class = 'spam'>No user in Learn DB exists for {$spamEmail}";
     }
     
 }
