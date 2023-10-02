@@ -35,12 +35,12 @@ require(__DIR__.'/../../config.php');
 
 //get all unconfirmed users flagged as deleted and remove from database
 $user = array('confirmed'=>0,'deleted'=>1);
-$unconfirmed_users = $DB->get_records('user',$user);
+//$unconfirmed_users = $DB->get_records('user',$user);
 $i=0;
 echo "<h1>Unconfirmed users</h1>";
 foreach ($unconfirmed_users as $unconfirmed_user) {
     //delete unconfirmed user
-    if ($DB->delete_records('user',array('id'=>$user->id)) {
+    if ($DB->delete_records('user',array('id'=>$unconfirmed_user->id))) {
         echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from database.</p>";
     } else {
         echo "<p>{$i} Failed to remove from database unconfirmed user: ".fullname($unconfirmed_user)." ({$unconfirmed_user->email})</p>";
@@ -52,9 +52,19 @@ foreach ($unconfirmed_users as $unconfirmed_user) {
 //get all users and check against cleantalk blacklist
 // Construct the calling string for a bulk spam check wget URL
 // example:  wget -O- --post-data='data=stop_email@example.com,10.0.0.1,10.0.0.2' https://api.cleantalk.org/?method_name=spam_check&auth_key=123456
-$all_users = array('deleted'=>0);
-$all_users = $DB->get_records('user',$all_users);
-
+$checkbefore = optional_param('checkbefore', null, PARAM_RAW);
+if ($checkbefore) {
+    $sql = "select u.* from mdl_user u 
+            join mdl_user_info_field uif on shortname = 'cleantalk_checked'
+            full outer join  mdl_user_info_data uid on uid.userid = u.id 
+                and uid.fieldid = uif.id
+                and (uid.data = '' or uid.data < '{$checkbefore}')
+            where u.deleted = 0";
+    $all_users = $DB->get_records_sql($sql);
+} else {
+    $user = array('deleted'=>0);
+    $all_users = $DB->get_records('user',$all_users);
+}
 $dryRun=1;
 if(isset($_GET["dryrun"])) {
     if ($_GET['dryrun']==0) $dryRun=0;
@@ -62,6 +72,13 @@ if(isset($_GET["dryrun"])) {
 ?>
 <label for = "dryrun"> Perform a dry run (No updates)? </label> 
 <input type = "checkbox" id = "dryrun" value = "<?php echo $dryRun;?>" onclick = "dryRun();" <?php echo ($dryRun==1) ? ("checked") : ("");?>>
+<br>
+<form method="post">
+    <label for = "checkbefore"> Check before: </label> 
+    <input type = "date" id = "checkbefore" name = "checkbefore" value = "<?php echo $checkbefore;?>">
+    <input type="submit">
+</form>
+
 <?php
 echo("<h1>Dry Run: ".($dryRun==1 ? "yes" : "no"));
 echo "<h1>The rest</h1>";
@@ -70,6 +87,7 @@ $fileNum=1;
 $maxApiCall=200;
 $postData='';
 $api_key = get_config('local_cleantalk_antispam', 'apikey');
+
 foreach ($all_users as $user) {
     echo "<p>{$i} {$user->email}</p>";
     $sender_email = $user->email;

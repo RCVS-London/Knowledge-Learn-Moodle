@@ -19,6 +19,29 @@ require(__DIR__.'/../../config.php');
         line-height:0.75em;
     }
     p.spam {color:#ff0000;}
+    p.loggedinrecently {color:#ffcc00;}
+    p.haslogs {color:#ff9966;}
+    p.deletionfail {color:#b642f5;}
+
+    .result:hover .tooltip {
+        display: block;
+    }
+
+
+    .tooltip {
+        display: none;
+        background: #C8C8C8;
+        margin-left: 28px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1000;
+        width:auto;
+        height:auto;
+    }
+
+    .result {
+        margin:10px;
+    }
 </style>
 <script>
     window.addEventListener("load", function(event) {
@@ -42,13 +65,37 @@ require(__DIR__.'/../../config.php');
             }
         }
         document.getElementById ("spamButton").addEventListener ("click", showOnlySpam, false);
+
+        // toggles the GET parameter 1 or 0 (creates if not exist, or updates if exists)
+        function dryRunToggle() {
+            let checkbox = document.getElementById('dryrun');
+            var url = new URL(window.location.href);
+            var search_params = url.searchParams;
+            search_params.set('dryrun', checkbox.checked ? '1' : '0');
+            url.search = search_params.toString();
+            var new_url = url.toString();
+            window.location.href = new_url;
+        }
+        document.getElementById ("dryrun").addEventListener ("click", dryRunToggle, false);
     });
     
 </script>
+<?php
+$dryRun=1;
+if(isset($_GET["dryrun"])) {
+    if ($_GET['dryrun']==0) $dryRun=0;
+}
+echo("<h1>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h1>");
+?>
+<label for = "dryrun"> Perform a dry run (No updates)? </label> 
+<input type = "checkbox" id = "dryrun" value = "<?php echo $dryRun;?>" onclick = "dryRun();" <?php echo ($dryRun==1) ? ("checked") : ("");?>>
+<hr>
 <button id="spamButton" onclick="showOnlySpam">Show only spam</button>
+<hr>
 <?php
 $spamCounter=0; // running total
 $spamEmails = array();
+$checkCounter = 0;
 // Get an array of all .txt files in the directory using glob()
 $files = glob('./results/*.txt');
 
@@ -90,7 +137,12 @@ foreach($files as $file) {
                 
                 if ($results['in_antispam_updated']!="") $summary.= "  in_antispam_updated:".$results['in_antispam_updated'];
                 //echo '<br>sha256:'.$results['sha256'];
-                echo "<p ".($spam==true ? "class='spam'" : "class='nospam'").">".$summary."</p>";
+                ?>
+                <input class="<?php echo($spam==true ? "spam result" : "nospam result");?>." type="checkbox" id="whitelist<?php echo $checkCounter;?>" name="whitelist" value="<?php echo $key;?>">
+                <label class="<?php echo($spam==true ? "spam result" : "nospam result");?>." for="whitelist<?php echo $checkCounter;?>">Add to whitelist?</label>
+                <?php
+                $checkCounter++;
+                echo "<p ".($spam==true ? "class='spam result'" : "class='nospam result'").">".$summary."<span class='tooltip'>".json_encode($results)."</span></p>";
                 // Add known spam records to the $spamEmails array.
                 if ($spam) array_push($spamEmails,$key);
 
@@ -116,22 +168,43 @@ foreach($files as $file) {
 
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
-$min_num_logs = 20;
-
+$min_num_logs = 5;
+$min_days = 60;
 foreach ($spamEmails as $spamEmail) {
     $user = $DB->get_record('user',array('email'=>$spamEmail));
+    $sql_count = "select count(id) 
+    from {$CFG->prefix}logstore_standard_log 
+    where userid = {$user->id}";
+    $sql_logs_in_last_period = "select count(id) 
+    from {$CFG->prefix}logstore_standard_log 
+    where userid = {$user->id} 
+    and 
+    to_timestamp(timecreated) > now() - interval '{$min_days} day'";
+    $skip = false;
     if (is_numeric($user->id)) {
-        $sql_count = "select count(id) 
-                from {$CFG->prefix}logstore_standard_log 
-                where userid = {$user->id}";
         $number_of_logs = $DB->count_records_sql($sql_count);
         if ($number_of_logs > $min_num_logs) {
-            echo "<p class = 'spam'>Spam user ".fullname($user).
+            echo "<p class = 'haslogs'>Spam user ".fullname($user).
             " (email {$user->email}) has {$min_num_logs} logs or above";
-        } else {
-            echo "<p>Spam user ".fullname($user)
-            ." (email {$user->email}) will be deleted";
+            $skip = true;
+        } 
+        if ($DB->count_records_sql($sql_logs_in_last_period) > 0) {
+            echo "<p class = 'loggedinrecently'>Spam user ".fullname($user)." (email {$user->email}) logged in in last {$min_days} days";
+            $skip = true;
         }
+        if (!$skip) {
+            if (!$dryRun) {
+                //if (delete_records('user',array('email'=>$user->email))) {
+                //    echo "<p>Spam user ".fullname($user)
+                 //   ." (email {$user->email}) has been deleted";
+                //} else {
+                //    echo "<p>Spam user ".fullname($user)
+                 //   ." (email {$user->email}) has failed to be deleted";
+               // }
+            }
+        }
+ 
+        
     } else {
         echo "<p class = 'spam'>No user in Learn DB exists for {$spamEmail}";
     }
