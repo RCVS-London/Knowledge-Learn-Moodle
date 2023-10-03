@@ -35,4 +35,13 @@ if ($hassiteconfig) {
         // This is the type of Parameter this config is
         PARAM_TEXT
     ));
+    $settings->add(new admin_setting_configtextarea(
+
+        'local_cleantalk_antispam/whitelist',
+
+        // This is the friendly title for the whitelist, which will be displayed
+        'Cleantalk Whitelist',
+        // This is helper text for this whitelist field
+        'Emails should be added to the whitelist seperated by comma',
+    ''));
 }

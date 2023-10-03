@@ -93,6 +93,10 @@ echo("<h1>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h1>");
 <button id="spamButton" onclick="showOnlySpam">Show only spam</button>
 <hr>
 <?php
+$whitelist = get_config('local_cleantalk_antispam', 'whitelist');
+echo("<h3>Whitelist: ".$whitelist."</h3>");
+$whitelistArr = explode( ",", $whitelist);
+print_r($whitelistArr);
 $spamCounter=0; // running total
 $spamEmails = array();
 $checkCounter = 0;
@@ -112,8 +116,18 @@ foreach($files as $file) {
         {
             // display/check result conditions here
             if ($key !== "") {
-                $summary='<br>User email: '.$key;
                 $spam=false;
+                $whitelisted=false;
+                $summary='<br>User email: '.$key;
+                if (in_array($key, $whitelistArr)) {
+                    $whitelisted=true;
+                    $summary.=" <b>Email is whitelisted.</b>";
+                    echo "<p ".($spam==true ? "class='spam result'" : "class='nospam result'").">".$summary."<span class='tooltip'>".json_encode($results)."</span></p>";
+                
+                };
+                if ($whitelisted) continue;
+
+                
                 
                 if ($results['disposable_email']>0) $summary.="  <b>Disposable email</b>";
                 
@@ -137,11 +151,7 @@ foreach($files as $file) {
                 
                 if ($results['in_antispam_updated']!="") $summary.= "  in_antispam_updated:".$results['in_antispam_updated'];
                 //echo '<br>sha256:'.$results['sha256'];
-                ?>
-                <input class="<?php echo($spam==true ? "spam result" : "nospam result");?>." type="checkbox" id="whitelist<?php echo $checkCounter;?>" name="whitelist" value="<?php echo $key;?>">
-                <label class="<?php echo($spam==true ? "spam result" : "nospam result");?>." for="whitelist<?php echo $checkCounter;?>">Add to whitelist?</label>
-                <?php
-                $checkCounter++;
+                
                 echo "<p ".($spam==true ? "class='spam result'" : "class='nospam result'").">".$summary."<span class='tooltip'>".json_encode($results)."</span></p>";
                 // Add known spam records to the $spamEmails array.
                 if ($spam) array_push($spamEmails,$key);
@@ -168,6 +178,7 @@ foreach($files as $file) {
 
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
+//I don't think we need this as we have the whitelist
 $min_num_logs = 5;
 $min_days = 60;
 foreach ($spamEmails as $spamEmail) {

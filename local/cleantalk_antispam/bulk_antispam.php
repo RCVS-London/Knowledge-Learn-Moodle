@@ -54,12 +54,14 @@ foreach ($unconfirmed_users as $unconfirmed_user) {
 // example:  wget -O- --post-data='data=stop_email@example.com,10.0.0.1,10.0.0.2' https://api.cleantalk.org/?method_name=spam_check&auth_key=123456
 $checkbefore = optional_param('checkbefore', null, PARAM_RAW);
 if ($checkbefore) {
+
     $sql = "select u.* from mdl_user u 
             join mdl_user_info_field uif on shortname = 'cleantalk_checked'
             full outer join  mdl_user_info_data uid on uid.userid = u.id 
                 and uid.fieldid = uif.id
                 and (uid.data = '' or uid.data < '{$checkbefore}')
             where u.deleted = 0";
+            echo $sql;
     $all_users = $DB->get_records_sql($sql);
 } else {
     $user = array('deleted'=>0);
@@ -72,7 +74,7 @@ if(isset($_GET["dryrun"])) {
 ?>
 <label for = "dryrun"> Perform a dry run (No updates)? </label> 
 <input type = "checkbox" id = "dryrun" value = "<?php echo $dryRun;?>" onclick = "dryRun();" <?php echo ($dryRun==1) ? ("checked") : ("");?>>
-<br>
+<hr>
 <form method="post">
     <label for = "checkbefore"> Check before: </label> 
     <input type = "date" id = "checkbefore" name = "checkbefore" value = "<?php echo $checkbefore;?>">
@@ -116,6 +118,7 @@ foreach ($all_users as $user) {
         } else {
             echo "<br>exec is disabled<br>";
         }
+
         
         // a new file should now appear:  api_results<X>.txt, where <X> is an incremental number
         echo file_get_contents('./results/'.$fileName);
@@ -123,219 +126,34 @@ foreach ($all_users as $user) {
         $postData='';
         $fileNum++;
     }
+    if ($dryRun==0) {
+        set_processed_data($user);
+    }
 }
 
-//QUESTION: Ant, do we need this function?
-function getApiURL($sender_email, $sender_ip)
-    {
-        $api_key = get_config('local_cleantalk_antispam', 'apikey');
-        $apiURL = 'https://api.cleantalk.org/?method_name=spam_check&auth_key=' . $api_key;
-        if ($sender_email != '') $apiURL .= '&email=' . $sender_email;
-        if ($sender_ip != '') $apiURL .= '&ip=' . $sender_ip;
-        return $apiURL;
-    }
 
-    
-/**
-     * Performs a generic API call using cURL
-     *
-     * @param mixed $method GET (can be PUT, POST, DELETE)
-     * @param mixed $url
-     * @param mixed $data   for a cURL GET, we can just set $data to false because we are not passing any data with a GET call.
-     *
-     * @return json
-     *
-     * example URLs:
-     * IP call
-     *       https://api.cleantalk.org/?method_name=spam_check&auth_key=123456&email=stop_email@example.com&ip=127.0.0.1
-     * email call (hashed email)
-     *       https://api.cleantalk.org/?method_name=spam_check&auth_key=123456&email=email_08c2495014d7f072fbe0bc10a909fa9dca83c17f2452b93afbfef6fe7c663631
-     * IP call (IPV4 hash)
-     *       https://api.cleantalk.org/?method_name=spam_check&auth_key=12345&ip=ip4_f46604ded89bbd0e8e478172a9a650f4825a763053ad2e3582c8286864ec4074
-     *
-     */
 
-//QUESTION: Ant, do we still need this function?
-    function callAPI($method, $url, $data)
-    {
-        $curl = curl_init();
-        switch ($method) {
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-        // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'APIKEY: jamu4y7uvyta8yq',
-            'Content-Type: application/json',
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        // EXECUTE:
-        $result = curl_exec($curl);
-        if (!$result) {
-            die("Connection Failure");
-        }
-        curl_close($curl);
-        return $result;
-    }
-
-//QUESTION: Ant, do we need this function?
-function checkApiResults($api_results, $sender_ip, $sender_email)
-    {
-        global $DB, $CFG;
-        $response = json_decode($api_results, true);
-
-        $data = $response['data'];
-        $is_spam = false;
-        if ($sender_ip != '') {
-            $ip_data = $data[$sender_ip];
-
-            // popular spam conditions for IP addresses
-            if ($ip_data['spam_rate'] == 1) {
-                echo ("<br><b>IP has a 100% spam rate.</b>");
-                $is_spam = true;
-            }
-            if ($ip_data['appears'] == 1) {
-                echo ("<br><b>IP appears in the spam blacklist.</b>");
-                $is_spam = true;
-            }
-            if ($ip_data['in_antispam'] > 0) {
-                echo ("<br><b>IP appears in the antispam blacklist.</b>");
-                if ($ip_data['in_antispam_previous'] > 0) {
-                    echo ("<br><b>IP has appeared previously in the antispam blacklist.</b>");
-                } else {
-                    echo ("<br><b>This is the first time this IP has been spotted in the antispam blacklist.</b>");
-                }
-
-                $is_spam = true;
-            }
-
-            if ($is_spam) {
-                echo ("<br><h1>Spam IP.</h1>");
-                $blockedip = get_config('core','blockedip','');
-                if (!strstr($blockedip,$sender_ip)) {
-                    $blockedip = $sender_email.'\n '.$blockedip;
-                    if (set_config('blockedip',$blockedip)) {
-                        echo "Blocked IPs list update succeeded.\n";
-                        error_log("IP:" . $sender_ip . "added to block list");
-                    } else {
-                        error_log("IP:" . $sender_ip . " faled to add to block list");
-                        echo "Blocked IPs list update failed.\n";
-                    }
-                } else {
-                    echo ("<br><h1>IP is OK.</h1>");
-                }
-            }
-        }
-
-        // just testing the blocked email list ... is it populated?  Can we avoid using $CFG?
-       // $blocked_email_obj = $DB->get_record('config', array('name' => 'denyemailaddresses'));
-       // print_r($blocked_email_obj);
-        // end of debug
-
-        // Check denied email addresses from the $CFG global
-        $email_denied = false;
-        error_log("Denied email addresses: ".$CFG->denyemailaddresses);
-        if (!empty($CFG->denyemailaddresses)) {
-            $denied = explode(' ', $CFG->denyemailaddresses);
-            //echo("Denied email addresses:");
-            //print_r($denied);
-
-            foreach ($denied as $deniedpattern) {
-               // if ($email_denied) continue;
-                $deniedpattern = trim($deniedpattern);
-                if (!$deniedpattern) {
-                    continue;
-                }
-                // For debugging:
-                //error_log("Denied pattern:".$deniedpattern);
-                //error_log("strpos(deniedpattern,.):".strpos($deniedpattern, '.'));
-                //error_log("strrev($sender_email):".strrev($sender_email));
-                //error_log("strrev($deniedpattern):".strrev($deniedpattern));
-                //Examples:
-                //Denied pattern:stop_email@example.com
-                //strpos(deniedpattern,.):18
-                //strrev(anthony@rcvsknowledge.org):gro.egdelwonksvcr@ynohtna
-                //strrev(stop_email@example.com):moc.elpmaxe@liame_pots
-                if (strpos($deniedpattern, '.') === 0) { // if this is a full domain with no email@ section, i.e. ".example.com"
-                    if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) { // If the sender email is from the same domain as the blocked email, i.e. "example.com"
-                        // Subdomains are in a form ".example.com" - matches "xxx@anything.example.com".
-                        echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
-                        error_log("Email ".$sender_email." is part of a blocked email domain");
-                        $email_denied = true;
-                    }
-                } else if (strpos(strrev($sender_email), strrev('@' . $deniedpattern)) === 0) {
-                    error_log("strrev(@ . deniedpattern):".strrev('@' . $deniedpattern));
-                    error_log("Email ".$sender_email." is a blocked email.");
-                    echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
-                    $email_denied = true;
-                }
-            }
+function set_processed_data($user) {
+    global $DB;
+    $cleantalk_check_fieldid = $DB->get_field('user_info_field','id',array('shortname'=>'cleantalk_checked'));
+    $date_today = date("Y-m-d");
+    if ($user_info_data = $DB->get_record('user_info_data',array('userid'=>$user->id,'fieldid'=>$cleantalk_check_fieldid))) {
+        $user_info_data->data =  $date_today;
+        if ($DB->update_record('user_info_data',$user_info_data)) {
+            echo ("<br>Successfully updated new user_info_data date for {$user->username} (id $user->id)");
         } else {
-            echo ("Denied email list is not defined.");
+            echo ("<br>Failed to update new user_info_data date for {$user->username} (id $user->id)");
         }
-        // If $email_denied==true then there is no need to add the email to the block list - it is already there...
-        $is_spam_email = false || $email_denied;
-        if ($is_spam_email) {
-            error_log("Email is blocked.  On the denied email list.");
+    } else {
+        $user_info_data = new stdClass();
+        $user_info_data->userid = $user->id;
+        $user_info_data->fieldid =$cleantalk_check_fieldid;
+        $user_info_data->data = $date_today;
+        $user_info_data->format = 0;
+        if ($DB->insert_record('user_info_data',$user_info_data)) {
+            echo ("<br>Successfully inserted record for new user_info_data record  for {$user->username} (id $user->id)");
         } else {
-            // Check for spamminess if this email is NOT on the blocked list.
-            $email_data = $data[$sender_email];
-
-            // popular spam conditions for email addresses
-            if ($email_data['frequency'] > 0) {
-                echo ('<br><b>Email has been spotted previously as spam ' . $email_data['frequency'] . ' times</b>');
-                $is_spam_email = true;
-            }
-            if ($email_data['spam_rate'] == 1) {
-                echo ("<br><b>Email appears in the spam blacklist.</b>");
-                $is_spam_email = true;
-            }
-            if (($email_data['exists'] !== null) && ($email_data['exists'] == 0)) {
-                echo ("<br><b>Email does not exist.  Invalid email.</b>");
-                $is_spam_email = true;
-            }
-            if ($email_data['disposable_email'] == 1) {
-                echo ("<br><b>Email is disposable - probably spam.</b>");
-                $is_spam_email = true;
-            }
-
-
-            if ($is_spam_email) {
-                $denyemailaddresses = get_config('core','denyemailaddresses','');
-                if (!strstr($denyemailaddresses,$sender_email)) {
-                    $denyemailaddresses = $sender_email.' '.$denyemailaddresses;
-                    if (set_config('denyemailaddresses',$denyemailaddresses)) {
-                        error_log("Email:" . $sender_email . " added to email block list");
-                        echo "Blocked email list update succeeded.\n";
-                    } else {
-                        error_log("Email:" . $sender_email . " failed to add to email block list");
-                        echo "Blocked email list update failed.\n";
-                    }
-                }
-            } else {
-                echo ("<br><h1>Email is OK.</h1>");
-            }
-        }
-        // If either the IP or email is regarded as spam then return true
-        if ($is_spam || $is_spam_email) {
-            error_log("Email:".$sender_email." is regarded as spam.");
-            echo ("<br>Results = SPAM.<br>");
-            return true; // Not OK - spam
-        } else {
-            error_log("Email:".$sender_email." is NOT regarded as spam.");
-            return false; // OK - not spam
+            echo ("<br>Failed to insert record for new user_info_data date for {$user->username} (id $user->id)");
         }
     }
+}
