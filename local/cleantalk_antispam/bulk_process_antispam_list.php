@@ -178,8 +178,9 @@ foreach($files as $file) {
 
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
+echo("<h2>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h2>");
 //I don't think we need this as we have the whitelist
-$min_num_logs = 0;
+$min_num_logs = 5;
 $min_days = 0;
 foreach ($spamEmails as $spamEmail) {
     $user = $DB->get_record('user',array('email'=>$spamEmail));
@@ -197,21 +198,23 @@ foreach ($spamEmails as $spamEmail) {
         if ($number_of_logs > $min_num_logs) {
             echo "<p class = 'haslogs'>Spam user ".fullname($user).
             " (email {$user->email}) has {$min_num_logs} logs or above";
-            $skip = true;
+            //$skip = true;
         } 
         if ($DB->count_records_sql($sql_logs_in_last_period) > 0) {
             echo "<p class = 'loggedinrecently'>Spam user ".fullname($user)." (email {$user->email}) logged in in last {$min_days} days";
-            $skip = true;
+            //$skip = true;
         }
         if (!$skip) {
+            echo "<p>Spam user ".fullname($user)
+            ." (email {$user->email}) will be deleted";
             if (!$dryRun) {
                 //if (delete_records('user',array('email'=>$user->email))) {
                 //    echo "<p>Spam user ".fullname($user)
-                 //   ." (email {$user->email}) has been deleted";
+                //    ." (email {$user->email}) has been deleted";
                 //} else {
                 //    echo "<p>Spam user ".fullname($user)
-                 //   ." (email {$user->email}) has failed to be deleted";
-               // }
+                //    ." (email {$user->email}) has failed to be deleted";
+                //}
             }
         }
  

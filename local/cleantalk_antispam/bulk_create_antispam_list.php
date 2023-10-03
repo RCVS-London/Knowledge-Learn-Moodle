@@ -20,6 +20,7 @@ $dryRun=1;
 if($dryrunoff==1) {
     $dryRun=0;
 }
+echo "<br>dryrunoff: $dryrunoff <br>dryRun: $dryRun <br>_POST: {$_POST['dryrunoff']}";
 
 //get all unconfirmed users flagged as deleted and remove from database
 $user = array('confirmed'=>0,'deleted'=>1);
@@ -64,7 +65,7 @@ if ($checkbefore) {
 ?>
 <form method="post">
     <label for = "dryrunoff">Turn dry run off (Update database)? </label> 
-    <input type = "checkbox" id = "dryrunoff" value = "<?php echo $dryrunoff;?>">
+    <input type = "checkbox" id = "dryrunoff" name = "dryrunoff" value = "1">
     <label for = "checkbefore"> Check before: </label> 
     <input type = "date" id = "checkbefore" name = "checkbefore" value = "<?php echo $checkbefore;?>">
     <input type="submit">
@@ -116,6 +117,7 @@ foreach ($all_users as $user) {
         $fileNum++;
     }
     if ($dryRun==0) {
+        echo '<br>paolofoo';
         set_processed_data($user);
     }
 }

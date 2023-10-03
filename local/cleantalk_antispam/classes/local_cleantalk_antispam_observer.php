@@ -13,7 +13,6 @@ class local_cleantalk_antispam_observer
     {
         global $USER, $DB;
         if (get_config('local_cleantalk_antispam', 'monitornewaccounts')) {
-            //error_log("user created - event picked up.",0);
             $sender_email = $_POST['email'];
             $sender_ip = $_SERVER['REMOTE_ADDR'];
             $api_key = self::getApiURL($sender_email, $sender_ip);
@@ -32,9 +31,7 @@ class local_cleantalk_antispam_observer
                 }
 
                 reset($USER);
-                // The following line doesn't appear to work...
-                //throw new moodle_exception('spam_user', 'local_rcvskantispam');
-                //header('Location: /error.html');
+
                 header('HTTP/1.0 403 Forbidden');
                 echo "<br>".get_config('local_cleantalk_antispam', 'errormessage');
                 exit;
@@ -50,10 +47,8 @@ class local_cleantalk_antispam_observer
         if (get_config('local_cleantalk_antispam', 'monitorlogin')) {
             $event_data = $event->get_data();
             error_log("user logged in - event picked up.", 0);
-            //echo("Username:".$event_data['other']['username']);
             $sender_email = $event_data['other']['username'];
             $sender_ip = $_SERVER['REMOTE_ADDR'];
-            //echo("<br>IP:".$sender_ip);
 
             error_log(json_encode($event_data), 0);
             $api_key = self::getApiURL($sender_email, $sender_ip);
@@ -65,15 +60,12 @@ class local_cleantalk_antispam_observer
                 echo ("<BR><h1>SPAM</h1>");
                 error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
                 reset($USER);
-                //throw new moodle_exception('spam_user', 'local_rcvskantispam');
-                //header('Location: /error.html');
                 header('HTTP/1.0 403 Forbidden');
                 echo get_config('local_cleantalk_antispam', 'errormessage');
                 exit;
-                //Notify admin?
+
             } else {
                 echo ("<BR><h1>NOT SPAM</h1>");
-                //die(); // remove this (and the echo message when finished.)
             }
         }
     }
@@ -126,37 +118,17 @@ class local_cleantalk_antispam_observer
             }
         }
 
-        // just testing the blocked email list ... is it populated?  Can we avoid using $CFG?
-        // $blocked_email_obj = $DB->get_record('config', array('name' => 'denyemailaddresses'));
-        // print_r($blocked_email_obj);
-        // end of debug
-
         // Check denied email addresses from the $CFG global
         $email_denied = false;
         error_log("Denied email addresses: " . $CFG->denyemailaddresses);
         if (!empty($CFG->denyemailaddresses)) {
             $denied = explode(' ', $CFG->denyemailaddresses);
-            //echo("Denied email addresses:");
-            //print_r($denied);
-
             foreach ($denied as $deniedpattern) {
                 // if ($email_denied) continue;
                 $deniedpattern = trim($deniedpattern);
                 if (!$deniedpattern) {
                     continue;
                 }
-                // For debugging:
-                //error_log("Denied pattern:".$deniedpattern);
-                //error_log("strpos(deniedpattern,.):".strpos($deniedpattern, '.'));
-                //error_log("strrev($sender_email):".strrev($sender_email));
-                //error_log("strrev($deniedpattern):".strrev($deniedpattern));
-                //Examples:
-                //Denied pattern:stop_email@example.com
-                //strpos(deniedpattern,.):18
-                //strrev(anthony@rcvsknowledge.org):gro.egdelwonksvcr@ynohtna
-                //strrev(stop_email@example.com):moc.elpmaxe@liame_pots
-                // Actual denied email list in learndev:
-                // very.green.pea.soup@gmail.com makekaos.com ilbkzgwt@mailkv.com yaya@yaya.org yaya@yaya.org yaya@yaya.org stop_email@example.com yaya@yaya.org baba@baba.org .@example.com bfeamuhn@maillsk.com etyptlza@maillv.com
                 if (strpos($deniedpattern, '.') === 0) { // if this is a full domain with no email@ section, i.e. ".example.com"
                     if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) { // If the sender email is from the same domain as the blocked email, i.e. "example.com"
                         // Subdomains are in a form ".example.com" - matches "xxx@anything.example.com".
