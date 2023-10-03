@@ -2,7 +2,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2023100290; // Replace with your version number. Note this needs to be incremented after every change.
+$plugin->version = 2023100292; // Replace with your version number. Note this needs to be incremented after every change.
 $plugin->requires = 2022041900;
 
 $plugin->component = 'local_cleantalk_antispam'; // Replace with your plugin's name.

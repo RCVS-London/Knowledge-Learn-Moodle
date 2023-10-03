@@ -179,8 +179,8 @@ foreach($files as $file) {
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
 //I don't think we need this as we have the whitelist
-$min_num_logs = 5;
-$min_days = 60;
+$min_num_logs = 0;
+$min_days = 0;
 foreach ($spamEmails as $spamEmail) {
     $user = $DB->get_record('user',array('email'=>$spamEmail));
     $sql_count = "select count(id) 

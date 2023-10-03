@@ -12,61 +12,69 @@ class local_cleantalk_antispam_observer
     public static function user_created(\core\event\user_created $event)
     {
         global $USER, $DB;
-        //error_log("user created - event picked up.",0);
-        $sender_email = $_POST['email'];
-        $sender_ip = $_SERVER['REMOTE_ADDR'];
-        $api_key = self::getApiURL($sender_email, $sender_ip);
-        // check if api key is not set- show error if not, or die?
-        $api_results = self::callAPI("GET", $api_key, null);
-        $isSpam = self::checkApiResults($api_results, $sender_ip, $sender_email);
+        if (get_config('local_cleantalk_antispam', 'monitornewaccounts')) {
+            //error_log("user created - event picked up.",0);
+            $sender_email = $_POST['email'];
+            $sender_ip = $_SERVER['REMOTE_ADDR'];
+            $api_key = self::getApiURL($sender_email, $sender_ip);
+            // check if api key is not set- show error if not, or die?
+            $api_results = self::callAPI("GET", $api_key, null);
+            $isSpam = self::checkApiResults($api_results, $sender_ip, $sender_email);
 
-        if ($isSpam) {
-            error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
-            echo ("<BR><h1>SPAM</h1>");
-            $user = $DB->delete_records('user',array('email'=>$sender_email));
-            if ($user) {
-                error_log("user deleted: ".$sender_email);
+            if ($isSpam) {
+                error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
+                echo ("<BR><h1>SPAM</h1>");
+                $user = $DB->delete_records('user', array('email' => $sender_email));
+                if ($user) {
+                    error_log("user deleted: " . $sender_email);
+                } else {
+                    error_log("user deletion attempt failed for: " . $sender_email . " - delete manually");
+                }
+
+                reset($USER);
+                // The following line doesn't appear to work...
+                //throw new moodle_exception('spam_user', 'local_rcvskantispam');
+                //header('Location: /error.html');
+                header('HTTP/1.0 403 Forbidden');
+                echo "<br>".get_config('local_cleantalk_antispam', 'errormessage');
+                exit;
             } else {
-                error_log("user deletion attempt failed for: ".$sender_email." - delete manually");
+                //echo ("<BR><h1>NOT SPAM</h1>");
             }
-
-            reset($USER);
-            // The following line doesn't appear to work...
-            //throw new moodle_exception('spam_user', 'local_rcvskantispam');
-            header('Location: /error.html');
-            exit;
-        } else {
-            //echo ("<BR><h1>NOT SPAM</h1>");
         }
     }
 
     public static function user_loggedin(\core\event\user_loggedin $event)
     {
         //echo("user_authenticated");
-        $event_data = $event->get_data();
-        error_log("user logged in - event picked up.", 0);
-        //echo("Username:".$event_data['other']['username']);
-        $sender_email = $event_data['other']['username'];
-        $sender_ip = $_SERVER['REMOTE_ADDR'];
-        //echo("<br>IP:".$sender_ip);
+        if (get_config('local_cleantalk_antispam', 'monitorlogin')) {
+            $event_data = $event->get_data();
+            error_log("user logged in - event picked up.", 0);
+            //echo("Username:".$event_data['other']['username']);
+            $sender_email = $event_data['other']['username'];
+            $sender_ip = $_SERVER['REMOTE_ADDR'];
+            //echo("<br>IP:".$sender_ip);
 
-        error_log(json_encode($event_data), 0);
-        $api_key = self::getApiURL($sender_email, $sender_ip);
-        // check if api key is not set- show error if not, or die?
-        $api_results = self::callAPI("GET", $api_key, null);
-        $isSpam = self::checkApiResults($api_results, $sender_ip, $sender_email);
+            error_log(json_encode($event_data), 0);
+            $api_key = self::getApiURL($sender_email, $sender_ip);
+            // check if api key is not set- show error if not, or die?
+            $api_results = self::callAPI("GET", $api_key, null);
+            $isSpam = self::checkApiResults($api_results, $sender_ip, $sender_email);
 
-        if ($isSpam) {
-            echo ("<BR><h1>SPAM</h1>");
-            error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
-            reset($USER);
-            //throw new moodle_exception('spam_user', 'local_rcvskantispam');
-            header('Location: /error.html');
-            exit;
-            //Notify admin?
-        } else {
-            echo ("<BR><h1>NOT SPAM</h1>");
-            //die(); // remove this (and the echo message when finished.)
+            if ($isSpam) {
+                echo ("<BR><h1>SPAM</h1>");
+                error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
+                reset($USER);
+                //throw new moodle_exception('spam_user', 'local_rcvskantispam');
+                //header('Location: /error.html');
+                header('HTTP/1.0 403 Forbidden');
+                echo get_config('local_cleantalk_antispam', 'errormessage');
+                exit;
+                //Notify admin?
+            } else {
+                echo ("<BR><h1>NOT SPAM</h1>");
+                //die(); // remove this (and the echo message when finished.)
+            }
         }
     }
 
@@ -102,10 +110,10 @@ class local_cleantalk_antispam_observer
 
             if ($is_spam) {
                 echo ("<br><h1>Spam IP.</h1>");
-                $blockedip = get_config('core','blockedip','');
-                if (!strstr($blockedip,$sender_ip)) {
-                    $blockedip = $sender_email.'\n '.$blockedip;
-                    if (set_config('blockedip',$blockedip)) {
+                $blockedip = get_config('core', 'blockedip', '');
+                if (!strstr($blockedip, $sender_ip)) {
+                    $blockedip = $sender_email . '\n ' . $blockedip;
+                    if (set_config('blockedip', $blockedip)) {
                         echo "Blocked IPs list update succeeded.\n";
                         error_log("IP:" . $sender_ip . "added to block list");
                     } else {
@@ -119,20 +127,20 @@ class local_cleantalk_antispam_observer
         }
 
         // just testing the blocked email list ... is it populated?  Can we avoid using $CFG?
-       // $blocked_email_obj = $DB->get_record('config', array('name' => 'denyemailaddresses'));
-       // print_r($blocked_email_obj);
+        // $blocked_email_obj = $DB->get_record('config', array('name' => 'denyemailaddresses'));
+        // print_r($blocked_email_obj);
         // end of debug
 
         // Check denied email addresses from the $CFG global
         $email_denied = false;
-        error_log("Denied email addresses: ".$CFG->denyemailaddresses);
+        error_log("Denied email addresses: " . $CFG->denyemailaddresses);
         if (!empty($CFG->denyemailaddresses)) {
             $denied = explode(' ', $CFG->denyemailaddresses);
             //echo("Denied email addresses:");
             //print_r($denied);
 
             foreach ($denied as $deniedpattern) {
-               // if ($email_denied) continue;
+                // if ($email_denied) continue;
                 $deniedpattern = trim($deniedpattern);
                 if (!$deniedpattern) {
                     continue;
@@ -153,12 +161,12 @@ class local_cleantalk_antispam_observer
                     if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) { // If the sender email is from the same domain as the blocked email, i.e. "example.com"
                         // Subdomains are in a form ".example.com" - matches "xxx@anything.example.com".
                         echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
-                        error_log("Email ".$sender_email." is part of a blocked email domain");
+                        error_log("Email " . $sender_email . " is part of a blocked email domain");
                         $email_denied = true;
                     }
                 } else if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) {
-                    error_log("strrev(@ . deniedpattern):".strrev('@' . $deniedpattern));
-                    error_log("Email ".$sender_email." is a blocked email.");
+                    error_log("strrev(@ . deniedpattern):" . strrev('@' . $deniedpattern));
+                    error_log("Email " . $sender_email . " is a blocked email.");
                     echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
                     $email_denied = true;
                 }
@@ -194,10 +202,10 @@ class local_cleantalk_antispam_observer
 
 
             if ($is_spam_email) {
-                $denyemailaddresses = get_config('core','denyemailaddresses','');
-                if (!strstr($denyemailaddresses,$sender_email)) {
-                    $denyemailaddresses = $sender_email.' '.$denyemailaddresses;
-                    if (set_config('denyemailaddresses',$denyemailaddresses)) {
+                $denyemailaddresses = get_config('core', 'denyemailaddresses', '');
+                if (!strstr($denyemailaddresses, $sender_email)) {
+                    $denyemailaddresses = $sender_email . ' ' . $denyemailaddresses;
+                    if (set_config('denyemailaddresses', $denyemailaddresses)) {
                         error_log("Email:" . $sender_email . " added to email block list");
                         echo "Blocked email list update succeeded.\n";
                     } else {
@@ -211,11 +219,11 @@ class local_cleantalk_antispam_observer
         }
         // If either the IP or email is regarded as spam then return true
         if ($is_spam || $is_spam_email) {
-            error_log("Email:".$sender_email." is regarded as spam.");
+            error_log("Email:" . $sender_email . " is regarded as spam.");
             echo ("<br>Results = SPAM.<br>");
             return true; // Not OK - spam
         } else {
-            error_log("Email:".$sender_email." is NOT regarded as spam.");
+            error_log("Email:" . $sender_email . " is NOT regarded as spam.");
             return false; // OK - not spam
         }
     }

@@ -44,4 +44,31 @@ if ($hassiteconfig) {
         // This is helper text for this whitelist field
         'Emails should be added to the whitelist seperated by comma',
     ''));
+
+    $settings->add(new admin_setting_configtextarea(
+
+        'local_cleantalk_antispam/errormessage',
+
+        // This is the friendly title for the whitelist, which will be displayed
+        'Spam-found error message to show the user.',
+        // This is helper text for this whitelist field
+        'Enter the short message to show to users who have attempted to create new accounts using blacklisted email addresses.',
+    ''));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_cleantalk_antispam/monitorlogin',
+
+        'Monitor User Logins',
+
+        'The plugin will monitor all user login events and check against the blacklist.  Off by default.',
+
+    0));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_cleantalk_antispam/monitornewaccounts',
+
+        'Monitor New User Accounts',
+
+        'The plugin will monitor all user creation events and check against the blacklist.  On by default.  If users are found to be blacklisted, their new account will immediately be deleted.',
+
+    1));
 }

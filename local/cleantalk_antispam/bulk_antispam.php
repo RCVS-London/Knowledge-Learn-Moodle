@@ -13,69 +13,58 @@
 
 require(__DIR__.'/../../config.php');
 //require_once($CFG->libdir.'/clilib.php');      // cli only functions
+$checkbefore = optional_param('checkbefore', null, PARAM_ALPHANUMEXT);
+$dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
 
-?>
-<script>
-    window.addEventListener("load", function(event) {
-        // toggles the GET parameter 1 or 0 (creates if not exist, or updates if exists)
-        function dryRunToggle() {
-            let checkbox = document.getElementById('dryrun');
-            var url = new URL(window.location.href);
-            var search_params = url.searchParams;
-            search_params.set('dryrun', checkbox.checked ? '1' : '0');
-            url.search = search_params.toString();
-            var new_url = url.toString();
-            window.location.href = new_url;
-        }
-        document.getElementById ("dryrun").addEventListener ("click", dryRunToggle, false);
-    });
-    
-</script>
-<?php
+$dryRun=1;
+if($dryrunoff==1) {
+    $dryRun=0;
+}
 
 //get all unconfirmed users flagged as deleted and remove from database
 $user = array('confirmed'=>0,'deleted'=>1);
 //$unconfirmed_users = $DB->get_records('user',$user);
 $i=0;
 echo "<h1>Unconfirmed users</h1>";
-foreach ($unconfirmed_users as $unconfirmed_user) {
-    //delete unconfirmed user
-    if ($DB->delete_records('user',array('id'=>$unconfirmed_user->id))) {
-        echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from database.</p>";
-    } else {
-        echo "<p>{$i} Failed to remove from database unconfirmed user: ".fullname($unconfirmed_user)." ({$unconfirmed_user->email})</p>";
+if ($dryRun==0) {
+    foreach ($unconfirmed_users as $unconfirmed_user) {
+        //delete unconfirmed user
+        if ($DB->delete_records('user',array('id'=>$unconfirmed_user->id))) {
+            echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from database.</p>";
+        } else {
+            echo "<p>{$i} Failed to remove from database unconfirmed user: ".fullname($unconfirmed_user)." ({$unconfirmed_user->email})</p>";
+        }
+        $i++;
     }
-    $i++;
 }
 
 
 //get all users and check against cleantalk blacklist
 // Construct the calling string for a bulk spam check wget URL
 // example:  wget -O- --post-data='data=stop_email@example.com,10.0.0.1,10.0.0.2' https://api.cleantalk.org/?method_name=spam_check&auth_key=123456
-$checkbefore = optional_param('checkbefore', null, PARAM_RAW);
-if ($checkbefore) {
 
+if ($checkbefore) {
     $sql = "select u.* from mdl_user u 
-            join mdl_user_info_field uif on shortname = 'cleantalk_checked'
-            full outer join  mdl_user_info_data uid on uid.userid = u.id 
+                where exists (select uid.id from mdl_user_info_data uid
+                join mdl_user_info_field uif on shortname = 'cleantalk_checked' 
                 and uid.fieldid = uif.id
-                and (uid.data = '' or uid.data < '{$checkbefore}')
-            where u.deleted = 0";
-            echo $sql;
+                where 
+                uid.userid = u.id and 
+                uid.data < '{$checkbefore}')
+                or not exists (select uid.id from mdl_user_info_data uid
+                join mdl_user_info_field uif on shortname = 'cleantalk_checked' and 
+                uid.fieldid = uif.id where u.deleted = 0 and 
+                uid.userid = u.id) and 
+                u.deleted = 0";     
     $all_users = $DB->get_records_sql($sql);
 } else {
     $user = array('deleted'=>0);
     $all_users = $DB->get_records('user',$all_users);
 }
-$dryRun=1;
-if(isset($_GET["dryrun"])) {
-    if ($_GET['dryrun']==0) $dryRun=0;
-}
 ?>
-<label for = "dryrun"> Perform a dry run (No updates)? </label> 
-<input type = "checkbox" id = "dryrun" value = "<?php echo $dryRun;?>" onclick = "dryRun();" <?php echo ($dryRun==1) ? ("checked") : ("");?>>
-<hr>
 <form method="post">
+    <label for = "dryrunoff">Turn dry run off (Update database)? </label> 
+    <input type = "checkbox" id = "dryrunoff" value = "<?php echo $dryrunoff;?>">
     <label for = "checkbefore"> Check before: </label> 
     <input type = "date" id = "checkbefore" name = "checkbefore" value = "<?php echo $checkbefore;?>">
     <input type="submit">
