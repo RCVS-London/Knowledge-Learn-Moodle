@@ -96,7 +96,7 @@ echo("<h1>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h1>");
 $whitelist = get_config('local_cleantalk_antispam', 'whitelist');
 echo("<h3>Whitelist: ".$whitelist."</h3>");
 $whitelistArr = explode( ",", $whitelist);
-print_r($whitelistArr);
+//print_r($whitelistArr);
 $spamCounter=0; // running total
 $spamEmails = array();
 $checkCounter = 0;
@@ -152,7 +152,7 @@ foreach($files as $file) {
                 if ($results['in_antispam_updated']!="") $summary.= "  in_antispam_updated:".$results['in_antispam_updated'];
                 //echo '<br>sha256:'.$results['sha256'];
                 
-                echo "<p ".($spam==true ? "class='spam result'" : "class='nospam result'").">".$summary."<span class='tooltip'>".json_encode($results)."</span></p>";
+                //echo "<p ".($spam==true ? "class='spam result'" : "class='nospam result'").">".$summary."<span class='tooltip'>".json_encode($results)."</span></p>";
                 // Add known spam records to the $spamEmails array.
                 if ($spam) array_push($spamEmails,$key);
 
@@ -205,6 +205,7 @@ foreach ($spamEmails as $spamEmail) {
             //    echo "<p>Spam user ".fullname($user)
             //    ." (email {$user->email}) has failed to be deleted";
             //}
+
         }
     }
         
@@ -212,6 +213,7 @@ foreach ($spamEmails as $spamEmail) {
         echo "<p class = 'spam'>No user in Learn DB exists for {$spamEmail}";
     }
 }
+
 
 // The array will now be sorted by number_of_logs in ascending order
 if ($_GET['sortbylogs']) {
@@ -244,8 +246,11 @@ foreach ($spam_users_by_logs_array as $spam_users_by_log) {
                 {$spam_users_by_log['spam_user']}
             </td>
         </tr>";
-    }
-echo "</table>";
+    $deleted_users .= $spam_users_by_log['spam_email'].',';
+}
+echo "</table>";   
+$file_name =  'deleted_users_'.date("Y-m-d").'.csv';
+file_put_contents('results/'.$file_name,substr($deleted_users,0,-1));
 
 
 
