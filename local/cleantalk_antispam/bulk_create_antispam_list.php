@@ -20,11 +20,11 @@ $dryRun=1;
 if($dryrunoff==1) {
     $dryRun=0;
 }
-echo "<br>dryrunoff: $dryrunoff <br>dryRun: $dryRun <br>_POST: {$_POST['dryrunoff']}";
 
 //get all unconfirmed users flagged as deleted and remove from database
 $user = array('confirmed'=>0,'deleted'=>1);
-//$unconfirmed_users = $DB->get_records('user',$user);
+$unconfirmed_users = $DB->get_records('user',$user);
+
 $i=0;
 echo "<h1>Unconfirmed users</h1>";
 if ($dryRun==0) {
@@ -87,10 +87,12 @@ foreach ($all_users as $user) {
     $i++;
     if ($i % $maxApiCall==0) {
         $sortedNum=substr(1000+$fileNum, 1);
-        $fileName="api_results".$sortedNum.".txt";
+        $filePath= date('Ymd');
+        
+        $fileName=$filePath."/api_results".$sortedNum.".txt";
         // create file
         if ($dryRun==0) {
-            //file_put_contents("./results/".$fileName, '');
+            file_put_contents("./results/".$fileName, '');
         }
         $wgetCall="wget -O ./results/".$fileName." --post-data='data=".substr($postData, 0, -1)."&method_name=spam_check&auth_key=".$api_key."' https://api.cleantalk.org/";
         echo("<br>WGET call string (counter = ".$i.")");
@@ -101,7 +103,7 @@ foreach ($all_users as $user) {
             // Uncomment the next line to re-enable the API call.  (It performs close to 9000 calls, so dont run this unless necessary)
             if ($dryRun==0) {
                 echo("<br>Calling API");
-                //exec($wgetCall);
+                exec($wgetCall);
             } else {
                 echo("Dry Run - not processed.");
             }
@@ -117,7 +119,6 @@ foreach ($all_users as $user) {
         $fileNum++;
     }
     if ($dryRun==0) {
-        echo '<br>paolofoo';
         set_processed_data($user);
     }
 }
