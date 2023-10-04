@@ -179,9 +179,6 @@ foreach($files as $file) {
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
 echo("<h2>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h2>");
-//I don't think we need this as we have the whitelist
-$min_num_logs = 5;
-$min_days = 0;
 foreach ($spamEmails as $spamEmail) {
     if ($user = $DB->get_record('user',array('email'=>$spamEmail))) {
     $sql_count = "select count(id) 
@@ -200,18 +197,14 @@ foreach ($spamEmails as $spamEmail) {
                     'spam_email'=>$user->username,
                     'spam_user'=>fullname($user)
                 );
-        if (!$skip) {
-            //echo "<p>Spam user ".fullname($user)
-            //." (email {$user->email}) will be deleted";
-            if (!$dryRun) {
-                //if (delete_records('user',array('email'=>$user->email))) {
-                //    echo "<p>Spam user ".fullname($user)
-                //    ." (email {$user->email}) has been deleted";
-                //} else {
-                //    echo "<p>Spam user ".fullname($user)
-                //    ." (email {$user->email}) has failed to be deleted";
-                //}
-            }
+        if (!$dryRun) {
+            //if (delete_records('user',array('email'=>$user->email))) {
+            //    echo "<p>Spam user ".fullname($user)
+            //    ." (email {$user->email}) has been deleted";
+            //} else {
+            //    echo "<p>Spam user ".fullname($user)
+            //    ." (email {$user->email}) has failed to be deleted";
+            //}
         }
     }
         
@@ -221,34 +214,39 @@ foreach ($spamEmails as $spamEmail) {
 }
 
 // The array will now be sorted by number_of_logs in ascending order
-
-usort($spam_users_by_logs_array, 'sortByNumberOfLogsDesc');
+if ($_GET['sortbylogs']) {
+    usort($spam_users_by_logs_array, 'sortByNumberOfLogsDesc');
+}
+if ($_GET['sortbylastloggedin']) {
+    usort($spam_users_by_logs_array, 'sortByLastLoggedInDesc');
+}
 
 echo "
-    <table>
+    <table id='delete_log_table'>
         <tr>
-            <td>Logs</td>
-            <td>Last Logged in</td>
+            <td><a href='?sortbylogs=1#delete_log_table'>Logs</a></td>
+            <td><a href='?sortbylastloggedin=1#delete_log_table'>Last Logged in</a></td>
             <td>Email</td>
             <td>Spam user</td>
         </tr>";
 foreach ($spam_users_by_logs_array as $spam_users_by_log) {
     echo "<tr>
-                <td>
-                    {$spam_users_by_log['number_of_logs']}
-                </td>
-                <td>
-                    {$spam_users_by_log['last_log']}
-                </td>
-                <td>
-                    {$spam_users_by_log['spam_email']}
-                </td>
-                <td>
-                    {$spam_users_by_log['spam_user']}
-                </td>
-            </tr>";
+            <td>
+                {$spam_users_by_log['number_of_logs']}
+            </td>
+            <td>
+                {$spam_users_by_log['last_log']}
+            </td>
+            <td>
+                {$spam_users_by_log['spam_email']}
+            </td>
+            <td>
+                {$spam_users_by_log['spam_user']}
+            </td>
+        </tr>";
     }
 echo "</table>";
+
 
 
 // Custom sorting function based on the number_of_logs of the subarrays in descending order
@@ -257,6 +255,13 @@ function sortByNumberOfLogsDesc($a, $b) {
         return 0;
     }
     return ($a["number_of_logs"] > $b["number_of_logs"]) ? -1 : 1;
+}
+
+function sortByLastLoggedInDesc($a, $b) {
+    if ($a["last_log"] == $b["last_logs"]) {
+        return 0;
+    }
+    return ($a["last_log"] > $b["last_log"]) ? -1 : 1;
 }
 
    
