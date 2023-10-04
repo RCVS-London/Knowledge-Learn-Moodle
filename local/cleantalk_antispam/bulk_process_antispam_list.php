@@ -183,30 +183,26 @@ echo("<h2>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h2>");
 $min_num_logs = 5;
 $min_days = 0;
 foreach ($spamEmails as $spamEmail) {
-    $user = $DB->get_record('user',array('email'=>$spamEmail));
+    if ($user = $DB->get_record('user',array('email'=>$spamEmail))) {
     $sql_count = "select count(id) 
     from {$CFG->prefix}logstore_standard_log 
     where userid = {$user->id}";
-    $sql_logs_in_last_period = "select count(id) 
-    from {$CFG->prefix}logstore_standard_log 
-    where userid = {$user->id} 
-    and 
-    to_timestamp(timecreated) > now() - interval '{$min_days} day'";
-    $skip = false;
+    $sql_last_log = "select to_timestamp(lastaccess) 
+    from {$CFG->prefix}user 
+    where id = {$user->id}";
     if (is_numeric($user->id)) {
         $number_of_logs = $DB->count_records_sql($sql_count);
-        if ($number_of_logs > $min_num_logs) {
-            echo "<p class = 'haslogs'>Spam user ".fullname($user).
-            " (email {$user->email}) has {$min_num_logs} logs or above";
-            //$skip = true;
-        } 
-        if ($DB->count_records_sql($sql_logs_in_last_period) > 0) {
-            echo "<p class = 'loggedinrecently'>Spam user ".fullname($user)." (email {$user->email}) logged in in last {$min_days} days";
-            //$skip = true;
-        }
+        $last_log = $DB->get_field_sql($sql_last_log);
+        $spam_users_by_logs_array[] = 
+                array(
+                    'number_of_logs' => $number_of_logs,
+                    'last_log'=>$last_log,
+                    'spam_email'=>$user->username,
+                    'spam_user'=>fullname($user)
+                );
         if (!$skip) {
-            echo "<p>Spam user ".fullname($user)
-            ." (email {$user->email}) will be deleted";
+            //echo "<p>Spam user ".fullname($user)
+            //." (email {$user->email}) will be deleted";
             if (!$dryRun) {
                 //if (delete_records('user',array('email'=>$user->email))) {
                 //    echo "<p>Spam user ".fullname($user)
@@ -217,12 +213,52 @@ foreach ($spamEmails as $spamEmail) {
                 //}
             }
         }
- 
+    }
         
     } else {
         echo "<p class = 'spam'>No user in Learn DB exists for {$spamEmail}";
     }
-    
 }
-// This array can be used to bulk delete users from the Moodle database
+
+// The array will now be sorted by number_of_logs in ascending order
+
+usort($spam_users_by_logs_array, 'sortByNumberOfLogsDesc');
+
+echo "
+    <table>
+        <tr>
+            <td>Logs</td>
+            <td>Last Logged in</td>
+            <td>Email</td>
+            <td>Spam user</td>
+        </tr>";
+foreach ($spam_users_by_logs_array as $spam_users_by_log) {
+    echo "<tr>
+                <td>
+                    {$spam_users_by_log['number_of_logs']}
+                </td>
+                <td>
+                    {$spam_users_by_log['last_log']}
+                </td>
+                <td>
+                    {$spam_users_by_log['spam_email']}
+                </td>
+                <td>
+                    {$spam_users_by_log['spam_user']}
+                </td>
+            </tr>";
+    }
+echo "</table>";
+
+
+// Custom sorting function based on the number_of_logs of the subarrays in descending order
+function sortByNumberOfLogsDesc($a, $b) {
+    if ($a["number_of_logs"] == $b["number_of_logs"]) {
+        return 0;
+    }
+    return ($a["number_of_logs"] > $b["number_of_logs"]) ? -1 : 1;
+}
+
+   
+
 ?>
