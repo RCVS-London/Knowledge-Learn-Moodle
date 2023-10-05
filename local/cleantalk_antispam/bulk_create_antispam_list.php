@@ -12,6 +12,11 @@
 //define('CLI_SCRIPT', true);
 
 require(__DIR__.'/../../config.php');
+require_login();
+if (!is_siteadmin()) {
+    die;
+}
+
 //require_once($CFG->libdir.'/clilib.php');      // cli only functions
 $checkbefore = optional_param('checkbefore', null, PARAM_ALPHANUMEXT);
 $dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
@@ -56,11 +61,11 @@ if ($checkbefore) {
                 join mdl_user_info_field uif on shortname = 'cleantalk_checked' and 
                 uid.fieldid = uif.id where u.deleted = 0 and 
                 uid.userid = u.id) and 
-                u.deleted = 0";     
+                u.deleted = 0";   
     $all_users = $DB->get_records_sql($sql);
 } else {
-    $user = array('deleted'=>0);
-    $all_users = $DB->get_records('user',$all_users);
+    $user_field_array = array('deleted'=>0);
+    $all_users = $DB->get_records('user',$user_field_array);
 }
 ?>
 <form method="post">
@@ -82,9 +87,11 @@ $api_key = get_config('local_cleantalk_antispam', 'apikey');
 
 foreach ($all_users as $user) {
     echo "<p>{$i} {$user->email}</p>";
-    $sender_email = $user->email;
+    $sender_email = str_replace("'", "'\''", $user->email);
     $postData.=$sender_email.",";
     $i++;
+    $success = 0;
+    $users_batch[] = $user;
     if ($i % $maxApiCall==0) {
         $sortedNum=substr(1000+$fileNum, 1);
         $filePath= date('Ymd');
@@ -92,7 +99,13 @@ foreach ($all_users as $user) {
         $fileName=$filePath."/api_results".$sortedNum.".txt";
         // create file
         if ($dryRun==0) {
+            //if ($i > 8799 && $i < 9000) {
+            $path = "./results/{$filePath}";
+            if (!file_exists($path)) {    
+                mkdir($path, 0777, true);
+            }
             file_put_contents("./results/".$fileName, '');
+            //}
         }
         $wgetCall="wget -O ./results/".$fileName." --post-data='data=".substr($postData, 0, -1)."&method_name=spam_check&auth_key=".$api_key."' https://api.cleantalk.org/";
         echo("<br>WGET call string (counter = ".$i.")");
@@ -103,7 +116,12 @@ foreach ($all_users as $user) {
             // Uncomment the next line to re-enable the API call.  (It performs close to 9000 calls, so dont run this unless necessary)
             if ($dryRun==0) {
                 echo("<br>Calling API");
-                exec($wgetCall);
+                //if ($i > 8799 && $i < 9000) {
+                exec($wgetCall,$output,$returnvar);
+                if ($returnvar === 0) {
+                    $success = 1;
+                }
+                //}
             } else {
                 echo("Dry Run - not processed.");
             }
@@ -117,10 +135,15 @@ foreach ($all_users as $user) {
         // new postdata after 200 records
         $postData='';
         $fileNum++;
+        
+        if ($success==1) {
+            foreach ($users_batch as $user_record) {
+                set_processed_data($user_record);
+            }   
+        }
+        $users_batch = array();
     }
-    if ($dryRun==0) {
-        set_processed_data($user);
-    }
+
 }
 
 

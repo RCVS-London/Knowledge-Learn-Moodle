@@ -5,7 +5,7 @@ function xmldb_local_cleantalk_antispam_upgrade($oldversion) {
     global $DB;
     //  database upgrade logic goes here.
 
-    if ($oldversion < 2023100290) {
+    if ($oldversion < 2023100400) {
         // Rename the field "tiletopleftthistile" to "tileicon".
         // The latter is much simpler and the former was only used for legacy reasons.
         $user_info_field = new stdClass();

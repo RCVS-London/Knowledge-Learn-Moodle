@@ -71,4 +71,10 @@ if ($hassiteconfig) {
         'The plugin will monitor all user creation events and check against the blacklist.  On by default.  If users are found to be blacklisted, their new account will immediately be deleted.',
 
     1));
+
+    // Links to cleantalk.
+    $settings->add(new admin_setting_heading('local_cleantalk_antispam', 'Bulk antspam',
+                "<p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>Create list of spam users</a> in the database by passing their email through CleanTalk blacklist.</p><p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_process_antispam_list.php'>Process list of spam users</a></p>"));
+
+
 }

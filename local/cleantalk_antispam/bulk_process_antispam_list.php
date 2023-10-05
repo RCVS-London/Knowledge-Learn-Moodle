@@ -11,6 +11,7 @@
 // https://cleantalk.org/help/api-spam-check#multiple_records_check
 
 require(__DIR__.'/../../config.php');
+
 ?>
 <style>
     p {
@@ -45,10 +46,18 @@ require(__DIR__.'/../../config.php');
 </style>
 
 <?php
-$dryRun=1;
-if(isset($_GET["dryrun"])) {
-    if ($_GET['dryrun']==0) $dryRun=0;
+
+if (!is_siteadmin()) {
+    die;
 }
+
+
+$dryrunvar = 1;
+if (!isset($_GET['dryrun']) || empty($_GET['dryrun']) || $_GET['dryrun'] == 0) {
+    echo 'do we get here?';
+    $dryrunvar=0;
+}
+echo "dryrunvar $dryrunvar _GET {$_GET['dryrun']}";
 $spamButton = 0;
 if(isset($_GET["spamButton"])) {
     if ($_GET['spamButton']==true) $spamButton=1;
@@ -57,15 +66,15 @@ $debug = 0;
 if(isset($_GET["debug"])) {
     if ($_GET['debug']==true) $debug=1;
 }
-echo("<h1>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h1>");
+echo("<h1>Dry Run: ".($dryrunvar==1 ? "yes" : "no")."</h1>");
 ?>
 <form method="get">
 <label for = "dryrun"> Perform a dry run (No updates)? </label> 
-<input type = "checkbox" id = "dryrun" name="dryrun" <?php echo ($dryRun==1) ? ("checked") : ("");?>>
+<input type = "checkbox" id = "dryrun" name="dryrun" value = "1" <?php echo ($dryrunvar==1) ? ("checked") : ("");?>>
 <br><label for = "debug"> Show debug messages? </label> 
-<input type = "checkbox" id="debug" name="debug" <?php echo ($debug==1) ? ("checked") : ("");?>>
+<input type = "checkbox" id="debug" name="debug" value = "1"  <?php echo ($debug==1) ? ("checked") : ("");?>>
 <br><label for = "spamButton"> Show only spam? </label> 
-<input type = "checkbox" id="spamButton" name="spamButton" <?php echo ($spamButton==1) ? ("checked") : ("");?>>
+<input type = "checkbox" id="spamButton" name="spamButton" value = "1"  <?php echo ($spamButton==1) ? ("checked") : ("");?>>
 <br><input type="submit">
 </form>
 <hr>
@@ -172,7 +181,7 @@ foreach($files as $file) {
 
 $arrlength = count($spamEmails);
 echo("<br><h1>Spam records: ".$arrlength."</h1>");
-echo("<h2>Dry Run: ".($dryRun==1 ? "yes" : "no")."</h2>");
+echo("<h2>Dry Run: ".($dryrunvar==1 ? "yes" : "no")."</h2>");
 foreach ($spamEmails as $spamEmail) {
     if ($user = $DB->get_record('user',array('email'=>$spamEmail))) {
     $sql_count = "select count(id) 
@@ -191,8 +200,8 @@ foreach ($spamEmails as $spamEmail) {
                     'spam_email'=>$user->username,
                     'spam_user'=>fullname($user)
                 );
-        if (!$dryRun) {
-            if (delete_records('user',array('email'=>$user->email))) {
+        if (!$dryrunvar) {
+            if ($DB->delete_records('user',array('email'=>$user->email))) {
                 echo "<p>Spam user ".fullname($user)
                 ." (email {$user->email}) has been deleted";
             } else {
@@ -210,10 +219,10 @@ foreach ($spamEmails as $spamEmail) {
 
 
 // The array will now be sorted by number_of_logs in ascending order
-if ($_GET['sortbylogs']) {
+if (isset($_GET['sortbylogs'])) {
     usort($spam_users_by_logs_array, 'sortByNumberOfLogsDesc');
 }
-if ($_GET['sortbylastloggedin']) {
+if (isset($_GET['sortbylastloggedin'])) {
     usort($spam_users_by_logs_array, 'sortByLastLoggedInDesc');
 }
 
@@ -225,6 +234,7 @@ echo "
             <td>Email</td>
             <td>Spam user</td>
         </tr>";
+$deleted_users = '';
 foreach ($spam_users_by_logs_array as $spam_users_by_log) {
     echo "<tr>
             <td>
@@ -243,8 +253,10 @@ foreach ($spam_users_by_logs_array as $spam_users_by_log) {
     $deleted_users .= $spam_users_by_log['spam_email'].',';
 }
 echo "</table>";   
-$file_name =  'deleted_users_'.date("Y-m-d").'.csv';
-file_put_contents('results/'.$file_name,substr($deleted_users,0,-1));
+if (isset($deleted_users)) {
+    $file_name =  'deleted_users_'.date("Y-m-d").'.csv';
+    file_put_contents('results/'.$file_name,substr($deleted_users,0,-1));
+}
 
 
 

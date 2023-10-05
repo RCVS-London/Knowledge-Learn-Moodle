@@ -22,7 +22,7 @@ class local_cleantalk_antispam_observer
 
             if ($isSpam) {
                 error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
-                echo ("<BR><h1>SPAM</h1>");
+                echo ("<BR><h1>Sorry, your access has been denied</h1>");
                 $user = $DB->delete_records('user', array('email' => $sender_email));
                 if ($user) {
                     error_log("user deleted: " . $sender_email);
@@ -132,14 +132,14 @@ class local_cleantalk_antispam_observer
                 if (strpos($deniedpattern, '.') === 0) { // if this is a full domain with no email@ section, i.e. ".example.com"
                     if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) { // If the sender email is from the same domain as the blocked email, i.e. "example.com"
                         // Subdomains are in a form ".example.com" - matches "xxx@anything.example.com".
-                        echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
+                        //echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
                         error_log("Email " . $sender_email . " is part of a blocked email domain");
                         $email_denied = true;
                     }
                 } else if (strpos(strrev($sender_email), strrev($deniedpattern)) === 0) {
                     error_log("strrev(@ . deniedpattern):" . strrev('@' . $deniedpattern));
                     error_log("Email " . $sender_email . " is a blocked email.");
-                    echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
+                    //echo get_string('emailnotallowed', '', $CFG->denyemailaddresses);
                     $email_denied = true;
                 }
             }
@@ -156,19 +156,19 @@ class local_cleantalk_antispam_observer
 
             // popular spam conditions for email addresses
             if ($email_data['frequency'] > 0) {
-                echo ('<br><b>Email has been spotted previously as spam ' . $email_data['frequency'] . ' times</b>');
+                error_log('<br><b>Email has been spotted previously as spam ' . $email_data['frequency'] . ' times</b>');
                 $is_spam_email = true;
             }
             if ($email_data['spam_rate'] == 1) {
-                echo ("<br><b>Email appears in the spam blacklist.</b>");
+                error_log("<br><b>Email appears in the spam blacklist.</b>");
                 $is_spam_email = true;
             }
             if (($email_data['exists'] !== null) && ($email_data['exists'] == 0)) {
-                echo ("<br><b>Email does not exist.  Invalid email.</b>");
+                error_log("<br><b>Email does not exist.  Invalid email.</b>");
                 $is_spam_email = true;
             }
             if ($email_data['disposable_email'] == 1) {
-                echo ("<br><b>Email is disposable - probably spam.</b>");
+                error_log("<br><b>Email is disposable - probably spam.</b>");
                 $is_spam_email = true;
             }
 
@@ -179,10 +179,10 @@ class local_cleantalk_antispam_observer
                     $denyemailaddresses = $sender_email . ' ' . $denyemailaddresses;
                     if (set_config('denyemailaddresses', $denyemailaddresses)) {
                         error_log("Email:" . $sender_email . " added to email block list");
-                        echo "Blocked email list update succeeded.\n";
+                        //echo "Blocked email list update succeeded.\n";
                     } else {
                         error_log("Email:" . $sender_email . " failed to add to email block list");
-                        echo "Blocked email list update failed.\n";
+                        //echo "Blocked email list update failed.\n";
                     }
                 }
             } else {
@@ -192,7 +192,7 @@ class local_cleantalk_antispam_observer
         // If either the IP or email is regarded as spam then return true
         if ($is_spam || $is_spam_email) {
             error_log("Email:" . $sender_email . " is regarded as spam.");
-            echo ("<br>Results = SPAM.<br>");
+            //echo ("<br>Results = SPAM.<br>");
             return true; // Not OK - spam
         } else {
             error_log("Email:" . $sender_email . " is NOT regarded as spam.");
