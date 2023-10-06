@@ -23,9 +23,14 @@ class local_cleantalk_antispam_observer
             if ($isSpam) {
                 error_log("user " . $sender_email . " was recognised as spam on IP: " . $sender_ip, 0);
                 echo ("<BR><h1>Sorry, your access has been denied</h1>");
-                $user = $DB->delete_records('user', array('email' => $sender_email));
+                $userid = $DB->get_field('user', 'id', array('email' => $sender_email));
+                $user = $DB->delete_records('user', array('id' => $userid));
                 if ($user) {
                     error_log("user deleted: " . $sender_email);
+                    $user_info = $DB->delete_records('user_info_data', array('userid' => $userid));
+                    if ($user_info) {
+                        error_log("user info deleted: " . $sender_email);
+                    }
                 } else {
                     error_log("user deletion attempt failed for: " . $sender_email . " - delete manually");
                 }

@@ -53,7 +53,7 @@ if (!is_siteadmin()) {
 
 
 $dryrunvar = 1;
-if (!isset($_GET['dryrun']) || empty($_GET['dryrun']) || $_GET['dryrun'] == 0) {
+if (!isset($_GET['dryrun']) && isset($_GET['submit'])) {
     echo 'do we get here?';
     $dryrunvar=0;
 }
@@ -75,7 +75,7 @@ echo("<h1>Dry Run: ".($dryrunvar==1 ? "yes" : "no")."</h1>");
 <input type = "checkbox" id="debug" name="debug" value = "1"  <?php echo ($debug==1) ? ("checked") : ("");?>>
 <br><label for = "spamButton"> Show only spam? </label> 
 <input type = "checkbox" id="spamButton" name="spamButton" value = "1"  <?php echo ($spamButton==1) ? ("checked") : ("");?>>
-<br><input type="submit">
+<br><input type = "submit" name = "submit" value = "Submit">
 </form>
 <hr>
 <?php
@@ -201,9 +201,12 @@ foreach ($spamEmails as $spamEmail) {
                     'spam_user'=>fullname($user)
                 );
         if (!$dryrunvar) {
-            if ($DB->delete_records('user',array('email'=>$user->email))) {
-                echo "<p>Spam user ".fullname($user)
-                ." (email {$user->email}) has been deleted";
+            if ($DB->delete_records('user',array('id'=>$user->id))) {
+                if ($debug) echo "<p>Spam user ".fullname($user)
+                ." (email {$user->email}) has been deleted from user table";
+                if ($DB->delete_records('user_info_data', array('userid' => $user->id))){
+                    if ($debug) echo "<p>{$i} Unconfirmed user ".fullname($user)." ({$user->email}) removed from user_info_data table.</p>";
+                }
             } else {
                 echo "<p>Spam user ".fullname($user)
                 ." (email {$user->email}) has failed to be deleted";

@@ -36,7 +36,10 @@ if ($dryRun==0) {
     foreach ($unconfirmed_users as $unconfirmed_user) {
         //delete unconfirmed user
         if ($DB->delete_records('user',array('id'=>$unconfirmed_user->id))) {
-            echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from database.</p>";
+            echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from user table.</p>";
+            if ($DB->delete_records('user_info_data', array('userid' => $userid))){
+                echo "<p>{$i} Unconfirmed user ".fullname($unconfirmed_user)." ({$unconfirmed_user->email}) removed from user_info_data table.</p>";
+            }
         } else {
             echo "<p>{$i} Failed to remove from database unconfirmed user: ".fullname($unconfirmed_user)." ({$unconfirmed_user->email})</p>";
         }
