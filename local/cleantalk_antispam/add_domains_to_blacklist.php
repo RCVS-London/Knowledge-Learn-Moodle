@@ -7,29 +7,30 @@ if (!is_siteadmin()) {
 
 $dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
 $domain_blacklist = optional_param('domain_blacklist', '', PARAM_URL);
-$deleted_unconfirmed = optional_param('deleted_unconfirmed', '', PARAM_URL);
+$deleted_unconfirmed = optional_param('deleted_unconfirmed', '', PARAM_INT);
 
 echo <<<LINK
     <p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/delete_users_in_domain_blacklist.php'>Delete users in blacklist</a></p>
 LINK;
-
-echo <<<DRYRUNFORM
-    <form method="post" name = "dryrun">
-        <label for = "dryrunoff">Turn dry run off (Update database)? </label> 
-        <input type = "checkbox" id = "dryrunoff" name = "dryrunoff">
+$deleted_unconfirmed_check_status = '';
+if ($deleted_unconfirmed) $deleted_unconfirmed_check_status = 'checked'; 
+echo <<<DELETEUNCONFIRMEDFORM
+    <form method="post" name = "deleted_unconfirmed_form">
         <label for = "deleted_unconfirmed">Run for deleted and confirmed only? </label>
-        <input type = "checkbox" id = "deleted_unconfirmed" name = "deleted_unconfirmed">
+        <input type = "checkbox" id = "deleted_unconfirmed" name = "deleted_unconfirmed" value = 1 {$deleted_unconfirmed_check_status}>
         <input type="submit">
     </form><br>
-DRYRUNFORM;
-$denyemailaddresses = $CFG->denyemailaddresses;
+DELETEUNCONFIRMEDFORM;
+$denyemailaddresses = get_config('core','denyemailaddresses');
 
 if ($domain_blacklist) {
     foreach ($domain_blacklist as $blacklisted_domain) {
         $denyemailaddresses .= ' '.$blacklisted_domain.' ';
     }
 }
+
 if ($dryrunoff) {
+    echo '<p><strong>Setting now</p></strong>';
     set_config('denyemailaddresses',$denyemailaddresses);
 }
 
@@ -87,8 +88,15 @@ ORDER BY
 SQL;
 //echo  $get_domainnames_sql;
 $domain_name_records = $DB->get_records_sql($get_domainnames_sql);
-echo "<p>$denyemailaddresses list: {$denyemailaddresses}</p>";
+echo "<p>Deny email addresses list: {$denyemailaddresses}</p>";
 echo '<form method="post" name = "add_domains_to_blacklist">';
+if ($dryrunoff) $dryrunoff_check_status = 'checked'; 
+echo <<<DRYRUNFORM
+    <label for = "dryrunoff">Turn dry run off (Update database)? </label> 
+    <input type = "checkbox" id = "dryrunoff" name = "dryrunoff" value = 1 {$dryrunoff_check_status}>
+    <input type = "hidden" id = "deleted_unconfirmed" name = "deleted_unconfirmed" value = "{$deleted_unconfirmed}">
+    <br>
+DRYRUNFORM;
 echo '<input type="submit" value = "Add emails">';
 echo <<<BLACKLISTTABLE
     <table>
@@ -99,9 +107,10 @@ echo <<<BLACKLISTTABLE
             <td>Add to blacklist</td>
         </tr>     
 BLACKLISTTABLE;
+
 foreach ($domain_name_records as $domain_name_record) {
     $email_domain = $domain_name_record->email_domain;
-    if (strstr($CFG->denyemailaddresses," {$email_domain} ") == false) {
+    if (strstr($denyemailaddresses," {$email_domain} ") == false) {
     echo <<<DELETECHECKBOX
         <tr>
             <td>{$email_domain}</td>
