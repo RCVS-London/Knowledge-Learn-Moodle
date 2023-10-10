@@ -9,10 +9,7 @@ echo "The timestamp for this run is " . $timeStamp;
 $dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
 $delete_users = optional_param('delete_users', 0, PARAM_INT);
 
-
-
 $denyemailaddresses = $CFG->denyemailaddresses;
-
 
 $count = 0;
 foreach ($delete_users as $delete_user) {
@@ -28,9 +25,12 @@ fputcsv($file,$deleted_email_array);
 fclose($file);
 
 $get_blacklisted_emails_sql = <<<SQL
-    SELECT u.id, u.email, u.firstname, u.lastname
-    FROM mdl_user u
+    SELECT u.id, u.email, u.firstname, u.lastname, count(lsl.id) as log_count
+    FROM {$CFG->prefix}user u   
+    LEFT JOIN
+        {$CFG->prefix}logstore_standard_log lsl ON lsl.userid = u.id
     WHERE STRPOS('{$denyemailaddresses}', CONCAT(' ',SUBSTRING(u.email, STRPOS(u.email, '@') + 1),' ')) > 0
+    GROUP BY u.id
 SQL;
 
 $get_blacklisted_emails = $DB->get_records_sql($get_blacklisted_emails_sql);
@@ -66,7 +66,8 @@ echo "<p>Current blacklist: {$denyemailaddresses}</p>";
             <td>User id</td>
             <td>Email</td>
             <td>Firstname</td>
-            <td>lastname</td>
+            <td>Lastname</td>
+            <td>Log count</td>
             <td>Delete permanently</td>
         </tr>  
         <input type="button" id="select" value="Select All" onclick="checkAll();">
@@ -80,6 +81,7 @@ foreach ($get_blacklisted_emails as $get_blacklisted_email) {
             <td><?php echo $get_blacklisted_email->email; ?></td>
             <td><?php echo $get_blacklisted_email->firstname; ?></td>
             <td><?php echo $get_blacklisted_email->lastname; ?></td>
+            <td><?php echo $get_blacklisted_email->log_count; ?></td>
             <td><input class="deleteCheck" type = "checkbox" id = "<?php echo $get_blacklisted_email->id; ?>" name = "delete_users[]" value="<?php echo $get_blacklisted_email->id; ?>"></td>
         </tr>
 <?php
