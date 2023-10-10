@@ -31,6 +31,7 @@ $get_blacklisted_emails_sql = <<<SQL
         {$CFG->prefix}logstore_standard_log lsl ON lsl.userid = u.id
     WHERE STRPOS('{$denyemailaddresses}', CONCAT(' ',SUBSTRING(u.email, STRPOS(u.email, '@') + 1),' ')) > 0
     GROUP BY u.id
+    ORDER BY log_count DESC
 SQL;
 
 $get_blacklisted_emails = $DB->get_records_sql($get_blacklisted_emails_sql);
