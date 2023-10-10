@@ -58,3 +58,5 @@ phpcs.xml
 jsconfig.json
 /local/cleantalk_antispam/results/*
 !/local/cleantalk_antispam/results/.gitkeep
+/local/cleantalk_antispam/blacklist/*
+!/local/cleantalk_antispam/blacklist/.gitkeep
