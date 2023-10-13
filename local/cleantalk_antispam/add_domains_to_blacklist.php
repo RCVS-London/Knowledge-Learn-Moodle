@@ -4,14 +4,36 @@ require_login();
 if (!is_siteadmin()) {
     die;
 }
+$PAGE->set_context(context_system::instance());
+$PAGE->set_pagelayout('admin');
+$PAGE->set_secondary_navigation(false);
+$PAGE->set_url('/local/cleantalk_antispam/add_domains_to_blacklist.php');
+$PAGE->set_title('Blacklist domains');
+$PAGE->set_heading('Blacklist domains');
+echo $OUTPUT->header();
+
+echo <<<LINK
+    <p>
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/add_domains_to_blacklist.php'>
+            Add domains to blacklist
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/delete_users_in_domain_blacklist.php'>
+            Delete users in blacklist
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>
+            Bulk create antispam list
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_process_antispam_list.php'>
+            Bulk process antispam list
+        </a>
+    </p>  
+LINK;
 
 $dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
 $domain_blacklist = optional_param('domain_blacklist', '', PARAM_URL);
 $deleted_unconfirmed = optional_param('deleted_unconfirmed', '', PARAM_INT);
 
-echo <<<LINK
-    <p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/delete_users_in_domain_blacklist.php'>Delete users in blacklist</a></p>
-LINK;
+
 $deleted_unconfirmed_check_status = '';
 if ($deleted_unconfirmed) $deleted_unconfirmed_check_status = 'checked'; 
 echo <<<DELETEUNCONFIRMEDFORM

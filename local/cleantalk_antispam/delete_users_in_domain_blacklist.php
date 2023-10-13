@@ -4,6 +4,31 @@ require_login();
 if (!is_siteadmin()) {
     die;
 }
+$PAGE->set_context(context_system::instance());
+$PAGE->set_pagelayout('admin');
+$PAGE->set_secondary_navigation(false);
+$PAGE->set_url('/local/cleantalk_antispam/add_domains_to_blacklist.php');
+$PAGE->set_title('Delete users in domain blacklist');
+$PAGE->set_heading('Delete users in domain blacklist');
+echo $OUTPUT->header($focus);
+echo <<<LINK
+    <p>
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/add_domains_to_blacklist.php'>
+            Add domains to blacklist
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/delete_users_in_domain_blacklist.php'>
+            Delete users in blacklist
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>
+            Bulk create antispam list
+        </a> | 
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_process_antispam_list.php'>
+            Bulk process antispam list
+        </a>
+    </p> 
+LINK;
+
+
 $timeStamp=date("Ymdhis");
 echo "The timestamp for this run is " . $timeStamp;
 $dryrunoff = optional_param('dryrunoff', 0, PARAM_INT);
