@@ -73,8 +73,21 @@ if ($hassiteconfig) {
     1));
 
     // Links to cleantalk.
-    $settings->add(new admin_setting_heading('local_cleantalk_antispam', 'Bulk antspam',
-                "<p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>Create list of spam users</a> in the database by passing their email through CleanTalk blacklist.</p><p><a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_process_antispam_list.php'>Process list of spam users</a></p>"));
+    $settings->add(new admin_setting_heading('local_cleantalk_antispam', 'Bulk antispam',
+                "<p>
+                <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_add_domains_to_blacklist.php'>
+                    Add domains to blacklist
+                </a> | 
+                <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_delete_users_in_domain_blacklist.php'>
+                    Delete users in blacklist
+                </a> | 
+                <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>
+                    Bulk create antispam list
+                </a> | 
+                <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_process_antispam_list.php'>
+                    Bulk process antispam list
+                </a>
+            </p>  "));
 
 
 }

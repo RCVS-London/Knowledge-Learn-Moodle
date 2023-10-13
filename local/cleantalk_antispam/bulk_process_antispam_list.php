@@ -60,10 +60,10 @@ echo $OUTPUT->header();
 
 echo <<<LINK
     <p>
-        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/add_domains_to_blacklist.php'>
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_add_domains_to_blacklist.php'>
             Add domains to blacklist
         </a> | 
-        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/delete_users_in_domain_blacklist.php'>
+        <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_delete_users_in_domain_blacklist.php'>
             Delete users in blacklist
         </a> | 
         <a href='{$CFG->wwwroot}/local/cleantalk_antispam/bulk_create_antispam_list.php'>
