@@ -80,8 +80,12 @@ class cmsummary implements named_templatable, renderable {
             'complete' => $complete,
             'mods' => array_values($mods),
         ];
-
-        $data->modprogress = get_string('progresstotal', 'completion', $data);
+/*RCVSK to change to say complted when section is complete */
+        if ($complete != $total){
+            $data->modprogress = get_string('progresstotal', 'completion', $data);
+        } else {
+            $data->modprogress = "COMPLETED";
+        }
 
         return $data;
     }

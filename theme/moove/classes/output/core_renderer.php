@@ -281,8 +281,11 @@ class core_renderer extends \theme_boost\output\core_renderer {
         if (!isset($contextheader->heading)) {
             $heading = $this->heading($this->page->heading, $contextheader->headinglevel, 'h2');
         } else {
-            $heading = $this->heading($contextheader->heading, $contextheader->headinglevel, 'h2');
+            $a_tag_course_url = "<a href = '{$CFG->wwwroot}/course/view.php?id={$this->page->course->id}'>";
+            $heading = $a_tag_course_url.$contextheader->heading.'</a>';
+            $heading = $this->heading($heading, $contextheader->headinglevel, 'h2');
         }
+ 
 
         // RCVSK addition to add git branch
         if ($CFG->wwwroot != "https://learn.rcvsknowledge.org" && $CFG->learnenv != 'live') {
@@ -296,6 +299,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $html = html_writer::start_div('page-context-header');
 
         // Image data.
+        $contextheader->imagedata = $this->rcvsk_get_course_image();
         if (isset($contextheader->imagedata)) {
             // Header specific image.
             $html .= html_writer::div($contextheader->imagedata, 'page-header-image mr-2');
@@ -446,6 +450,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $output;
     }
 
+ /* RCVSK link to home page */   
     public function rcvsk_url() {
         global $CFG;
         
@@ -454,6 +459,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
         return $rcvsk_url;
     }
 
+ /* RCVSK use common links */ 
     public function rcvsk_menu() {
         global $OUTPUT, $CFG;
 
@@ -461,6 +467,35 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $template->config = $CFG;
         
         return $OUTPUT->render_from_template("theme_moove/rcvsk/rcvsk_menu", $template);
+    }
+
+ /* RCVSK add course image */   
+    public function rcvsk_get_course_image() {
+        $course = $this->page->course;
+        $imgurl = '';
+        $context = context_course::instance($course->id);
+        if ($course instanceof stdClass) {
+            $course = new \core_course_list_element($course);
+        }
+        $coursefiles = $course->get_course_overviewfiles();
+        foreach ($coursefiles as $file) {
+            if ($isimage = $file->is_valid_image()) {
+                $imgurl = file_encode_url("/pluginfile.php", '/' . $file->get_contextid() . '/' . $file->get_component()
+                        . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename() , !$isimage);
+                $imgurl = new moodle_url($imgurl);
+                break;
+            }
+        }
+        if (stripos($text, '{courseimage}') !== false) {
+            $replace['/\{courseimage\}/i'] = '<img src="' . $imgurl . '" class="img-responsive">';
+        }
+        if (stripos($text, '{courseimage-url}') !== false) {
+            $replace['/\{courseimage-url\}/i'] = $imgurl;
+        }
+        if (!empty($imgurl)) {
+            $imghtml = "<img src = '$imgurl' id='rcvsk_course_image'>";
+        }
+        return $imghtml;
     }
 
 }

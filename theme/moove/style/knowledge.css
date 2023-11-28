@@ -1,3 +1,27 @@
+/*ul.topics .section-summary-activities.pr-2.mdl-right {
+    display:none;
+}*/
+.course-content ul.topics li.section, .course-content ul.weeks li.section {
+    padding-top:0.2em;
+    padding-bottom:0;   
+}
+
+.course-content ul.topics li.section h3 > a:after {
+    content: '\f054';
+    padding-left: 1rem;
+    font-size: 1rem;
+    font-family: 'FontAwesome';
+}
+
+#rcvsk_course_image {
+    width:200px;
+    border-radius: 5%;
+}
+
+.breadcrumb {
+    justify-content: flex-start;
+}
+
 /* BODY BACKGROUND */
 body {
     background-color: #F8F8F8 !important;
