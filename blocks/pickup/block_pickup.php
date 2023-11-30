@@ -125,8 +125,7 @@ class block_pickup extends block_base {
                    JOIN {course} c ON c.id = ula.courseid
                    JOIN {course_categories} cc ON cc.id = c.category
                   WHERE ula.userid = :userid
-               ORDER BY ula.timeaccess DESC
-                  LIMIT 3";
+               ORDER BY ula.timeaccess DESC";
 
         $params = array(
             'userid' => $USER->id,
@@ -140,8 +139,9 @@ class block_pickup extends block_base {
 
         /* Template data for mustache. */
         $template = new stdClass();
-
+        $i=0;
         foreach ($courserecords as $cr) {
+            if ($i>2) continue;
             /* Template per course. */
             $course = new stdClass();
             $course->fullname = $cr->fullname;
@@ -154,10 +154,14 @@ class block_pickup extends block_base {
                 $percentage = floor($percentage);
                 $course->progress = $percentage;
             }
+            if ($percentage == '100' || $percentage == '0') {
+                continue;
+            }
 
             /* Course image. */
             $course->courseimage = course_summary_exporter::get_course_image($cr);
             $template->courses[] = $course;
+            $i++;
         }
 
         return  $template->courses;
