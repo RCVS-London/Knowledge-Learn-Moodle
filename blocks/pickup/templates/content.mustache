@@ -1,0 +1,135 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+{{!
+    @template blocks_pickup/content
+    Example context (json):
+    {
+        "courses": [
+         {
+            "courseimage": "https://moodle.org/blocks/stats_registry/pix/courses.svg",
+            "viewurl": "https://moodle.com/",
+            "fullname": "The fullname of the course",
+            "coursecategory": "The category",
+            "progress": "50"
+         },
+         {
+            "courseimage": "https://moodle.org/blocks/stats_registry/pix/courses.svg",
+            "viewurl": "https://moodle.com/",
+            "fullname": "The fullname of the course",
+            "coursecategory": "The category",
+            "progress": "50"
+         }
+        ],
+        "mods": [
+         {
+            "purpose": "content",
+            "icon": "https://moodle.org/blocks/stats_registry/pix/courses.svg",
+            "url": "https://moodle.com/",
+            "type": "file",
+            "name": "The fullname of the activity",
+            "coursename": "The name of the course"
+         },
+         {
+            "purpose": "content",
+            "icon": "https://moodle.org/blocks/stats_registry/pix/courses.svg",
+            "url": "https://moodle.com/",
+            "type": "file",
+            "name": "The fullname of the activity",
+            "coursename": "The name of the course"
+          }
+        ]
+
+    }
+}}
+<div id="block-pickup-content" class="animate-enter">
+  <div class="container">
+    <div class="row">
+
+      {{! Header and link. }}
+      <div class="col-lg-3">
+        <div class="py-3">
+          <h3>{{#str}} pluginname, block_pickup {{/str}} </h3>
+
+          <div class="nav flex-column" id="block-pickup-tab" role="tablist" aria-orientation="vertical">
+
+            <a class="nav-link transition p-0 py-1 active"
+                id="block-pickup-courses-tab"
+                data-toggle="pill"
+                href="#block-pickup-courses"
+                role="tab"
+                aria-controls="block-pickup-courses"
+                aria-selected="true">
+                  <i class="block-pickup-active-arrow transition fa fa-arrow-right-long mr-2" aria-hidden="true"></i>{{#str}} courses {{/str}}
+
+                </a>
+            <a class="nav-link transition p-0 py-1"
+                id="block-pickup-activites-tab"
+                data-toggle="pill"
+                href="#block-pickup-activites"
+                role="tab"
+                aria-controls="block-pickup-activites"
+                aria-selected="false">
+                  <i class="block-pickup-active-arrow transition fa fa-arrow-right-long mr-2" aria-hidden="true"></i>{{#str}} activities {{/str}}
+                </a>
+          </div>
+
+        </div>
+      </div>
+
+      {{! Tab content. }}
+      <div class="col-lg-9">
+
+        <div class="tab-content" id="block-pickup-tabContent">
+
+          {{! Courses pane. }}
+          <div class="tab-pane fade show active" id="block-pickup-courses" role="tabpanel" aria-labelledby="block-pickup-courses-tab">
+
+            <div class="row">
+            {{#courses}}
+              <div class="col-md-6 col-lg-4 my-3">
+                {{> block_pickup/coursecard }}
+              </div>
+            {{/courses}}
+
+              <!-- All courses link. 
+              <div class="col-md-6 col-lg-12 text-center text-lg-right py-2 my-auto">
+                <a href="{{{ config.wwwroot }}}/my/courses.php" class="mb-3"><i class="fa fa-arrow-right mr-2" aria-hidden="true"></i> {{#str}} viewmycourses, block_pickup {{/str}}</a>
+              </div>-->
+            </div>
+
+          </div>
+
+          {{! Activities pane. }}
+          <div class="tab-pane fade" id="block-pickup-activites" role="tabpanel" aria-labelledby="block-pickup-activites-tab">
+
+            <div class="row mt-3">
+              {{#mods}}
+              <div class="col-md-6 mb-3">
+                {{> block_pickup/activity }}
+              </div>
+              {{/mods}}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    {{! /row. }}
+  </div>
+  {{! /container. }}
+</div>
+
