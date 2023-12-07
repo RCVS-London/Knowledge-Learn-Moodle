@@ -148,8 +148,13 @@ abstract class qtype_multichoice_renderer_base extends qtype_with_combined_feedb
         $result = '';
         $result .= html_writer::tag('div', $question->format_questiontext($qa),
                 array('class' => 'qtext'));
+/* RCVSK change remove overflow */
+        //problem in display of the 2nd question in Pigs
+        //mod/quiz/attempt.php?attempt=1840&cmid=340
+        //question-1856-2&id=107
+        //$result .= html_writer::start_tag('div', array('class' => 'ablock no-overflow visual-scroll-x'));
+        $result .= html_writer::start_tag('div', array('class' => 'ablock visual-scroll-x'));
 
-        $result .= html_writer::start_tag('fieldset', array('class' => 'ablock no-overflow visual-scroll-x'));
         if ($question->showstandardinstruction == 1) {
             $legendclass = '';
             $questionnumber = $options->add_question_identifier_to_label($this->prompt(), true, true);

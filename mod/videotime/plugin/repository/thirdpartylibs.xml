@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>amd/src/select2.js</location>
+        <name>Select2</name>
+        <license>MIT</license>
+        <version>4.0.13</version>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>lib/vimeo-api</location>
+        <name>Vimeo API</name>
+        <license>Apache License</license>
+        <version>3.4</version>
+        <licenseversion>2.0</licenseversion>
+    </library>
+</libraries>

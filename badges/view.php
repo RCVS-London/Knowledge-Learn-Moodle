@@ -128,6 +128,9 @@ if ($totalcount) {
 } else {
     echo $output->notification(get_string('nobadges', 'badges'), 'info');
 }
+//RCVSK link to all badges
+echo "<p class='text-right'><a href = '{$CFG->wwwroot}/badges/mybadges.php'>See all your badges</a></p>";
+
 // Trigger event, badge listing viewed.
 $eventparams = array('context' => $PAGE->context, 'other' => $eventotherparams);
 $event = \core\event\badge_listing_viewed::create($eventparams);

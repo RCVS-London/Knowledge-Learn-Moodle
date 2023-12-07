@@ -1,0 +1,45 @@
+/* Hide the first dropdown-divider if no filter option element is listed before it.
+   This can happen for some subset configurations of the block_goals course filter. */
+.block_goals button#groupingdropdown + .dropdown-menu li:first-of-type.dropdown-divider:first-of-type {
+    display: none;
+}
+
+:root {
+    --bs-primary: rgb(120, 33, 86);
+}
+.fad, .fab {
+    --fa-primary-opacity: 1.0;
+    --fa-secondary-opacity: 0.5;
+    --fa-primary-color: var(--bs-primary);
+    --fa-secondary-color: var(--bs-gray);
+}
+.fa-user, .fa-user-tie, .fa-sheep, .fa-dog, .fa-goat, .fa-cow, .fa-dog-leashed, .fa-farm {
+    --fa-primary-opacity: 1.0;
+    --fa-secondary-opacity: 0.5;
+    --fa-primary-color: var(--bs-primary);
+    --fa-secondary-color: var(--bs-gray);
+}
+.fa-cat, .fa-rabbit, .fa-ram, .fa-feather, .fa-pig, .fa-horse, .fa-horse-saddle, .fa-clock {
+    --fa-primary-opacity: 0.5;
+    --fa-secondary-opacity: 1;
+    --fa-primary-color: var(--bs-gray);
+    --fa-secondary-color: var(--bs-primary);
+}
+[data-toggle="collapse"] .fa:before {
+    content: "\f139";
+}
+[data-toggle="collapse"].collapsed .fa:before {
+    content: "\f13a";
+}
+
+
+/* moodle copying */
+.userpicture {
+    border-radius: 50%;
+}
+nav.navbar .navbar-brand .logo img {
+    max-height: 70px;
+    width: 160px;
+    margin-top: 10px;
+    margin-left: 20px;
+}

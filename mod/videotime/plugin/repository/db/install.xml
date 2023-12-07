@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/videotime/plugin/repository/db" VERSION="20210601" COMMENT="XMLDB file for Moodle mod/videotime/plugin/repository"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="videotime_vimeo_video" COMMENT="Cache video data from Vimeo API">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="source" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="How the video originated (API, adhoc, etc)"/>
+        <FIELD NAME="categories" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The categories to which this video belongs."/>
+        <FIELD NAME="config_url" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Config link for providing player related information"/>
+        <FIELD NAME="content_rating" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The content ratings of this video."/>
+        <FIELD NAME="context" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The context of the video's subscription, if this video is part of a subscription."/>
+        <FIELD NAME="created_time" TYPE="char" LENGTH="25" NOTNULL="false" SEQUENCE="false" COMMENT="The time in ISO 8601 format when the video was created."/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="A brief explanation of the video's content."/>
+        <FIELD NAME="duration" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The video's duration in seconds."/>
+        <FIELD NAME="embed" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Information about embedding this video."/>
+        <FIELD NAME="height" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The video's height in pixels."/>
+        <FIELD NAME="language" TYPE="char" LENGTH="25" NOTNULL="false" SEQUENCE="false" COMMENT="The video's primary language."/>
+        <FIELD NAME="last_user_action_event_date" TYPE="char" LENGTH="25" NOTNULL="false" SEQUENCE="false" COMMENT="The time in ISO 8601 format when the user last modified the video."/>
+        <FIELD NAME="license" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="The Creative Commons license used for the video."/>
+        <FIELD NAME="link" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The link to the video."/>
+        <FIELD NAME="metadata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The video's metadata."/>
+        <FIELD NAME="modified_time" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="When the video metadata was last modified."/>
+        <FIELD NAME="name" TYPE="char" LENGTH="500" NOTNULL="false" SEQUENCE="false" COMMENT="The video's title."/>
+        <FIELD NAME="parent_folder" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Information about the folder that contains this video."/>
+        <FIELD NAME="password" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The privacy-enabled password to watch this video. Only users can see their own video passwords. This data requires a bearer token with the private scope."/>
+        <FIELD NAME="pictures" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The active picture for this video."/>
+        <FIELD NAME="privacy" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The video's privacy setting."/>
+        <FIELD NAME="release_time" TYPE="char" LENGTH="25" NOTNULL="false" SEQUENCE="false" COMMENT="The time in ISO 8601 format when the video was released."/>
+        <FIELD NAME="resource_key" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The resource key string of the video."/>
+        <FIELD NAME="stats" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="A collection of stats associated with this video."/>
+        <FIELD NAME="status" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="The status code for the availability of the video. This field is deprecated in favor of upload and transcode."/>
+        <FIELD NAME="tags" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="An array of all tags assigned to this video."/>
+        <FIELD NAME="transcode" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The transcode information for a video upload."/>
+        <FIELD NAME="type" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="The type of the video."/>
+        <FIELD NAME="upload" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The upload information for this video."/>
+        <FIELD NAME="uri" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The video's canonical relative URI."/>
+        <FIELD NAME="userinfo" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The video owner."/>
+        <FIELD NAME="width" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The video's width in pixels."/>
+        <FIELD NAME="state" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="State of video data processing"/>
+        <FIELD NAME="albums" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Collection of albums the video belongs to."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="videotime_vimeo_album" COMMENT="Stores album information for easy filtering">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The album's display name."/>
+        <FIELD NAME="uri" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The album's URI."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="uri" UNIQUE="true" FIELDS="uri"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="videotime_vimeo_video_album" COMMENT="Album assignments to video">
+      <FIELDS>
+        <FIELD NAME="video_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Record ID of video assigned to an album"/>
+        <FIELD NAME="album_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Record ID of album assign to video"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="video_id" TYPE="foreign" FIELDS="video_id" REFTABLE="videotime_vimeo_video" REFFIELDS="id"/>
+        <KEY NAME="album_id" TYPE="foreign" FIELDS="album_id" REFTABLE="videotime_vimeo_album" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="video_album_assignment" UNIQUE="true" FIELDS="video_id, album_id"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="videotime_vimeo_tag" COMMENT="Stores tag information for easy filtering">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The tag's display name."/>
+        <FIELD NAME="uri" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The tag's URI."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="uri" UNIQUE="true" FIELDS="uri"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="videotime_vimeo_video_tag" COMMENT="Tag assignments to video">
+      <FIELDS>
+        <FIELD NAME="video_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Record ID of video assigned to an tag"/>
+        <FIELD NAME="tag_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Record ID of tag assign to video"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="video_id" TYPE="foreign" FIELDS="video_id" REFTABLE="videotime_vimeo_video" REFFIELDS="id"/>
+        <KEY NAME="tag_id" TYPE="foreign" FIELDS="tag_id" REFTABLE="videotime_vimeo_tag" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="video_tag_assignment" UNIQUE="true" FIELDS="video_id, tag_id"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

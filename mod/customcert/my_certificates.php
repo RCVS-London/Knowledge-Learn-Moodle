@@ -1,0 +1,128 @@
+<?php
+// This file is part of the customcert module for Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Handles viewing the certificates for a certain user.
+ *
+ * @package    mod_customcert
+ * @copyright  2016 Mark Nelson <markn@moodle.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+require_once('../../config.php');
+
+// RCVSK move require login so required at top of script 
+// Requires a login.
+if ($courseid) {
+    require_login($courseid);
+} else {
+    require_login();
+}
+
+//RCVSK added redirect
+if (!isloggedin() || isguestuser()) {
+    redirect($CFG->wwwroot . '/login/index.php');
+}
+
+$userid = optional_param('userid', $USER->id, PARAM_INT);
+$download = optional_param('download', null, PARAM_ALPHA);
+$courseid = optional_param('course', null, PARAM_INT);
+$downloadcert = optional_param('downloadcert', '', PARAM_BOOL);
+if ($downloadcert) {
+    $certificateid = required_param('certificateid', PARAM_INT);
+    $customcert = $DB->get_record('customcert', array('id' => $certificateid), '*', MUST_EXIST);
+
+    // Check there exists an issued certificate for this user.
+    if (!$issue = $DB->get_record('customcert_issues', ['userid' => $userid, 'customcertid' => $customcert->id])) {
+        throw new moodle_exception('You have not been issued a certificate');
+    }
+}
+$page = optional_param('page', 0, PARAM_INT);
+$perpage = optional_param('perpage', \mod_customcert\certificate::CUSTOMCERT_PER_PAGE, PARAM_INT);
+$pageurl = $url = new moodle_url('/mod/customcert/my_certificates.php', array('userid' => $userid,
+    'page' => $page, 'perpage' => $perpage));
+
+    
+
+
+// Check that we have a valid user.
+$user = \core_user::get_user($userid, '*', MUST_EXIST);
+
+// If we are viewing certificates that are not for the currently logged in user then do a capability check.
+if (($userid != $USER->id) && !has_capability('mod/customcert:viewallcertificates', context_system::instance())) {
+    throw new moodle_exception('You are not allowed to view these certificates');
+}
+
+$PAGE->set_url($pageurl);
+$PAGE->set_context(context_user::instance($userid));
+$PAGE->set_title(get_string('mycertificates', 'customcert'));
+$PAGE->set_pagelayout('standard');
+$PAGE->navigation->extend_for_user($user);
+
+// Check if we requested to download a certificate.
+if ($downloadcert) {
+    $template = $DB->get_record('customcert_templates', array('id' => $customcert->templateid), '*', MUST_EXIST);
+    $template = new \mod_customcert\template($template);
+    $template->generate_pdf(false, $userid);
+    exit();
+}
+
+$table = new \mod_customcert\my_certificates_table($userid, $download);
+$table->define_baseurl($pageurl);
+
+if ($table->is_downloading()) {
+    $table->download();
+    exit();
+}
+
+// Additional page setup.
+$PAGE->navbar->add(get_string('profile'), new moodle_url('/user/profile.php', array('id' => $userid)));
+$PAGE->navbar->add(get_string('mycertificates', 'customcert'));
+
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('mycertificates', 'customcert'));
+echo html_writer::div(get_string('mycertificatesdescription', 'customcert'));
+
+//RCVSK beautify page when user has no certificates
+if ($DB->record_exists('customcert_issues', ['userid' => $userid])) {
+    $table->out($perpage, false);
+} else {
+    echo <<<FORMATOPEN
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-sm bg-light text-dark p-4 border">
+FORMATOPEN;       
+    if (!isguestuser()) {
+        echo <<<NOCERTS
+
+            <p>Hi {$USER->firstname},</p>
+            <p>You have not been awarded a certificate yet, but please come back when you have earned one.</p>
+            <p>Good luck!</p>
+            <p>The RCVS Knowledge team</p>
+            </p><a href="mailto:ebvm@rcvsknowledge.org">ebvm@rcvsknowledge.org</a></p>
+NOCERTS;
+    } else {
+        echo <<<NOTLOGGEDIN
+            <p>You are currently using guest access. To see your certificates badges you need to log in with your user account.</p>
+NOTLOGGEDIN;
+    }
+    echo <<<FORMATCLOSE
+        </div>
+    </div>
+</div>
+FORMATCLOSE;
+}
+echo $OUTPUT->footer();

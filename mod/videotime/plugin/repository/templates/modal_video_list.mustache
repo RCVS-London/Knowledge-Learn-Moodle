@@ -1,0 +1,44 @@
+{{< core/modal }}
+    {{$classes}}modal-xl{{/classes}}
+
+    {{$body}}
+        <form class="form-inline pull-right mb-2 video-filters">
+            <span>{{#str}}filter{{/str}}</span>
+            <select name="albums" multiple class="form-control ml-1 select2" data-placeholder="{{#str}}albums, videotime{{/str}}">
+                {{#albums}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/albums}}
+            </select>
+            <select name="tags" multiple class="form-control ml-1 select2" data-placeholder="{{#str}}tags{{/str}}">
+                {{#tags}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/tags}}
+            </select>
+            <button class="btn btn-secondary ml-1" data-action="apply-filters" type="button">{{#str}}apply, videotime{{/str}}</button>
+            <a href="#" class="btn btn-link" data-action="clear-filters" data-target=".video-filters select">{{#str}}clear{{/str}}</a>
+        </form>
+
+        {{^is_totara}}
+            <div class="input-group mb-2 video-search">
+                <input type="text" id="search-input" class="form-control" placeholder="{{#str}}search_help, videotime{{/str}}">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" data-action="search" data-target="#search-input" type="button">{{#str}}search{{/str}}</button>
+                    <button class="btn btn-link" data-action="clear-search" data-target="#search-input">{{#str}}clear{{/str}}</button>
+                </div>
+            </div>
+        {{/is_totara}}
+        {{#is_totara}}
+            <div class="input-group video-search">
+                <input type="text" id="search-input" class="form-control" placeholder="{{#str}}search_help, videotime{{/str}}">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" data-action="search" data-target="#search-input" type="button">{{#str}}search{{/str}}</button>
+                    <button class="btn btn-link" data-action="clear-search" data-target="#search-input">{{#str}}clear{{/str}}</button>
+                </span>
+            </div>
+        {{/is_totara}}
+        <div class="video-list-table">
+
+        </div>
+        <div class="pagination-container"></div>
+    {{/body}}
+{{/ core/modal }}

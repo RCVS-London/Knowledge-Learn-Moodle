@@ -1,0 +1,65 @@
+<table class="table table-striped table-responsive">
+    <thead>
+    <tr>
+        {{^readonly}}
+            <th></th>
+        {{/readonly}}
+        <th>{{#str}}preview{{/str}}</th>
+        <th><a href="#" data-action="sort" data-field="v.name">{{#str}}name{{/str}}</a></th>
+        <th><a href="#" data-action="sort" data-field="v.description">{{#str}}description{{/str}}</a></th>
+        <th>{{#str}}albums, videotime{{/str}}</th>
+        <th>{{#str}}tags{{/str}}</th>
+        <th><a href="#" data-action="sort" data-field="v.duration">{{#str}}duration, videotime{{/str}}</a></th>
+        <th><a href="#" data-action="sort" data-field="v.created_time">{{#str}}date{{/str}}</a></th>
+        <th>{{#str}}embeds, videotime{{/str}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#data}}
+        <tr>
+            {{^readonly}}
+                <td>
+                    <button data-uri="{{uri}}" data-action="use-video" class="btn btn-info text-capitalize">{{#str}}use, videotime{{/str}}</button>
+                </td>
+            {{/readonly}}
+            <td>
+                <div class="img-hover cursor-pointer">
+                    <img data-action="preview" data-uri="{{uri}}" src="{{{thumbnail_url}}}" style="width: 100px">
+                </div>
+            </td>
+            <td>{{name}}</td>
+            <td>
+                {{#description_excerpt}}
+                    {{{description_excerpt}}} {{#show_more_button}}<a href="#" data-action="show-description" data-uri="{{uri}}">{{#str}}more, videotime{{/str}}</a>{{/show_more_button}}
+                {{/description_excerpt}}
+            </td>
+            <td>
+                {{#albums}}
+                    <span class="badge badge-secondary">{{name}}</span>
+                {{/albums}}
+            </td>
+            <td>
+                {{#tags}}
+                    <span class="badge badge-secondary">{{name}}</span>
+                {{/tags}}
+            </td>
+            <td>
+                <span class="badge badge-dark">{{duration_formatted}}</span>
+            </td>
+            <td>{{date_formatted}}</td>
+            <td>
+                {{#has_courses}}
+                    <a href="#" data-action="show-embeds" data-uri="{{uri}}">{{courses.length}} ({{#str}}show{{/str}})</a>
+                {{/has_courses}}
+                {{^has_courses}}
+                    <span class="text-muted">{{#str}}none{{/str}}</span>
+                {{/has_courses}}
+            </td>
+        </tr>
+    {{/data}}
+    </tbody>
+</table>
+
+{{^data}}
+    <p class="alert alert-info">{{#str}}noresults{{/str}}</p>
+{{/data}}

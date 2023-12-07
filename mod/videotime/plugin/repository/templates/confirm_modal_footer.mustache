@@ -1,0 +1,12 @@
+<div class="text-center">
+    <button class="btn btn-default btn-secondary" data-action="hide">{{#str}}cancel{{/str}}</button>
+    {{^readonly}}
+        <button class="btn btn-primary" data-action="use-video">{{#str}}yes{{/str}}</button>
+    {{/readonly}}
+</div>
+<hr>
+<div class="pull-left text-muted">
+    <label>
+        <input type="checkbox" name="override" checked> {{#str}}insert_video_metadata, videotime{{/str}}
+    </label>
+</div>

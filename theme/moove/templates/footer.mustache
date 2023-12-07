@@ -1,0 +1,595 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_moove/footer
+
+    Page footer.
+
+    Example context (json):
+    {
+        "output": {
+            "page_doc_link": "Help and documentation",
+            "supportemail": "<a href=\"#\">Contact site support</a>",
+            "has_popover_links": true,
+            "services_support": "Services and support",
+            "login_info": "You are logged in as cute kitten",
+            "moodle_release": "90210"
+        }
+    }
+}}
+
+{{! RCVSK addition footer text }}
+
+<div id="top-footer">
+    <div class="moove-container-fluid footer-columns">
+        <div class="row">
+            <div class="col-12 col-md-4" style="padding-bottom: 1em;">
+                <em>Registered Office</em><br>
+                RCVS Knowledge<br/>
+                First Floor<br/>
+                10 Queen Street Place<br/>
+                London EC4R 1BE
+            </div>
+            <div class="col-12 col-md-4" style="padding-bottom: 1em;">
+                <em>Correspondence Address</em><br>
+                RCVS Knowledge<br>
+                The Cursitor<br>
+                38 Chancery Lane<br>
+                London, WC2A 1EN
+            </div>
+
+            <div class="col-12 col-md-4" style="padding-bottom: 1em;">
+                <a href="/local/staticpage/view.php?page=privacy-policy">Privacy policy</a><br/>
+                <a href="/local/staticpage/view.php?page=accessing-information-policy">Accessing information
+                    policy</a><br/>
+                <a href="/local/staticpage/view.php?page=cookie-declaration">Cookie policy</a><br/>
+                <a href="/local/staticpage/view.php?page=disclaimer">Disclaimer</a>
+            </div>
+
+            <div class="col-12 col-md-12" style="padding-bottom: 1em;">
+                Royal College of Veterinary Surgeons Trust (trading as RCVS Knowledge) is a registered Charity No.
+                230886<br/>
+                Registered as a Company limited by guarantee in England & Wales No. 598443
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="page-footer">
+    <div class="moove-container-fluid footer-columns">
+        <div class="row">
+            <div class="col-md-4 column-left">
+                <!-- RCVSK addition (deletion)-->
+                <div class="contact">
+                    <h3 class="footer-title">{{#str}}contactus, theme_moove{{/str}}</h3>
+
+                    <ul>
+                        {{#website}}
+                            <li>
+                                <a href="{{{website}}}" target="_blank" class="website btn btn-link">
+                                    <i class="fa fa-globe"></i>
+                                </a>
+                            </li>
+                        {{/website}}
+                        {{#mobile}}
+                            <li>
+                                <a href="tel:{{{mobile}}}" target="_blank" class="mobile btn btn-link">
+                                    <i class="fa fa-phone"></i>
+                                </a>
+                            </li>
+                        {{/mobile}}
+                        {{#mail}}
+                            <li>
+                                <a href="mailto:{{{mail}}}" target="_blank" class="mail btn btn-link">
+                                    <i class="fa fa-envelope"></i>
+                                </a>
+                            </li>
+                        {{/mail}}
+                    </ul>
+                </div>
+
+                <div class="socialnetworks">
+                    <h3 class="footer-title">{{#str}}followus, theme_moove{{/str}}</h3>
+
+                    <ul class="mb-0">
+                        {{#facebook}}
+                            <li>
+                                <a href="{{{facebook}}}" target="_blank" class="facebook btn btn-link btn-rounded">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                        {{/facebook}}
+
+                        {{#twitter}}
+                            <li>
+                                <a href="{{{twitter}}}" target="_blank" class="twitter btn btn-link btn-rounded">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                        {{/twitter}}
+
+                        {{#linkedin}}
+                            <li>
+                                <a href="{{{linkedin}}}" target="_blank" class="linkedin btn btn-link btn-rounded">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                        {{/linkedin}}
+
+                        {{#youtube}}
+                            <li>
+                                <a href="{{{youtube}}}" target="_blank" class="youtube btn btn-link btn-rounded">
+                                    <i class="fa fa-youtube"></i>
+                                </a>
+                            </li>
+                        {{/youtube}}
+
+                        {{#instagram}}
+                            <li>
+                                <a href="{{{instagram}}}" target="_blank" class="instagram btn btn-link btn-rounded">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+                        {{/instagram}}
+
+                        {{#whatsapp}}
+                            <li>
+                                <a href="https://api.whatsapp.com/send?phone={{{whatsapp}}}" target="_blank" class="whatsapp btn btn-link btn-rounded">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                            </li>
+                        {{/whatsapp}}
+
+                        {{#telegram}}
+                            <li>
+                                <a href="{{{telegram}}}" target="_blank" class="telegram btn btn-link btn-rounded">
+                                    <i class="fa fa-telegram"></i>
+                                </a>
+                            </li>
+                        {{/telegram}}
+
+                        {{! RCVSK addition podbean icon }}
+                        <li>
+                            <a href="https://rcvsknowledge.podbean.com/" target="_blank"
+                               class="podbean btn btn-link btn-rounded">
+                                <i class="fa fa-podcast"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 column-center">
+                {{# output.supportemail }}
+                    <div class="supportemail">{{{ output.supportemail }}}</div>
+                {{/ output.supportemail }}
+
+                {{#mobile}}
+                    <div class="supportemail">
+                        <a href="tel:{{{mobile}}}" target="_blank" class="">
+                            <i class="fa fa-phone"></i>{{{mobile}}}
+                        </a>
+                    </div>
+                {{/mobile}}
+
+                {{{ output.login_info }}}
+                {{# not.rcvsk}}
+                    {{{ output.standard_footer_html }}}
+
+                    <div class="tool_usertours-resettourcontainer"></div>
+                {{/not.rcvsk}}
+            </div>
+            <div class="col-md-4 column-right">
+                {{#enablemobilewebservice}}
+
+                    {{#mobilesetuplink}}
+                        <a href="{{{mobilesetuplink}}}">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</a>
+                    {{/mobilesetuplink}}
+
+                    {{^mobilesetuplink}}
+                        <h3 class="footer-title">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</h3>
+                    {{/mobilesetuplink}}
+
+                    <div class="stores">
+                        {{#androidappid}}
+                            <a href="https://play.google.com/store/apps/details?id={{androidappid}}">
+                                <img src="{{config.wwwroot}}/theme/moove/pix/store_google.svg" alt="Play Store">
+                            </a>
+                        {{/androidappid}}
+                        {{#iosappid}}
+                            <a class="mt-1" href="https://apps.apple.com/app/id{{iosappid}}">
+                                <img src="{{config.wwwroot}}/theme/moove/pix/store_apple.svg" alt="App Store">
+                            </a>
+                        {{/iosappid}}
+                    </div>
+                {{/enablemobilewebservice}}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-content-debugging footer-dark bg-dark text-light">
+        <div class="moove-container-fluid footer-dark-inner">
+            {{{ output.debug_footer_html }}}
+        </div>
+    </div>
+
+    {{# not.rcvsk }}
+    <div data-region="footer-container-popover">
+        <button class="btn btn-icon bg-secondary icon-no-margin btn-footer-popover" data-action="footer-popover" aria-label="{{#str}}showfooter, theme_boost{{/str}}">
+            {{#pix}}e/question, core{{/pix}}
+        </button>
+    </div>
+    <div class="footer-content-popover container" data-region="footer-content-popover">
+        {{# output.has_popover_links }}
+            <div class="footer-section p-3 border-bottom">
+                {{# output.page_doc_link }}
+                    <div>{{{ output.page_doc_link }}}</div>
+                {{/ output.page_doc_link }}
+
+                {{# output.services_support_link }}
+                    <div>{{{ output.services_support_link }}}</div>
+                {{/ output.services_support_link }}
+            </div>
+        {{/ output.has_popover_links }}
+
+        {{# not.rcvsk }}
+            <div class="footer-section p-3">
+                <div>{{#str}}poweredbymoodle, core{{/str}}</div>
+                {{#output.moodle_release}}
+                    <div>
+                        {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+                    </div>
+                {{/output.moodle_release}}
+            </div>
+        {{/not.rcvsk}}
+    </div>
+    {{/not.rcvsk}}
+    {{# not.rcvsk}}
+        <div class="copyright">
+            <div class="madeby">
+                <p>{{#str}}themedevelopedby, theme_moove{{/str}}</p>
+                <a href="https://conecti.me">
+                    <img src="{{config.wwwroot}}/theme/moove/pix/logo_conectime.svg" alt="Conecti.me"
+                         style="height: 40px;">
+                </a>
+            </div>
+        </div>
+    {{/not.rcvsk}}
+</footer>
+
+
+{{{ output.standard_end_of_body_html }}}
+
+{{!
+    RCVSK add active class to primary nav when clicked
+    RCVSK addition legacy javascript for EBVM quizzes
+    RCVSK addition colours for dev environments
+}}
+
+<script>
+    //highlight primary navigation when on teh page link or subpage
+    const currentURL = window.location.href;
+    const navLinks = document.querySelectorAll('.primary-navigation a.nav-link');
+    navLinks.forEach(navLink => {
+        const linkURL = navLink.getAttribute('href');
+        const linklastslashpos = linkURL.lastIndexOf('/'); 
+        const linkpath = linkURL.substring(0,linklastslashpos);
+        const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
+        const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
+        navLink.classList.remove('active');
+        //console.log('link path ' + linkpath + 'current path ' + currentURLpath);
+        if (linkpath === currentURLpath) {
+            navLink.classList.add('active');
+        }
+    });
+
+    const mobileNavLinks = document.querySelectorAll('.nav-item a.list-group-item-action');
+    mobileNavLinks.forEach(mobileNavLink => {
+        const linkURL = mobileNavLink.getAttribute('href');
+        const linklastslashpos = linkURL.lastIndexOf('/'); 
+        const linkpath = linkURL.substring(0,linklastslashpos);
+        const currentURLlastslashpos = currentURL.lastIndexOf('/'); 
+        const currentURLpath = currentURL.substring(0,currentURLlastslashpos);        
+        mobileNavLink.classList.remove('active');
+        //console.log('link path ' + linkpath + 'current path ' + currentURLpath);
+        if (linkpath === currentURLpath) {
+            mobileNavLink.classList.add('active');
+        }
+    });
+    //This is to remove the expand arrow in collapsible topics view when there is content
+    document.querySelectorAll('div.content').forEach(function(contentDiv) {
+        var collapsible = contentDiv.querySelectorAll('div.collapse').forEach(function(collapseDiv) {
+            var listElement = collapseDiv.querySelector('ul');
+            var innerList = listElement.querySelectorAll('li');
+            if (!innerList.length) {
+                contentDiv.querySelectorAll('div[role="tabpanel"]').forEach(function(tabPanel) {
+                    tabPanel.removeAttribute('id');
+                });
+                var sectionToggle = contentDiv.querySelector('a.sectiontoggle');
+                sectionToggle.style.backgroundImage = 'none';
+                sectionToggle.style.paddingLeft = '0';
+                sectionToggle.style.position = 'relative';
+                sectionToggle.style.right = '.5rem';
+            }
+        });
+    });
+    
+
+    //This is EBVM stuff
+
+    //Change text to collapse or expand
+    document.addEventListener("DOMContentLoaded", function() {
+        var accordionButtons = document.querySelectorAll("div.accordion-box > button");
+        accordionButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                var collapsed = button.classList.contains("collapsed");
+                if (collapsed) {
+                    button.querySelector("small").textContent = "Click to close";
+                } else {
+                    button.querySelector("small").textContent = "Click to expand";
+                }
+            });
+        });
+    });
+
+    function scrollToToC() {
+        var h5s = document.getElementsByTagName("h5");
+        var searchText = "Contents";
+        var toC;
+        for (var i = 0; i < h5s.length; i++) {
+            if (h5s[i].textContent == searchText) {
+                toC = h5s[i];
+                break;
+            }
+        }
+        toC.scrollIntoView();
+    }
+
+    function insertQuiz(
+            question,
+            answerArray,
+            correctAnswerArray,
+            explanationArray,
+            imageUrl,
+            imageAltText
+    ) {
+        function areArraysEqualSets(a1, a2) {
+            const superSet = {};
+            for (const i of a1) {
+                const e = i + typeof i;
+                superSet[e] = 1;
+            }
+            for (const i of a2) {
+                const e = i + typeof i;
+                if (!superSet[e]) {
+                    return false;
+                }
+                superSet[e] = 2;
+            }
+            for (let e in superSet) {
+                if (superSet[e] === 1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function guidGenerator() {
+            var S4 = function () {
+                return (((1 + Math.random()) * 0x10000) | 0)
+                        .toString(16)
+                        .substring(1);
+            };
+            return (
+                    S4() +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    "-" +
+                    S4() +
+                    S4() +
+                    S4()
+            );
+        }
+
+        var quizId = guidGenerator();
+        $(".quizContent").append(
+                "<div id='" + quizId + "_content' style='padding-bottom: 2em;'><div>"
+        );
+        if (
+                typeof imageUrl !== "undefined" &&
+                typeof imageAltText !== "undefined"
+        ) {
+            $("div#" + quizId + "_content").append(
+                    "<img src='" +
+                    imageUrl +
+                    "' alt='" +
+                    imageAltText +
+                    "' title='" +
+                    imageAltText +
+                    "' class='img-fluid'>"
+            );
+        }
+        $("div#" + quizId + "_content").append("<p>" + question + "</p>");
+        var type;
+        correctAnswerArray.length === 1
+                ? (type = "radio")
+                : (type = "checkbox");
+        if (type === "checkbox") {
+            $("div#" + quizId + "_content").append(
+                    "<div id='" + quizId + "_checkboxes'></div>"
+            );
+        } else {
+            $("div#" + quizId + "_content").append(
+                    "<div id='" + quizId + "_radiobuttons'></div>"
+            );
+        }
+        $.each(answerArray, function (index, value) {
+            if (type === "checkbox") {
+                $("#" + quizId + "_checkboxes").append(
+                        "<div class='checkbox'><label><input type='checkbox' value='" +
+                        index +
+                        "'>&nbsp;" +
+                        value +
+                        "</label><p style='display: none;' id='answer_" +
+                        quizId +
+                        "_" +
+                        index +
+                        "'></p></div>"
+                );
+            } else {
+                $("#" + quizId + "_radiobuttons").append(
+                        "<div class='radio'><label><input type='radio' name='radio_" +
+                        quizId +
+                        "' value='" +
+                        index +
+                        "'>&nbsp;" +
+                        value +
+                        "</label><p style='display: none;' id='answer_" +
+                        quizId +
+                        "_" +
+                        index +
+                        "'></div>"
+                );
+            }
+        });
+        var additionalAnswer = false;
+        $.each(explanationArray, function (index, value) {
+            if (answerArray.length < explanationArray.length && index === explanationArray.length - 1) {
+                $("div#" + quizId + "_content").append(
+                        "<p style='font-weight: bold; display: none;' id='" +
+                        quizId +
+                        "_additionalAnswer'></p>"
+                );
+                $("p#" + quizId + "_additionalAnswer").text(value);
+                additionalAnswer = true;
+            } else {
+                $("p#answer_" + quizId + "_" + index).text(value);
+            }
+        });
+        $("div#" + quizId + "_content").append(
+                "<div id='" + quizId + "_buttons'></div>"
+        );
+        $("div#" + quizId + "_buttons").append(
+                "<a class='btn btn-warning' id='" +
+                quizId +
+                "_check' role='button'>Check answer</a>"
+        );
+        $("div#" + quizId + "_buttons").append(
+                "<a style='margin-left: 1em; color: white !important; cursor: pointer;' id='" +
+                quizId +
+                "_show' class='btn btn-primary' role='button'> Show answers and explanations</a>"
+        );
+        $("div#" + quizId + "_content").append(
+                "<p style='font-weight: bold;' id='" + quizId + "_result'></p>"
+        );
+
+        function revealAnswers() {
+            $("[id^=answer_" + quizId + "]").show();
+            if (additionalAnswer) {
+                $("p#" + quizId + "_additionalAnswer").show();
+            }
+            $("[id^=answer_" + quizId + "]").css("color", "#9A3918");
+            var correctAnswerIndexArray = [];
+            $.each(correctAnswerArray, function (index, value) {
+                correctAnswerIndexArray.push(answerArray.indexOf(value));
+            });
+            $.each(correctAnswerIndexArray, function (index, value) {
+                $("#answer_" + quizId + "_" + value).css("color", "#34632C");
+            });
+        }
+        $("a#" + quizId + "_check").click(function () {
+            if (type === "checkbox") {
+                var selectedOptions = $(
+                        "#" +
+                        quizId +
+                        "_checkboxes > div.checkbox > label > input:checked"
+                );
+                var selectedAnswers = [];
+                $(selectedOptions).each(function () {
+                    selectedAnswers.push(parseInt($(this).val()));
+                });
+                var correctAnswerIndexArray = [];
+                $.each(correctAnswerArray, function (index, value) {
+                    correctAnswerIndexArray.push(answerArray.indexOf(value));
+                });
+                var pass = areArraysEqualSets(
+                        selectedAnswers,
+                        correctAnswerIndexArray
+                );
+                var correct_count = 0;
+                var correct_total = correctAnswerIndexArray.length;
+                $.each(selectedAnswers, function (index, value) {
+                    if (correctAnswerIndexArray.indexOf(value) !== -1) {
+                        correct_count++;
+                    }
+                });
+            } else {
+                var selectedOptionValue = parseInt(
+                        $(
+                                "#" +
+                                quizId +
+                                "_radiobuttons > div.radio > label > input:checked"
+                        ).val()
+                );
+                var correctAnswerIndex = answerArray.indexOf(correctAnswerArray[0]);
+                var pass = selectedOptionValue === correctAnswerIndex;
+            }
+            var result;
+            var result_colour;
+            if (pass) {
+                result = "<i class='fa fa-check fa-3x'></i> Correct";
+                result_colour = "green";
+            } else if (correct_count) {
+                result = correct_count + " out of " + correct_total + " correct";
+                result_colour = "blue";
+            } else {
+                result = "<i class='fa fa-times fa-3x'></i> Incorrect";
+                result_colour = "red";
+            }
+            $("p#" + quizId + "_result").css("color", result_colour);
+            $("p#" + quizId + "_result").html(result);
+        });
+        $("a#" + quizId + "_show").click(function () {
+            revealAnswers();
+        });
+    }
+
+    var rcvskGitBranch = document.getElementById('rcvsk-git-branch');
+
+    var devcolor = "skyblue";
+    var stagingcolor = "orange"
+    var localhostcolor = "#90EE90"
+    if (window.location.href.indexOf("learndev") > -1) {
+        rcvskGitBranch.style.backgroundColor = devcolor;
+    }
+    if (window.location.href.indexOf("learnstaging") > -1) {
+        rcvskGitBranch.style.backgroundColor = stagingcolor;
+    }
+    if (window.location.href.indexOf("localhost") > -1) {
+        rcvskGitBranch.style.backgroundColor = localhostcolor;
+    }
+</script>
+
+{{#js}}
+    require(['theme_boost/footer-popover'], function(FooterPopover) {
+    FooterPopover.init();
+    });
+{{/js}}

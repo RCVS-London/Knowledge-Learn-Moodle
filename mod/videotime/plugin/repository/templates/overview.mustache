@@ -1,0 +1,47 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1. <a href="https://developer.vimeo.com/apps/new" target="_blank">{{#str}}create_vimeo_app, videotime{{/str}}</a></td>
+            <td>{{{configuration_status}}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2. <a href="{{settings_url}}">{{#str}}set_client_id_and_secret, videotime{{/str}}</a></td>
+            <td>{{settings_status}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3. <a href="{{authenticate_url}}">{{#str}}authenticate_vimeo, videotime{{/str}}</a></td>
+            <td class="text-{{authentication_class}}">{{authentication_status}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                {{^is_totara}}
+                    4. <a href="{{video_discovery_task}}">{{#str}}videos_discovered, videotime{{/str}}</a>
+                {{/is_totara}}
+                {{#is_totara}}
+                    {{#str}}videos_discovered, videotime{{/str}}
+                {{/is_totara}}
+            </td>
+            <td>{{videos_discovered}}</td>
+            <td>
+                {{#is_totara}}
+                    {{#str}}totara_video_discovery_help, videotime{{/str}}
+                {{/is_totara}}
+            </td>
+        </tr>
+        <tr>
+            <td>{{#str}}videos_processed, videotime{{/str}}</td>
+            <td>{{videos_processed}}</td>
+            <td>{{#str}}process_videos_help, videotime{{/str}}</td>
+        </tr>
+    </tbody>
+</table>

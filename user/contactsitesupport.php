@@ -25,6 +25,9 @@ require_once('../config.php');
 require_once($CFG->dirroot . '/user/lib.php');
 
 $user = isloggedin() && !isguestuser() ? $USER : null;
+if (!isloggedin() || isguestuser()) {
+    redirect($CFG->wwwroot . '/login/index.php');
+}
 
 // If not allowed to view this page, redirect to the homepage. This would be where the site has
 // disabled support, or limited it to authenticated users and the current user is a guest or not logged in.

@@ -1,0 +1,13 @@
+<div class="pull-right">
+    <button class="btn btn-default btn-secondary" {{#previous_disabled}}disabled{{/previous_disabled}} data-action="change-page" data-page="{{previous_page}}">{{#str}}previous{{/str}}</button>
+    <span>{{#str}}page{{/str}}</span>
+    <select data-action="jump-page">
+        {{#pages}}
+            <option value="{{index}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+        {{/pages}}
+    </select>
+    {{#str}}of, videotime{{/str}}
+    {{page_count}}
+    <button class="btn btn-default btn-secondary" {{#next_disabled}}disabled{{/next_disabled}} data-action="change-page" data-page="{{next_page}}">{{#str}}next{{/str}}</button>
+</div>
+<span>{{#str}}showing, videotime{{/str}} {{total}} {{#str}}results, videotime{{/str}}</span>

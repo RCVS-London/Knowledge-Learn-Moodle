@@ -1,0 +1,131 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost/login
+
+    Login page template
+
+    Example context (json):
+    {
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Login page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headers keep HTML validators happy</h1>"
+        }
+    }
+}}
+{{> theme_moove/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+
+<div id="page-wrapper">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    <div id="page" class="container-fluid mt-0">
+        <div id="page-content" class="row">
+            <div id="region-main-box" class="col-12">
+                <section id="region-main" class="col-12 h-100" aria-label="{{#str}}content{{/str}}">
+                    <div class="login-wrapper">
+                        <div class="login-container">
+                            {{{ output.main_content }}}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-none">
+    {{{ output.standard_footer_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+</body>
+</html>
+
+{{#js}}
+    M.util.js_pending('theme_boost/loader');
+    require(['theme_boost/loader'], function() {
+      M.util.js_complete('theme_boost/loader');
+    });
+    $(document).ready(function () {
+      var inTheKnowLabel =
+        "I would like to stay up to date with the latest developments in evidence-based veterinary medicine. Please subscribe me to intheKNOW, RCVS Knowledge's monthly newsletter";
+      var inFocusLabel =
+        "I would like to stay up to date with summaries of the latest research that has the potential to positively impact patient care. Please subscribe me to inFOCUS, RCVS Knowledge's bi-monthly journal watch email.";
+
+      // Create checkboxes
+      $("#fgroup_id_buttonar").before(
+            "<div class='form-check form-check-inline'>" +
+                "<input class='inTheKnow-check-input' type='checkbox' value='' id='inTheKnowSubscribe'>" +
+                "<label class='inTheKnow-check-label p-3' for='inTheKnowSubscribe'>" +
+                     inTheKnowLabel +
+                "</label>" +
+            "</div>" +
+            "<div class='form-check form-check-inline'>" +
+                "<input class='inFocus-check-input' type='checkbox' value='' id='inFocusSubscribe'>" +
+                "<label class='inFocus-check-label p-3' for='inFocusSubscribe'>" +
+                    inFocusLabel +
+                "</label>" +
+             "</div>" +
+          "<hr>"
+      );
+
+      $("#id_submitbutton").click(function () {
+        var firstName = $("#id_firstname").val();
+        var lastName = $("#id_lastname").val();
+        var jobRole = $("#id_profile_field_jobtitle").find(":selected").text();
+        var emailOne = $("#id_email").val();
+        var emailTwo = $("#id_email2").val();
+        var mailchimpUserData = {
+          firstName: firstName,
+          lastName: lastName,
+          jobRole: jobRole,
+          email: emailOne,
+          newsletter: []
+        };
+        if (emailOne.length > 0) { // && emailOne === emailTwo) {
+          if (
+            $("#inTheKnowSubscribe").prop("checked") ||
+            $("#inFocusSubscribe").prop("checked")
+          ) {
+            if ($("#inTheKnowSubscribe").prop("checked")) {
+              mailchimpUserData["newsletter"].push("inTheKnow")
+            }
+            if ($("#inFocusSubscribe").prop("checked")) {
+              mailchimpUserData["newsletter"].push("inFocus");
+            }
+              $.ajax({
+                type: "POST",
+                url:
+                  "https://xn0x3xonk7.execute-api.eu-west-2.amazonaws.com/prod/submit",
+                data: JSON.stringify(mailchimpUserData),
+                success: function (data) {
+                  console.log(data["body"]);
+                },
+                contentType: "application/json",
+                dataType: "json",
+              });
+            return true;
+          }
+        }
+      });
+    });
+{{/js}}

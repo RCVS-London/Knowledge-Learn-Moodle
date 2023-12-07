@@ -1,0 +1,21 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{{#str}}course{{/str}}</th>
+            <th>{{#str}}category{{/str}}</th>
+            <th>{{#str}}activity{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#video.courses}}
+            <tr>
+                <td>{{fullname}}</td>
+                <td>{{category}}</td>
+                <td>
+                    <a href="{{activity_url}}">{{activity_name}}</a>
+                </td>
+            </tr>
+        {{/video.courses}}
+    </tbody>
+</table>
+

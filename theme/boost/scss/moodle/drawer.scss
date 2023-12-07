@@ -219,6 +219,7 @@ $right-drawer-width: 320px;
     @include drawertypes();
 }
 
+/*RCVSK removed as was breaking book module
 @include media-breakpoint-up(lg) {
     .drawer {
         z-index: inherit;
@@ -236,7 +237,7 @@ $right-drawer-width: 320px;
             display: block;
         }
     }
-}
+}*/
 
 .drawer-md,
 .drawer-sm {
