@@ -998,3 +998,9 @@ div .rcvsk-front-page-label .atto_image_button_text-bottom {
 }
 
 
+.bg-cover {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center; 
+}
+
