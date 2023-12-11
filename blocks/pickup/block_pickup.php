@@ -59,8 +59,18 @@ class block_pickup extends block_base {
         }
 
         $this->content = new stdClass();
-        $this->content->footer = '';
-
+        /* RCVSK block see course overview */
+        if ($_GET['see_all_courses']) {
+            $this->content->footer = 
+            <<<FOOTER
+                <a href ='?see_all_courses=0'>Hide course overview</a>.
+FOOTER;
+        } else {
+            $this->content->footer = 
+            <<<FOOTER
+                <a href ='?see_all_courses=1'>See course overview</a>.
+FOOTER;
+        }
         $template = new stdClass();
         $template->courses = $this->fetch_recent_courses();
         $coursecount = count($template->courses);
@@ -85,9 +95,14 @@ class block_pickup extends block_base {
     public function fetch_recent_mods() : array {
         /* Get the recent items using recentlyaccesseditems block's helper class */
         $modrecords = helper::get_recent_items(4);
-
+        /* RCVSK logic - if no activities say something */
         if (!count($modrecords)) {
-            return array();
+            $text = new stdClass();
+            $text->name = 'No activities in progress';
+            $text->icon = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+            $text->url = '/my/courses.php#block-pickup-activites';
+            $template[] = $text;
+            return $template;
         }
 
         /* Template data for mustache. */
@@ -117,9 +132,10 @@ class block_pickup extends block_base {
      * @return array courses.
      */
     public function fetch_recent_courses() : array {
-        global $USER, $DB;
+        global $USER, $DB, $OUTPUT;
 
         // Get recent courses.
+        /* RCVSK do not limit query */
          $sql = "SELECT c.id, c.fullname, c.visible, cc.name as catname
                    FROM {user_lastaccess} ula
                    JOIN {course} c ON c.id = ula.courseid
@@ -141,6 +157,7 @@ class block_pickup extends block_base {
         $template = new stdClass();
         $i=0;
         foreach ($courserecords as $cr) {
+            /* RCVSK restriction no more than 3 */
             if ($i>2) continue;
             /* Template per course. */
             $course = new stdClass();
@@ -154,13 +171,18 @@ class block_pickup extends block_base {
                 $percentage = floor($percentage);
                 $course->progress = $percentage;
             }
-            if ($percentage == '100' || $percentage == '0') {
+            /* RCVSK logic - only display if % not 0 or 100 */
+            if (!$percentage || $percentage == '100' || $percentage == '0') {
                 continue;
             }
-
+            
             /* Course image. */
             $course->courseimage = course_summary_exporter::get_course_image($cr);
+            if (!$course->courseimage) {
+                $course->courseimage = $OUTPUT->get_generated_image_for_id($cr->id);
+            }
             $template->courses[] = $course;
+             /* RCVSK count */
             $i++;
         }
 

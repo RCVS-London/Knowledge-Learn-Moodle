@@ -46,6 +46,8 @@ class block_myoverview extends block_base {
      * @return stdClass contents of block
      */
     public function get_content() {
+        /* RCVSK block hide course overview onless selected */
+        if (!$_GET['see_all_courses']) return;
         if (isset($this->content)) {
             return $this->content;
         }
