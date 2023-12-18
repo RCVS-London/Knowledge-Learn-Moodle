@@ -299,7 +299,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
         $html = html_writer::start_div('page-context-header');
 
         // Image data.
-        $contextheader->imagedata = $this->rcvsk_get_course_image();
+
+        If ($this->page->pagelayout == 'course') {
+            $contextheader->imagedata = $this->rcvsk_get_course_image();
+        }
         if (isset($contextheader->imagedata)) {
             // Header specific image.
             $html .= html_writer::div($contextheader->imagedata, 'page-header-image mr-2');
