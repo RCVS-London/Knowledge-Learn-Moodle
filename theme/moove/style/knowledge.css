@@ -1,18 +1,3 @@
-/*ul.topics .section-summary-activities.pr-2.mdl-right {
-    display:none;
-}*/
-.course-content ul.topics li.section, .course-content ul.weeks li.section {
-    padding-top:0.2em;
-    padding-bottom:0;   
-}
-
-.course-content ul.topics li.section h3 > a:after {
-    content: '\f054';
-    padding-left: 1rem;
-    font-size: 1rem;
-    font-family: 'FontAwesome';
-}
-
 #rcvsk_course_image {
     width:200px;
     border-radius: 5%;
@@ -699,6 +684,39 @@ div.icon_learn::before {
 
 .course-content ul.collapsibletopics .content .section-summary-activities .activity-count {
     display: none;
+}
+
+/* TOPICS */
+/* add chevron after title */
+.course-content ul.topics li.section h3 > a:after {
+    content: '\f054';
+    padding-left: 1rem;
+    font-size: 1rem;
+    font-family: 'FontAwesome';
+}
+
+/* squeeze topics*/
+.course-content ul.topics li.section, .course-content ul.weeks li.section {
+    padding-top:0.2em;
+    padding-bottom:0;   
+}
+
+/* add some colour to topic lists */
+.course-content ul.topics li.section-summary:nth-child(odd) {
+    background-color: #f1f2f3;
+}
+
+/* don't display topic summary text */
+.course-content ul.topics .summarytext {
+    display:none;
+}
+/* unless first topic */
+.course-content ul.topics li#section-0 .summarytext {
+    display:block;
+}
+/* or just showing single section summary */
+.course-content div.single-section ul.topics .summarytext {
+    display:block;
 }
 
 /* FLIP ANIMATION */
