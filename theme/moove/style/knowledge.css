@@ -843,6 +843,28 @@ div#hvpintro.box.py-3.mod_introbox {
    font-weight: 400;
  }
 
+ #page-footer .socialnetworks ul li a.twitter, #page-footer .contact ul li a.twitter {
+    background-color: black;
+}
+
+a.twitter > svg {
+    fill: #fff;
+    position: relative;
+    left: -7px;
+    height: 20px;
+}
+#page-footer a>svg:hover {
+    fill: #000;
+}
+
+a.twitter a > svg:hover {
+    fill: #000;
+}
+a.twitter a > svg {
+    transition: 0.3s;
+    font-weight: 600;
+}
+
  /* RCVSK course images on enrolment page */
 
  #page-site-index #topofscroll {
