@@ -807,6 +807,7 @@ a.twitter > svg {
     fill: #fff;
     position: relative;
     left: -7px;
+    height: 20px;
 }
 #page-footer a>svg:hover {
     fill: #000;
