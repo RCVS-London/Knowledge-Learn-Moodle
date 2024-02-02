@@ -123,20 +123,15 @@ if ($action == 'creategoal') {
         echo $OUTPUT->heading('Goal Added!');
 
         $output = '<div class="container-fluid">
-            <div class="mb-5 p-4 shadow-sm">
-                <h3>Create a SMART Goal</h3>
-                <div class="jumbotron">
-                    <h1 class="display-4">SMART Goal Successfully Created</h1>
+                <div class="shadow p-2">
                     <p class="lead">Congratulations on setting up a new goal.</p>
                     <hr class="my-4">
-                    <p>You are currently being reminded (' . $reminderfrequencytext . ') about your SMART goals? You can change your settings <a href="/blocks/goals/preferences.php">here</a>.</p>
-                    <p>Click here to return to your SMART goal dashboard.</p>
+                    <p>You can change <a href="/blocks/goals/preferences.php">your settings here</a>.</p>
                     <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="/blocks/goals/view.php" role="button">Return to dashboard</a>
+                        <a class="btn btn-primary" href="/blocks/goals/view.php" role="button">Return to dashboard</a>
                     </p>
                 </div>
-            </div>
-        </div>';
+            </div>';
         echo $output;
         echo $OUTPUT->footer();
         die();
@@ -304,32 +299,31 @@ $species = models\category::get_record(['name' => 'Species']);
 
                             <input type="hidden" id="goaltype" name="goaltype" value="individual">
                             <div class="d-flex align-items-stretch">
-                                <div class="d-inline p-2 m-2  bg-success rounded bg-opacity-25">
+                                <div class="d-inline p-2 m-2  bg-light rounded bg-opacity-25 border border-dark">
                                     <div class='d-block mb-2'>
                                         <span class = 'pb-4'><?php echo get_string('createindividualgoalpreamble', 'block_goals'); ?>
                                     </div>
                                     <div class='d-block text-center'>
-                                        <button id="addgoal1" type="button" class="btn btn-success btn-lg active  bottom-0"  role="button" aria-pressed="true">
+                                        <button id="addgoal1" type="button" class="btn btn-primary active  bottom-0"  role="button" aria-pressed="true">
                                             <?php echo get_string('createindividualgoal', 'block_goals'); ?>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="d-inline p-2 bg-success m-2 rounded bg-opacity-25">
+                                <div class="d-inline p-2 bg-light border border-dark m-2 rounded bg-opacity-25">
                                     <div class='d-block mb-2'>
                                         <span class = 'pb-4'><?php echo get_string('createteamgoalpreamble', 'block_goals'); ?>
                                     </div>
                                     <div class='d-block text-center'>
                                     <?php
                                         if (!empty($teamshtml)) {
-                                            echo $teamshtml;
-                                            echo '<button id="addgoal2" type="button" class="btn btn-success btn-lg active align-bottom mb-2">';
+                                            echo '<button id="addgoal2" type="button" class="btn btn-primary active align-bottom mb-2">';
                                             echo get_string('createteamgoal', 'block_goals');
                                             echo '</button><br>';
-    
+                                            echo $teamshtml;
                                         }
                                     ?>    
-                                        <a href="/blocks/goals/teams.php" class="btn btn-success active align-bottom" role="button" aria-pressed="true">
-                                        <?php echo get_string('managemyteams', 'block_goals') . '</a>'; ?>
+                                        <a href="/blocks/goals/teams.php">
+                                        <i class="fas fa-cog"></i>&nbsp;<?php echo get_string('managemyteams', 'block_goals') . '</a>'; ?>
                                     </div>
                                 </div>
                             </div>
@@ -426,13 +420,13 @@ $species = models\category::get_record(['name' => 'Species']);
                             ?>
                             </div>
                             <div class="container-fluid">
-                                <button id="goalstablereveal" type="button" class="btn btn-success">Change suggested SMART goal <i class="fas fa-edit"></i></button>
+                                <button id="goalstablereveal" type="button" class="btn btn-primary">Change suggested SMART goal <i class="fas fa-edit"></i></button>
                             </div>
 
                             <hr>
                             <br><br>
                             <div class="container-fluid">
-                                <button id="addgoal" type="button" class="btn btn-success"><?php echo get_string('createnewgoal', 'block_goals'); ?>&nbsp;<i class="fas fa-plus"></i></button>
+                                <button id="addgoal" type="button" class="btn btn-primary"><?php echo get_string('createnewgoal', 'block_goals'); ?>&nbsp;<i class="fas fa-plus"></i></button>
                             </div>
                             <br>
                             <div class="container-fluid">
@@ -512,7 +506,7 @@ $species = models\category::get_record(['name' => 'Species']);
                                         </div>
                                         <div class="modal-body">
                                             <div class="alert alert-info" role="alert">
-                                                <h5 id="sentence" class="alert-link"></h5>
+                                                <p id="sentence" class=""></p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -583,7 +577,7 @@ $species = models\category::get_record(['name' => 'Species']);
                             -->
                             <div class="container-fluid">
                                 <h5 id="goal"></h5>
-                                <button id="submitgoal" type="button" class="btn btn-success"><?php echo get_string('submitgoal', 'block_goals'); ?></button>
+                                <button id="submitgoal" type="button" class="btn btn-primary"><?php echo get_string('submitgoal', 'block_goals'); ?></button>
                             </div>
 
 

@@ -296,7 +296,7 @@ function send_reminder_emails($reminderfrequency = 0) {
                 'type' => models\goal::TYPE_INDIVIDUAL,
                 'duedate' => $time,
                 'hidden' => models\goal::HIDDEN_FALSE
-            ], 'duedate ASC');
+            ], 'id ASC');
             if (!empty($individualgoals)) {
                 $goaltext .= get_string('mysmartgoals', 'block_goals') . PHP_EOL;
                 $goalhtml .= '<b>' . get_string('mysmartgoals', 'block_goals') . '</b><br/>';
@@ -330,7 +330,7 @@ function send_reminder_emails($reminderfrequency = 0) {
                     'type' => models\goal::TYPE_TEAM,
                     'duedate' => $time,
                     'hidden' => models\goal::HIDDEN_FALSE
-                ], 'duedate ASC');
+                ], 'id ASC');
 
                 if (!empty($teamgoals)) {
                     $goaltext .= PHP_EOL . 'Team: ' . $myteammember->get_team()->get('name') . ' SMART Goals';

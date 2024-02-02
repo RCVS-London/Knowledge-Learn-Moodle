@@ -536,13 +536,13 @@ class goal {
 
             $button = '';
             if ($add) {
-                $button = '<button type="button" class="btn btn-success add-goal">Use this SMART goal &nbsp;<i class="fas fa-plus"></i></button>';
+                $button = '<button type="button" class="btn btn-primary add-goal">Use this SMART goal &nbsp;<i class="fas fa-plus"></i></button>';
             } else {
                 $button = '
                     <form method="GET" action="/blocks/goals/view.php">
                         <input type="hidden" name="action" value="trackgoal">
                         <input type="hidden" name="id" value="' . $goal->get('id') . '">
-                        <button type="submit" class="btn btn-success">' . get_string('trackprogress', 'block_goals') . ' &nbsp;<i class="fas fa-edit"></i></button>
+                        <button type="submit" class="btn btn-primary">' . get_string('trackprogress', 'block_goals') . ' &nbsp;<i class="fas fa-edit"></i></button>
                     </form>';
             }
 
@@ -559,12 +559,12 @@ class goal {
             $row = new \html_table_row();
             if ($goal->get('type') != models\goal::TYPE_TEMPLATE) {
                 if (empty($goal->get('progress'))) {
-                    $rowclass = 'table-warning';
+                    $rowclass = 'table-danger';
                 } else {
                     if ($goal->get('progress') == 100) {
                         $rowclass = 'table-success';
                     } else {
-                        $rowclass = 'table-info';
+                        $rowclass = 'table-warning';
                     }
                 }
                 $row->attributes['class'] = $rowclass;
@@ -579,7 +579,7 @@ class goal {
                 $goal->get_percentagename(),
                 $goal->get('objective'),
                 $goal->get_filternames(),
-                $goal->get_formattedrecenthistory(),
+                $goal->get_formattedtimemodified(),
                 $goal->get_formattedduedate()
             ];
 

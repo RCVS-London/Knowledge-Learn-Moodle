@@ -33,7 +33,7 @@ $string['accept'] = 'Accept Invitation';
 $string['additionaldetails'] = 'Additional Details';
 $string['additionaldetailsdescription'] = '<p><em>This is an opportunity to add in additional details to make your SMART goal more specific. For example, are you targeting a specific group of farmers? Do you want to implement a new policy in your practice in order to achieve a SMART goal?</em></p>';
 $string['addnewgoal'] = 'Add a new SMART Goal';
-$string['addnewteam'] = 'Add New Team';
+$string['addnewteam'] = 'Add new Team';
 $string['admin'] = 'Admin';
 $string['amount'] = 'Amount';
 $string['backtodashboard'] = 'Back to smart goals listing';
@@ -52,13 +52,13 @@ $string['creategoal'] = 'Create SMART Goal';
 $string['creategoalfilter'] = 'Create SMART Goal Filter';
 $string['createindividualgoal'] = 'Create new Individual SMART goal</i>';
 $string['createindividualgoalpreamble'] = 'I want to create a SMART goal that is just for me  &nbsp;<i class="fas fa-plus"></i>';
-$string['createnewcategory'] = 'Create New Category';
-$string['createnewfilter'] = 'Create New Filter';
-$string['createnewgoal'] = 'Create New SMART Goal';
-$string['createnewgoalfilter'] = 'Create New SMART Goal Filter';
-$string['createnewteam'] = 'Create New Team';
-$string['createnewteammember'] = 'Add New Team Member';
-$string['createnewverb'] = 'Create New Verb';
+$string['createnewcategory'] = 'Create new Category';
+$string['createnewfilter'] = 'Create new Filter';
+$string['createnewgoal'] = 'Create new SMART Goal';
+$string['createnewgoalfilter'] = 'Create new SMART Goal Filter';
+$string['createnewteam'] = 'Create new Team';
+$string['createnewteammember'] = 'Add new Team Member';
+$string['createnewverb'] = 'Create new Verb';
 $string['createteam'] = 'Create Team';
 $string['createteamgoal'] = 'Create new Team SMART goal &nbsp;<i class="fas fa-plus"></i>';
 $string['createteamgoalpreamble'] = 'I want to create a SMART goal that is for a team  &nbsp;<i class="fas fa-plus"></i>';
@@ -83,13 +83,13 @@ $string['dashboardheading'] = '
           </p> 
           <p>Think about what area of your work you would like to focus on and who might be involved before setting a SMART goal. 
           SMART Goals can only be set one at a time.</p>
-          <p>Click on Add a New SMART Goal to get started!</p>
+          <p>Click on Add a new SMART Goal to get started!</p>
           <p>For GDPR purposes, please do not use any personal identifiable information in this goal unless you have the correct permissions to do so. </p>
 
         </div>
-        <div class="col-md-4 col-sm-12 bg-secondary rounded">
+        <div class="col-md-4 col-sm-12 bg-secondary text-center rounded">
           <img src="https://moodle-images.s3.eu-west-2.amazonaws.com/smartgoalstortoise.jpeg" 
-        alt="" width="1500" height="833" role="presentation" class="img-fluid atto_image_button_text-bottom rounded mt-2">
+        alt="" width="1500" height="833" role="presentation" class="img-fluid atto_image_button_text-bottom rounded mt-2 ml-0">
           <p class="pt-2"><a href="/course/view.php?id=120">For more on Smart Goals</a></p>
         </div>
       </div>
@@ -186,7 +186,7 @@ $string['goalspreamble'] = '<h5>Suggested SMART Goals (based on your answers)</h
 $string['goalsummary'] = 'SMART Goal Summary';
 $string['goaltext'] = 'SMART Goal';
 $string['goaltype'] = 'SMART Goal Type';
-$string['goalverbpreamble'] = '<h5>When creating or editing a goal, you can edit the verb from the drop-down list to explain how you will approach your SMART goal. Edit the number/percentage that you are aiming for. Type in your objective in the free-text box. You will set a target date at a later stage.</h5>';
+$string['goalverbpreamble'] = '<p>When creating or editing a goal, you can edit the verb from the drop-down list to explain how you will approach your SMART goal. Edit the number/percentage that you are aiming for. Type in your objective in the free-text box. You will set a target date at a later stage.</p>';
 $string['header'] = 'Header text goes here';
 $string['hidden'] = 'Hidden';
 $string['history'] = 'History';
@@ -308,7 +308,7 @@ $string['tracksmartgoal'] = 'Track SMART goal: {$a}';
 $string['type'] = 'Type';
 $string['update'] = 'Update';
 $string['updategoal'] = 'Update smart goal';
-$string['updatepreamble'] = 'Please update your progress. 25% complete - you have made a fantastic start to your SMART goal keep going, 50% complete  - you are half way there, 75% - you are nearly there, keep up the good work, 100% - Congratulations you have completed your SMART goal.';
+$string['updatepreamble'] = 'Please update your progress.';
 $string['userprofilefieldsdisplay'] = 'User Profile Fields for display';
 $string['userprofilefieldsdisplaydesc'] = 'User Profile Fields for display in team management';
 $string['verb'] = 'Verb';

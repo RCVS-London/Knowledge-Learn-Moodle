@@ -58,10 +58,12 @@ switch ($action) {
         $action = required_param('action', PARAM_ALPHANUMEXT);
         $progress = required_param('progress', PARAM_INT);
         $description = required_param('description', PARAM_TEXT);
-
+        $duedate = required_param('duedate', PARAM_RAW);
+        $duedate = strtotime($duedate);
         $goal = new models\goal($id);
         $goal->read();
         $goal->set('progress', $progress);
+        $goal->set('duedate', $duedate);
         $goal->update();
 
         $goalhistory = new models\goalhistory(0,
@@ -88,28 +90,30 @@ switch ($action) {
 
         $PAGE->set_title(get_string('tracksmartgoal', 'block_goals', $goal->get_abstract()));
         $PAGE->set_heading(get_string('tracksmartgoal', 'block_goals', $goal->get_abstract()));
-
-        if (empty($goal->get('progress'))) {
-            $colour = 'bg-warning';
+        $titletext = "Keep going...";
+        if ($goal->get('progress') == 100) {
+            $titletext = "Congratulations!";
+            $colour = 'bg-success';
+            $text = '<p>You have completed this SMART goal!</p>'; 
+        } elseif ($goal->get('duedate') < time()) {
+            $titletext = 'Oops!';
+            $colour = 'bg-warning';  
+            $text = '<p>The due date for this SMART goal is now in the past. If you are still working towards this goal, you can change the due date below 
+            and you can still track your SMART goal below</p>';          
         } else {
-            if ($goal->get('progress') == 100) {
-                $colour = 'bg-success';
-            } else {
-                $colour = 'bg-info';
-            }
+            $colour = 'bg-info';
         }
 
         $output = '<h5>' . $goal->get('goaltext') . '</h5>';
-        if ($goal->get('duedate') < time()) {
+        if ($goal->get('duedate')+86400 < time()) {
+            
             $output .= '
-            <div class="jumbotron ' . $colour . ' text-light">
-              <h1 class="display-4">Congratulations!</h1>
-              <p class="lead">The due date for this SMART goal is now in the past. Congratulations for setting a SMART goal.</p>
-              <hr class="my-4">
-              <p>You can still track your SMART goal below</p>
+            <div class="jumbotron ' . $colour .'">
+              <h3>' . $titletext . '</h3>
+              <hr class="my-4"> '. $text .'
             </div>';
         }
-
+        $duedate = date('Y-m-d',$goal->get('duedate'));
         $output .= '<div class="col-md-4">';
         $type = $goal->get('type');
         $teamhtml = '';
@@ -149,7 +153,7 @@ switch ($action) {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h5>' . get_string('updatepreamble', 'block_goals') . '</h5><br>
+                            <p>' . get_string('updatepreamble', 'block_goals') . '</p><br>
                             <div class="form-group">
                                 <input type="hidden" name="id" value="' . $goal->get('id') . '">
                                 <input type="hidden" name="action" value="updategoal">
@@ -163,7 +167,12 @@ switch ($action) {
                                         <span class="input-group-text">' . get_string('percentcomplete', 'block_goals') . '</span>
                                     </div>
                                 </div>
-                                
+                                <div class="col-xs-12"> 
+                                <div class="form-group">
+                                    <label for="duedate">Due Date:</label>
+                                    <input type="date" id="duedate" name="duedate" value="'. $duedate .'">
+                                    </div>
+                                </div>                               
                                 
                                   <!--  rows="8", cols="80"-->
                                 <div class="col-xs-12"> 
@@ -230,7 +239,7 @@ switch ($action) {
                 'type' => models\goal::TYPE_INDIVIDUAL,
                 'duedate' => time(),
                 'hidden' => models\goal::HIDDEN_FALSE
-        ], 'duedate ASC');
+        ], 'id ASC');
 
         $individualgoals += models\goal::get_records_select(
             'userid = :userid AND type = :type AND duedate < :duedate  AND hidden = :hidden', [
@@ -238,7 +247,7 @@ switch ($action) {
             'type' => models\goal::TYPE_INDIVIDUAL,
             'duedate' => time(),
             'hidden' => models\goal::HIDDEN_FALSE
-        ], 'duedate DESC');
+        ], 'id DESC');
 
 
 

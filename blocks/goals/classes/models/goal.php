@@ -424,6 +424,10 @@ class goal extends \core\persistent {
         return userdate($this->get('duedate'), get_string('strftimedatefullshort', 'langconfig'));
     }
 
+    public function get_formattedtimemodified() {
+        return userdate($this->get('timemodified'), get_string('strftimedatefullshort', 'langconfig'));
+    }
+
     public function get_formattedrecenthistory() {
         $id = $this->get('id');
         $goalhistory = null;
