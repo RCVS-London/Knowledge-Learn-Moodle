@@ -215,7 +215,7 @@ $string['management'] = 'Management';
 $string['managementdesc'] = '<a href="{$a}" class="btn btn-secondary" role="button">SMART Goal Management</a>';
 $string['managemypreferenceshtml'] = '<a href="{$a}">Manage my reminder preferences</a>.';
 $string['managemypreferencestext'] = 'Manage my reminder preferences: {$a}.';
-$string['managemyteams'] = 'Manage my teams</i>';
+$string['managemyteams'] = 'Manage or create a team</i>';
 $string['missinggoaltext'] = '(Missing SMART goal text)';
 $string['missingindividualname'] = '(Missing individual name)';
 $string['missingteamname'] = '(Missing team name)';
