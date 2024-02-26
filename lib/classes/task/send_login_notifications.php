@@ -87,10 +87,13 @@ class send_login_notifications extends adhoc_task {
         $userpicture->includetoken = $USER->id; // Generate an out-of-session token for the user receiving the message.
         $eventdata->customdata = ['notificationiconurl' => $userpicture->get_url($PAGE)->out(false)];
 
-        if (message_send($eventdata)) {
+        /* RCVS Knowledge change to prevent mail veubg sent */
+        /*if (message_send($eventdata)) {
             $this->log_finish("Notification successfully sent");
         } else {
             $this->log_finish("Failed to send notification");
-        }
+        }*/
+        $this->log_finish("Notification disabled");
+
     }
 }
