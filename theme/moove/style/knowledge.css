@@ -1,3 +1,12 @@
+#page-badges-view h2:after {
+    content: "These badges are available to be awarded. Complete the criteria to add them to your profile.";
+    display: block;
+    padding: 0.5rem;
+    font-weight: 200;
+    font-size: 1.2rem;
+
+}
+
 #rcvsk_course_image {
     width:200px;
     border-radius: 5%;
