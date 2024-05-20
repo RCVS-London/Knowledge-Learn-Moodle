@@ -856,6 +856,10 @@ div#hvpintro.box.py-3.mod_introbox {
     background-color: black;
 }
 
+#page-footer .fa,  #page-footer .fas {
+    font-family: 'FontAwesome';
+ }
+
 a.twitter > svg {
     fill: #fff;
     position: relative;
