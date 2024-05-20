@@ -316,6 +316,8 @@ $PAGE->requires->js(new moodle_url("https://cdn.datatables.net/responsive/2.2.9/
 $PAGE->requires->js(new moodle_url("https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"), true);
 $PAGE->requires->js(new moodle_url("https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"), true);
 //$PAGE->requires->js(new moodle_url("https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"), true);
+// Load the sorting algorithm AFTER the other lives have loaded.
+$PAGE->requires->js(new moodle_url("https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"), true);
 
 
 $PAGE->requires->js(new moodle_url('/blocks/goals/js/dashboard.js'));

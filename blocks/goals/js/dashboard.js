@@ -14,8 +14,8 @@ $(document).ready(function() {
                 {"visible": false, "searchable": true, "targets": 5},
                 {"visible": false, "searchable": true, "targets": 6},
                 {"visible": false, "searchable": true, "targets": 7},
-                {"visible": true, "searchable": true, "targets": 8},
-                {"visible": true, "searchable": true, "targets": 9},
+                {"visible": true, "searchable": true, "targets": 8, "type":"date-eu"},
+                {"visible": true, "searchable": true, "targets": 9, "type":"date-eu"},
             ]
         }
     );
