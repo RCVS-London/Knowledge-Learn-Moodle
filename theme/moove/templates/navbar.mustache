@@ -64,7 +64,7 @@
 }}
 <nav class="navbar-light bg-white shadow" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 {{RCVS Knowledge}}
-  <main id='rcvsk-nav'>
+  <div id='rcvsk-nav'>
 {{!RCVSK mobile menu up/down chevron }}
     <div class="d-md-none d-sm-block bg-white accordion  pb-3 pt-4" id="accordion-rcvsk">
       <h2 class="mb-0 d-inline-block">
@@ -94,7 +94,7 @@
         <ul class="nav d-flex mr-auto">
           <li class="nav-item">
                   <a class="navbar-brand d-none d-md-block" href="{{output.rcvsk_url}}">
-          <img src="{{output.get_logo}}" class="logo mr-1" id="learn-logo-full" width="150px" alt="{{sitename}}">
+          <img src="{{output.get_logo}}" class="logo mr-1" id="learn-logo-full" width="150" alt="{{sitename}}">
         </a>
           </li>
         </ul>
@@ -127,7 +127,7 @@
     <div class="navbar-collapse d-md-none collapse" id="bottomNavBar" style="">
         <ul class="navbar-nav ms-auto mb-2 mb-sm-0 mx-0">
           <li class="nav-item">
-            <a class="nav-link link-dark font-weight-bold fs-5" href="#">
+<!--            <a class="nav-link link-dark font-weight-bold fs-5" href="#">-->
                 {{$drawercontent}}
         <div class="list-group">
             {{#mobileprimarynav}}
@@ -163,12 +163,12 @@
             {{/mobileprimarynav}}
         </div>
     {{/drawercontent}}
-    </a>
+ <!--   </a> -->
           </li>
         </ul>
 
     </div>
-  </main>
+  </div>
 
 {{! RCVS Knowledge end }}
 
